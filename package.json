@@ -1,22 +1,25 @@
 {
-  "name": "casse-tete-solver",
-  "version": "0.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/eliasm307/casse-tete-solver.git"
-  },
-  "author": "Elias Mangoro",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/eliasm307/casse-tete-solver/issues"
-  },
-  "homepage": "https://github.com/eliasm307/casse-tete-solver#readme",
-  "devDependencies": {
-    "typescript": "^4.1.3"
-  }
+	"name": "casse-tete-solver",
+	"version": "0.0.0",
+	"description": "",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "tsc",
+		"prepublish": "tsc"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/eliasm307/casse-tete-solver.git"
+	},
+	"author": "Elias Mangoro",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/eliasm307/casse-tete-solver/issues"
+	},
+	"homepage": "https://github.com/eliasm307/casse-tete-solver#readme",
+	"devDependencies": {
+		"typescript": "^4.1.3"
+	}
 }
