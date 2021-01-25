@@ -15,21 +15,37 @@ const generateTestPieces = (count: number) => {
 	return map;
 };
 
-const TestPiecesGroups: Array<number[]> = [[]];
+const TestPiecesGroups: Array<number[]> = [ [] ];
+
+const SEPARATOR = '----------------------------------------';
 
 test('getPossiblePieceGroups for 3 pieces with ids 0 to 2', () => {
-	const testPieces = generateTestPieces( 3 );
-	const testPieceGroups = getPossiblePieceGroups( testPieces );
+	const testPieces = generateTestPieces(3);
+	const testPieceGroups = getPossiblePieceGroups(testPieces);
+
+	console.log( SEPARATOR );
+	console.log(__filename, 'START 3 test pieces', {
+		testPieces,
+		testPieceGroups,
+		testPieceGroupsValues: testPieceGroups.values(),
+	});
+	expect(testPieceGroups.size).toEqual(1);
+	expect( testPieceGroups.values() ).toContainEqual( [ 0, 1, 2 ] );
 	
-	console.log(__filename, '3 test pieces', {testPieces, testPieceGroups});
-	expect(testPieceGroups).toEqual([[0, 1, 2]]);
-} );
+	console.log(SEPARATOR);
+});
 
 test('getPossiblePieceGroups for 4 pieces with ids 0 to 3', () => {
-	const testPieces = generateTestPieces( 4 );
-	const testPieceGroups = getPossiblePieceGroups( testPieces );
-	
-	console.log( __filename, '4 test pieces', { testPieces, testPieceGroups } );
-	expect(testPieceGroups.length).toEqual(4);
-	expect(testPieceGroups).toContainEqual([0, 1, 2]);
+	const testPieces = generateTestPieces(4);
+	const testPieceGroups = getPossiblePieceGroups(testPieces);
+
+	console.log(SEPARATOR);
+	console.log(__filename, 'START 4 test pieces', {
+		testPieces,
+		testPieceGroups,
+		testPieceGroupsValues: testPieceGroups.values(),
+	});
+	expect(testPieceGroups.size).toEqual(4);
+	expect( testPieceGroups.values() ).toContainEqual( [ 0, 1, 2 ] );
+	console.log(SEPARATOR);
 });
