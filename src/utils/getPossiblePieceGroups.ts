@@ -5,22 +5,24 @@ import combinations = require('combinations');
  * and makes sure groups are not repeated ie a group with pieces 1,2,3 is the same as a group with pieces 3,2,1
  */
 function getPossiblePieceGroups(pieces: Pieces): PieceIdGroups {
-	const pieceIDs: number[] = [...pieces].map((piece, id) => id);
+	// extract piece ids into a simple array
+	const pieceIDs: number[] = [...pieces].map((_, id) => id);
 
-	const combinationsWithIds: Array<[string, number[]]> = combinations(pieceIDs, 3, 3).map(pieceIDGroup => [
+	// produce the possible combinations of the available ids, in groups of 3, in the correct type (PieceIdGroup)
+	const combinationTuples: PieceIdGroup[] = combinations(pieceIDs, 3, 3).map(
+		pieceIDGroup => pieceIDGroup as PieceIdGroup
+	);
+
+	// generate an id for each combination
+	const combinationsWithIds: Array<[string, PieceIdGroup]> = combinationTuples.map(pieceIDGroup => [
 		pieceIDGroup.toString(),
-		pieceIDGroup,
+		pieceIDGroup as PieceIdGroup,
 	]);
 
-	const pieceIDGroups: PieceIdGroups = new Map<string, number[]>(combinationsWithIds);
+	// put the combinations in a map and use id as key
+	const pieceIDGroups: PieceIdGroups = new Map<string, PieceIdGroup>(combinationsWithIds);
 
-	console.log(__filename, { pieceIDs, combinationsWithIds, pieceIDGroups });
-
-	// return piece groups with actual piece objects
-	/*return pieceIDGroups.map( pieceIDGroup => {
-    return pieceIDGroup.map( id => pieces[ id ] );
-  })
-  */
+	// console.log(__filename, { pieceIDs, combinationsWithIds, pieceIDGroups });
 
 	// return piece groups, with piece ids
 	return pieceIDGroups;

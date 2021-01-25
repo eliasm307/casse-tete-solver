@@ -60,3 +60,5 @@ export const pieces: Map<number, Piece> = new Map( [
     },
   ],
 ] );
+
+export const CONSOLE_SEPARATOR = '----------------------------------------';
