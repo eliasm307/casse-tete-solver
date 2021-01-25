@@ -28,6 +28,12 @@ declare type PieceIdGroups = Map<string, PieceIdGroup>;
  */
 declare type PieceGroupPermutations = Map<string, PieceIdGroup[]>;
 
-
+/**
+ * Map of piece group permutations and their corresponding possible patterns
+ * @key PieceIdGroup array as a string
+ * @value Array of pieceGroupPatterns
+ */
 declare type PieceGroupPatterns = Map<string, PieceGroupPattern[]>;
+
+declare type PatternMatrix = [number[], number[], number[]];
 
