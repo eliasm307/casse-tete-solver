@@ -22,3 +22,10 @@ export const twoTestPieces: Map<number, Piece> = new Map([
 		},
 	],
 ]);
+
+export const TEST_PIECE: Piece = {
+	sides: [
+		[-1, -1, 1],
+		[-1, -1, 0],
+	],
+};
