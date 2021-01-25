@@ -27,3 +27,7 @@ declare type PieceIdGroups = Map<string, PieceIdGroup>;
  * @value array of possible PieceIdGroup permutations of the base sorted PieceIdGroup
  */
 declare type PieceGroupPermutations = Map<string, PieceIdGroup[]>;
+
+
+declare type PieceGroupPatterns = Map<string, PieceGroupPattern[]>;
+

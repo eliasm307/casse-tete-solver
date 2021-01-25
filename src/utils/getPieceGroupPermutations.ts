@@ -5,9 +5,19 @@ function getPieceGroupPermutations(pieceIdGroups: PieceIdGroups): PieceGroupPerm
 
 	//
 	pieceIdGroups.forEach((pieceIdGroup, key) => {
-		const permutations: PieceIdGroup[] = perm(pieceIdGroup);
+		const permutations: PieceIdGroup[] = [];
+
+		// print permutations
+		for (let permutation of perm(pieceIdGroup)) {
+			// console.log( __filename, { pieceIdGroup, permutation } );
+			permutations.push(permutation as PieceIdGroup);
+		}
+
+		console.log(__filename, { pieceIdGroup, permutations });
+
+		// add permutations to map
 		pieceGroupPermutations.set(key, permutations);
-		console.log(__filename, 'pieceIdGroups.forEach', { key, pieceIdGroup });
+		// console.log(__filename, 'pieceIdGroups.forEach', { key, pieceIdGroup });
 	});
 
 	return pieceGroupPermutations;

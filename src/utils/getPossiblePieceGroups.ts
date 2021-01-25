@@ -22,7 +22,7 @@ function getPossiblePieceGroups(pieces: Pieces): PieceIdGroups {
 	// put the combinations in a map and use id as key
 	const pieceIDGroups: PieceIdGroups = new Map<string, PieceIdGroup>(combinationsWithIds);
 
-	console.log(__filename, { pieceIDs, combinationsWithIds, pieceIDGroups });
+	// console.log(__filename, { pieceIDs, combinationsWithIds, pieceIDGroups });
 
 	// return piece groups, with piece ids
 	return pieceIDGroups;
