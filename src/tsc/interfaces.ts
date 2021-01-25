@@ -1,3 +1,3 @@
-interface Piece {
+declare interface Piece {
 	sides: [SidePattern, SidePattern];
 }

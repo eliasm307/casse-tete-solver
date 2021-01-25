@@ -1,4 +1,4 @@
-import { pieces } from '../constants';
+// import { pieces } from '../constants/constants';
 import getPossiblePieceGroups from './getPossiblePieceGroups';
 
 const testPiece: Piece = {
