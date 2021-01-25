@@ -4,7 +4,7 @@
  * slots are given integer values ie -1 for a hole, 0 for a blank, 1 for a nub
  * each piece has a unique ID (pieces are reffered to by ID from here)
  */
-export const pieces: Map<number, Piece> = new Map( [
+export const AVAILABLE_PIECES: Map<number, Piece> = new Map( [
   [
     0,
     {
@@ -60,5 +60,6 @@ export const pieces: Map<number, Piece> = new Map( [
     },
   ],
 ] );
+
 
 export const CONSOLE_SEPARATOR = '----------------------------------------';
