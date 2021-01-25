@@ -1,7 +1,13 @@
+import getPossiblePieceGroups from './utils/getPossiblePieceGroups';
+
+
+
+
 // define 6 pieces with 2 sides and 3 slots on each side.
 // slots are given integer values ie -1 for a hole, 0 for a blank, 1 for a nub
+
 // each piece has a unique ID (pieces are reffered to by ID from here)
-const pieces = [
+const pieces: Piece[] = [
 	{
 		id: 0,
 		sides: [
