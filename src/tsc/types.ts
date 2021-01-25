@@ -1,3 +1,6 @@
-type SidePattern = number[];
+declare type SidePattern = number[];
 
-type Pieces = Map<number, Piece>;
+declare type Pieces = Map<number, Piece>;
+
+declare type PieceGroups = Map<string, number[]>;
+
