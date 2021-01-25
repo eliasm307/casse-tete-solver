@@ -1,56 +1,8 @@
-import getPossiblePieceGroups from './utils/getPossiblePieceGroups';
+import { pieces } from './src/constants';
+import getPossiblePieceGroups from './src/utils/getPossiblePieceGroups';
 
 
 
-
-// define 6 pieces with 2 sides and 3 slots on each side.
-// slots are given integer values ie -1 for a hole, 0 for a blank, 1 for a nub
-
-// each piece has a unique ID (pieces are reffered to by ID from here)
-const pieces: Piece[] = [
-	{
-		id: 0,
-		sides: [
-			[-1, -1, 1],
-			[-1, -1, 0],
-		],
-	},
-	{
-		id: 1,
-		sides: [
-			[-1, 0, 1],
-			[-1, 1, 0],
-		],
-	},
-	{
-		id: 2,
-		sides: [
-			[0, 1, 0],
-			[1, 0, 1],
-		],
-	},
-	{
-		id: 3,
-		sides: [
-			[1, -1, 0],
-			[0, -1, 1],
-		],
-	},
-	{
-		id: 4,
-		sides: [
-			[1, 1, 0],
-			[0, 0, 1],
-		],
-	},
-	{
-		id: 5,
-		sides: [
-			[-1, 1, 0],
-			[-1, 0, 1],
-		],
-	},
-];
 
 // for the pieces available, find all possible ways to split the 6 pieces into 2 groups of 3 pieces
 // make sure groups are not repeated ie a group with pieces 1,2,3 is the same as a group with pieces 3,2,1
