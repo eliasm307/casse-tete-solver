@@ -5,6 +5,8 @@ function getPieceGroupPatterns(pieceGroupPermutations: PieceGroupPermutations): 
 	// get remainder piece groups
 	// const pieceGroupsWithRemainderGroups = getPieceGroupRemainders(pieceIdGroups);
 
+  const patterns: PieceGroupPatterns = new Map<string, PieceGroupPattern[]>();
+
 	pieceGroupPermutations.forEach((permutations, pieceGroupKey) => {
 		const possiblePatterns: PieceGroupPattern[] = permutations.reduce(
 			(
@@ -12,19 +14,18 @@ function getPieceGroupPatterns(pieceGroupPermutations: PieceGroupPermutations): 
 				currentPermutation: PieceIdGroup,
 				i: number,
 				arr: PieceIdGroup[]
-      ): PieceGroupPattern[] => {
-        
-        // for the current permutation, loop through all the possible configurations from flipping (ie same as counting to 7 in binary)
-        for ( let config = 0; config < 8; config++ ) {
-          
-          
-        }
-
-
-      },
+			): PieceGroupPattern[] => {
+				// for the current permutation, loop through all the possible configurations from flipping (ie same as counting to 7 in binary)
+				for (let config = 0; config < 8; config++) {}
+				return accumulated;
+			},
 			[] as PieceGroupPattern[]
-		);
-	});
+    );
+    
+
+  } );
+  
+  return patterns;
 }
 
 export default getPieceGroupPatterns;

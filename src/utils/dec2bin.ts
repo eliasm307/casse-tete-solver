@@ -6,7 +6,9 @@ function dec2bin(dec: number): string {
 	const int: number = Math.round(dec);
 
 	const binary: string = (int >>> 0).toString(2).padStart(3, '0');
-  console.log( __filename, { int, binary } );
-  
+	console.log(__filename, { int, binary });
+
 	return binary;
 }
+
+export default dec2bin;
