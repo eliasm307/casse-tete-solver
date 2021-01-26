@@ -1,3 +1,5 @@
+import rotateMatrix from 'rotate-matrix';
+
 import TypeFactory from './TypeFactory';
 
 export default class PatternEvaluator implements iPatternConfigurationEvaluator {
@@ -13,9 +15,14 @@ export default class PatternEvaluator implements iPatternConfigurationEvaluator 
 		} else if (this.comparisonHistory.has(this.getPatternCoupleId(pattern2, pattern1))) {
 			return this.comparisonHistory.get(this.getPatternCoupleId(pattern2, pattern1)) as boolean;
 		}
-    
-    // compare patterns for 4 rotations
+
+		// compare patterns for 4 rotations
     for ( let i = 0; i < 4; i++ ) {
+      
+      const matrix1Rotated = rotateMatrix( pattern1.matrix, i );
+
+      const sumMatrix = 
+
       
     }
 	}
