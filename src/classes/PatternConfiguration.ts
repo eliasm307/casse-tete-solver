@@ -3,14 +3,12 @@ class PatternConfiguration implements iPatternConfiguration {
 	pieceGroupId: string;
 
 	sidesUsed: PieceGroupSidesTuple;
-	pieceGroup: iPieceGroup;
+	private pieceGroup: iPieceGroup;
 
 	constructor(pieceGroup: iPieceGroupPermutation, sidesUsed: PieceGroupSidesTuple) {
 		this.sidesUsed = sidesUsed;
-    this.pieceGroupId = pieceGroup.id;
-    this.pieceGroup = pieceGroup;
+		this.pieceGroupId = pieceGroup.id;
+		this.pieceGroup = pieceGroup;
 		this.matrix = pieceGroup.getMatrix(this.sidesUsed);
-  }
-  
-  
+	}
 }

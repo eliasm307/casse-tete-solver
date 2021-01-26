@@ -40,4 +40,6 @@ declare type PieceGroupPermutationsMap = Map<string, PieceIdGroupTuple[]>;
  */
 declare type PatternConfigurationsMap = Map<string, iPatternConfiguration[]>;
 
+declare type Piece3Tuple = [iPiece, iPiece, iPiece];
+
 
