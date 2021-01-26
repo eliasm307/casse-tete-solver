@@ -14,11 +14,21 @@ export default class PieceGroupUnique implements iPieceGroupUnique {
 		this.availablePieces = availablePieces;
 		this.id = pieceIdGroup.toString();
 		this.configuration = this.pieceIdGroup.map(pieceId => availablePieces.get(pieceId) as iPiece) as Piece3Tuple;
-		this.pieceGroupPermutations = createPermutations();
+		this.pieceGroupPermutations = this.createPermutations();
 	}
 
 	getRemainderPieceIdGroup(): PieceIdGroupTuple {
-		throw new Error('Method not implemented.');
+		// get available ids
+		const ids: number[] = Array.from(this.availablePieces.keys());
+
+		// put available ids in a set
+		const idSet: Set<number> = new Set<number>(ids);
+
+		// remove ids used by this group from the set
+		this.pieceIdGroup.forEach(id => idSet.delete(id));
+
+		// return remaining ids in set
+		return Array.from(idSet.values()) as PieceIdGroupTuple;
 	}
 
 	getPatterns(): iPatternConfiguration[] {
