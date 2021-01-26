@@ -5,7 +5,7 @@
 declare type SidePatternTuple = [number, number, number];
 
 /** Tuple representing 3x3 pattern produced by putting 3 pieces together */
-declare type PatternMatrixTuple = [number[], number[], number[]];
+declare type PatternMatrixTuple = [SidePatternTuple, SidePatternTuple, SidePatternTuple];
 
 declare type PieceGroupSidesTuple = [number, number, number];
 
@@ -39,5 +39,7 @@ declare type PieceGroupPermutationsMap = Map<string, PieceIdGroupTuple[]>;
  * @value Array of pieceGroupPatterns
  */
 declare type PatternConfigurationsMap = Map<string, iPatternConfiguration[]>;
+
+declare type Piece3Tuple = [iPiece, iPiece, iPiece];
 
 

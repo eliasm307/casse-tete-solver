@@ -1,5 +1,4 @@
-abstract class TypeFactory {
-	constructor() {}
+export default abstract class TypeFactory {
 
 	static newPiecesMap(): PiecesMap {
 		return new Map<number, iPiece>();
@@ -11,5 +10,13 @@ abstract class TypeFactory {
 
 	static newPieceIdGroupsMap(...args: any[]): PieceIdGroupsMap {
 		return new Map<string, PieceIdGroupTuple>(...args);
-	}
+  }
+  
+  static newPatternMatrixTuple(): PatternMatrixTuple {
+    return [
+			[NaN, NaN, NaN],
+			[NaN, NaN, NaN],
+			[NaN, NaN, NaN],
+		];
+  }
 }

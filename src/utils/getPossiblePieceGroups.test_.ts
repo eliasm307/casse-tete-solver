@@ -1,5 +1,5 @@
 import { CONSOLE_SEPARATOR } from '../constants/constants';
-import { generateTestPieces } from './generateTestPieces';
+import { generateTestPieces } from '../test-utils/generateTestPieces';
 import getPossiblePieceGroups from './getPossiblePieceGroups';
 
 test('getPossiblePieceGroups for 3 pieces with ids 0 to 2', () => {
