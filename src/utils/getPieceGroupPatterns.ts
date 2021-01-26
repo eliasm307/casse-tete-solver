@@ -1,28 +1,28 @@
-// function getPieceGroupPatterns( pieceGroupPermutations: PieceGroupPermutations ) { }
-import { AVAILABLE_PIECES } from './../constants/constants';
+import { AVAILABLE_PIECES_MAP } from './../constants/constants';
 import dec2bin from './dec2bin';
 
+// function getPieceGroupPatterns( pieceGroupPermutations: PieceGroupPermutations ) { }
 
 function getPieceGroupPatterns(
 	pieceGroupPermutations: PieceGroupPermutationsMap,
 	AVAILABLE_PIECES: PiecesMap
-): PieceGroupPatternsMap {
+): PatternConfigurationsMap {
 	// For each pattern object, assign the ids of the AVAILABLE_PIECES it uses, so the patterns can be tracked when a solution is found. Ie for each combination, flatten all the resulting possible patterns and include information on the configuration to build the pattern.
 	// get remainder piece groups
 	// const pieceGroupsWithRemainderGroups = getPieceGroupRemainders(pieceIdGroups);
 
-	if (!AVAILABLE_PIECES) return new Error(__filename + ' AVAILABLE_PIECES not defined');
+	if (!AVAILABLE_PIECES) new Error(__filename + ' AVAILABLE_PIECES not defined');
 
-	const patterns: PieceGroupPatternsMap = new Map<string, iPattern[]>();
+	const patterns: PatternConfigurationsMap = TypeFactory.newPatternConfigurationsMap();
 
 	pieceGroupPermutations.forEach((permutations, pieceGroupKey) => {
-		const possiblePatterns: iPattern[] = permutations.reduce(
+		const possiblePatterns: iPatternConfiguration[] = permutations.reduce(
 			(
-				accumulated: iPattern[],
+				accumulated: iPatternConfiguration[],
 				currentPermutation: PieceIdGroupTuple,
 				i: number,
 				arr: PieceIdGroupTuple[]
-			): iPattern[] => {
+			): iPatternConfiguration[] => {
 				// for the current permutation, loop through all the possible configurations from flipping (ie same as counting to 7 in binary)
 				for (let config = 0; config < 8; config++) {
 					const binaryConfig = dec2bin(config);
@@ -41,15 +41,15 @@ function getPieceGroupPatterns(
 					});
 
 					// Todo add some tracking info to the matrix, e.g. the ids of the AVAILABLE_PIECES used and the permuation etc
-					const pattern: iPattern = { matrix };
+					// const pattern: iPatternConfiguration = { matrix };
 
 					// save pattern in a collection for the current piece group permutation
-					accumulated.push(pattern);
+					// accumulated.push(pattern);
 				}
 
 				return accumulated;
 			},
-			[] as iPattern[]
+			[] as iPatternConfiguration[]
 		);
 	});
 
