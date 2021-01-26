@@ -1,8 +1,10 @@
+import matrix from 'matrix-js';
 import rotateMatrix from 'rotate-matrix';
 
 import TypeFactory from './TypeFactory';
 
-export default class PatternEvaluator implements iPatternConfigurationEvaluator {
+
+ export default class PatternEvaluator implements iPatternConfigurationEvaluator {
 	private comparisonHistory: PatternComparisonHistoryMap;
 
 	constructor() {
@@ -21,7 +23,7 @@ export default class PatternEvaluator implements iPatternConfigurationEvaluator 
       
       const matrix1Rotated = rotateMatrix( pattern1.matrix, i );
 
-      const sumMatrix = 
+      const sumMatrix = [];
 
       
     }
