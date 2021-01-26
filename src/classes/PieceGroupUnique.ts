@@ -6,18 +6,26 @@ export default class PieceGroupUnique implements iPieceGroupUnique {
 	id: string;
 	pieceIdGroup: PieceIdGroupTuple;
 	availablePieces: PiecesMap;
-	configuration: Piece3Tuple;
+	layout: Piece3Tuple;
 	pieceGroupPermutations: iPieceGroupPermutation[];
+	oppositePieceIdGroup: PieceIdGroupTuple;
+	patterns: iPatternConfiguration[];
 
 	constructor(pieceIdGroup: PieceIdGroupTuple, availablePieces: PiecesMap) {
 		this.pieceIdGroup = pieceIdGroup;
 		this.availablePieces = availablePieces;
 		this.id = pieceIdGroup.toString();
-		this.configuration = this.pieceIdGroup.map(pieceId => availablePieces.get(pieceId) as iPiece) as Piece3Tuple;
-		this.pieceGroupPermutations = this.createPermutations();
+		this.layout = this.getLayout();
+		this.pieceGroupPermutations = this.getPermutations();
+		this.oppositePieceIdGroup = this.getOppositePieceIdGroup();
+		this.patterns = this.getPatterns();
 	}
 
-	getRemainderPieceIdGroup(): PieceIdGroupTuple {
+	getLayout(): Piece3Tuple {
+		return this.pieceIdGroup.map(pieceId => this.availablePieces.get(pieceId) as iPiece) as Piece3Tuple;
+	}
+
+	getOppositePieceIdGroup(): PieceIdGroupTuple {
 		// get available ids
 		const ids: number[] = Array.from(this.availablePieces.keys());
 
@@ -31,7 +39,7 @@ export default class PieceGroupUnique implements iPieceGroupUnique {
 		return Array.from(idSet.values()) as PieceIdGroupTuple;
 	}
 
-	private createPermutations(): iPieceGroupPermutation[] {
+	private getPermutations(): iPieceGroupPermutation[] {
 		const pieceGroupPermutations: iPieceGroupPermutation[] = [];
 
 		// get id group permeatations

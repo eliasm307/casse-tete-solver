@@ -3,12 +3,11 @@ import PieceGroupPermutation from './PieceGroupPermutation';
 
 let testName: string = 'PieceGroupPermutation 1';
 test(testName, () => {
-	console.log(CONSOLE_SEPARATOR);
-
 	const testPieceIdGroup: PieceIdGroupTuple = [0, 1, 2];
-
 	const pieceGroup: iPieceGroupPermutation = new PieceGroupPermutation(testPieceIdGroup, AVAILABLE_PIECES_MAP);
 
+	/*
+	console.log( CONSOLE_SEPARATOR );
 	console.log(__filename, {
 		testName,
 		testPieceIdGroup,
@@ -17,9 +16,12 @@ test(testName, () => {
 		pieceGroupGetPatternsMatrices: pieceGroup
 			.getPatterns()
 			.map(pattern => pattern.matrix.reduce((acc, row) => (acc += `[ ${row.toString()} ]`), '')),
-	});
+	} );
+	console.log( CONSOLE_SEPARATOR );
+	*/
+
 	// testPieceGroupPermutations.forEach((value, key) => console.log(__filename, { key, value }));
-	expect(pieceGroup.configuration).toEqual([
+	expect(pieceGroup.layout).toEqual([
 		AVAILABLE_PIECES_MAP.get(0),
 		AVAILABLE_PIECES_MAP.get(1),
 		AVAILABLE_PIECES_MAP.get(2),
@@ -28,6 +30,4 @@ test(testName, () => {
 	expect(pieceGroup.getPatterns().length).toEqual(8);
 
 	// expect(pieceGroup.getPatterns())
-
-	console.log(CONSOLE_SEPARATOR);
 });

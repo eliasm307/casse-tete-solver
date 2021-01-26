@@ -21,9 +21,9 @@ export default class SolverFacade implements iSolverFacade {
 		const pieceIDs: number[] = [...this.availablePieces].map((_, id) => id);
 
 		// produce the possible combinations of the available ids, in groups of 3, in the correct type (PieceIdGroup)
-		const combinationTuples: PieceIdGroupTuple[] = combinations(pieceIDs, 3, 3).map(
-			pieceIDGroup => pieceIDGroup as PieceIdGroupTuple
-		);
+		const combinationTuples: PieceIdGroupTuple[] = combinations(pieceIDs, 3, 3)
+			.filter((pieceIDGroup: number[]) => pieceIDGroup.length === 3) // make sure id groups are 3 items long
+			.map(pieceIDGroup => pieceIDGroup as PieceIdGroupTuple); // map id groups to tuple type
 
 		// generate an id for each combination
 		const combinationsWithIds: Array<[string, PieceIdGroupTuple]> = combinationTuples.map(pieceIDGroup => [

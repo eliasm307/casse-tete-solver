@@ -6,13 +6,13 @@ export default class PieceGroupPermutation implements iPieceGroupPermutation {
 	readonly pieceIdGroup: PieceIdGroupTuple;
 	readonly availablePieces: PiecesMap;
 	readonly id: string;
-	readonly configuration: Piece3Tuple;
+	readonly layout: Piece3Tuple;
 
 	constructor(pieceIdGroup: PieceIdGroupTuple, availablePieces: PiecesMap) {
 		this.pieceIdGroup = pieceIdGroup;
 		this.availablePieces = availablePieces;
 		this.id = pieceIdGroup.toString();
-		this.configuration = this.pieceIdGroup.map(pieceId => availablePieces.get(pieceId) as iPiece) as Piece3Tuple;
+		this.layout = this.pieceIdGroup.map(pieceId => availablePieces.get(pieceId) as iPiece) as Piece3Tuple;
 	}
 
 	/**

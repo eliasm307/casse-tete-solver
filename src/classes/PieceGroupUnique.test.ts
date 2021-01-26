@@ -4,12 +4,11 @@ import PieceGroupUnique from './PieceGroupUnique';
 
 let testName: string = 'iPieceGroupUnique test 1';
 test(testName, () => {
-	console.log(CONSOLE_SEPARATOR);
-
 	const testPieceIdGroup: PieceIdGroupTuple = [0, 1, 2];
 
 	const pieceGroup: iPieceGroupUnique = new PieceGroupUnique(testPieceIdGroup, AVAILABLE_PIECES_MAP);
-
+	/*
+console.log(CONSOLE_SEPARATOR);
 	console.log(__filename, {
 		testName,
 		testPieceIdGroup,
@@ -19,8 +18,11 @@ test(testName, () => {
 			.getPatterns()
 			.map(pattern => pattern.matrix.reduce((acc, row) => (acc += `[ ${row.toString()} ]`), '')),
 	});
+	console.log(CONSOLE_SEPARATOR);
+	*/
+
 	// testPieceGroupPermutations.forEach((value, key) => console.log(__filename, { key, value }));
-	expect(pieceGroup.configuration).toEqual([
+	expect(pieceGroup.layout).toEqual([
 		AVAILABLE_PIECES_MAP.get(0),
 		AVAILABLE_PIECES_MAP.get(1),
 		AVAILABLE_PIECES_MAP.get(2),
@@ -29,6 +31,4 @@ test(testName, () => {
 	expect(pieceGroup.getPatterns().length).toEqual(48);
 
 	// expect(pieceGroup.getPatterns())
-
-	console.log(CONSOLE_SEPARATOR);
 });

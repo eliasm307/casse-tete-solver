@@ -16,16 +16,18 @@ declare interface iPatternConfiguration {
 declare interface iPieceGroup {
 	readonly id: string;
 	readonly pieceIdGroup: PieceIdGroupTuple;
-	readonly availablePieces: PiecesMap;
-	readonly configuration: Piece3Tuple;
+	// ? readonly availablePieces: PiecesMap;
+	readonly layout: Piece3Tuple;
 
 	// getPatternMatrix(sidesUsed: PieceGroupSidesTuple): PatternMatrixTuple;
 	getPatterns(): iPatternConfiguration[];
 }
 
 declare interface iPieceGroupUnique extends iPieceGroup {
-	readonly pieceGroupPermutations: iPieceGroupPermutation[];
-	getRemainderPieceIdGroup(): PieceIdGroupTuple;
+	readonly pieceGroupPermutations: iPieceGroupPermutation[]; 
+	oppositePieceIdGroup: PieceIdGroupTuple;
+	patterns: iPatternConfiguration[];
+	// ? getOppositePieceIdGroup(): PieceIdGroupTuple;
 }
 
 declare interface iPieceGroupPermutation extends iPieceGroup {}
