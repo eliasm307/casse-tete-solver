@@ -2,7 +2,7 @@ import dec2bin from '../utils/dec2bin';
 import { PatternConfiguration } from './PatternConfiguration';
 
 /** This class represents a permutation of an id group e.g. [1,2,3] and [3,2,1] would be different permutations */
-class PieceGroupPermutation implements iPieceGroupPermutation {
+export default class PieceGroupPermutation implements iPieceGroupPermutation {
 	readonly pieceIdGroup: PieceIdGroupTuple;
 	readonly availablePieces: PiecesMap;
 	readonly id: string;

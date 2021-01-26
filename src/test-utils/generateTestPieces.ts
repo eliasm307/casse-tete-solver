@@ -1,4 +1,4 @@
-import { TEST_PIECE } from './../constants/tests.constants';
+import { TEST_PIECE } from '../constants/tests.constants';
 
 export function generateTestPieces( count: number ) {
 	const map: PiecesMap = TypeFactory.newPiecesMap();
