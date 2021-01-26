@@ -7,7 +7,7 @@ test(testName, () => {
 	const testPieceIdGroup: PieceIdGroupTuple = [0, 1, 2];
 
 	const pieceGroup: iPieceGroupUnique = new PieceGroupUnique(testPieceIdGroup, AVAILABLE_PIECES_MAP);
-	/*
+	/* 
 console.log(CONSOLE_SEPARATOR);
 	console.log(__filename, {
 		testName,
@@ -30,5 +30,5 @@ console.log(CONSOLE_SEPARATOR);
 
 	expect(pieceGroup.getPatterns().length).toEqual(48);
 
-	// expect(pieceGroup.getPatterns())
+	expect(pieceGroup.oppositePieceIdGroup).toEqual([3, 4, 5]);
 });

@@ -32,9 +32,7 @@ export default class SolverFacade implements iSolverFacade {
 		]);
 
 		// put the combinations in a map and use id as key
-		const pieceIDGroups: PieceIdGroupsMap = TypeFactory.newPieceIdGroupsMap(combinationsWithIds);
-
-		// console.log(__filename, { pieceIDs, combinationsWithIds, pieceIDGroups });
+		const pieceIDGroups: PieceIdGroupsMap = TypeFactory.newPieceIdGroupsMap(combinationsWithIds); 
 
 		// return piece groups, with piece ids
 		return pieceIDGroups;
