@@ -1,6 +1,6 @@
 import { getPatternMatrix } from '../utils/pieceGroupUtils';
 
-class PatternConfiguration implements iPatternConfiguration {
+default export class PatternConfiguration implements iPatternConfiguration {
 	matrix: PatternMatrixTuple;
 	pieceGroupId: string;
 	sidesUsed: PieceGroupSidesTuple;
