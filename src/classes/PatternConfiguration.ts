@@ -1,4 +1,5 @@
 import { getPatternMatrix } from '../utils/pieceGroupUtils';
+import TypeFactory from './TypeFactory';
 
 export default class PatternConfiguration implements iPatternConfiguration {
 	matrix: PatternMatrixTuple;

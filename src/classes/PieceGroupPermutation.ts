@@ -1,5 +1,5 @@
 import dec2bin from '../utils/dec2bin';
-import { PatternConfiguration } from './PatternConfiguration';
+import PatternConfiguration from './PatternConfiguration';
 
 /** This class represents a permutation of an id group e.g. [1,2,3] and [3,2,1] would be different permutations */
 export default class PieceGroupPermutation implements iPieceGroupPermutation {

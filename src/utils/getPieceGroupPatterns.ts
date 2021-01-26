@@ -1,3 +1,4 @@
+import TypeFactory from '../classes/TypeFactory';
 import { AVAILABLE_PIECES_MAP } from './../constants/constants';
 import dec2bin from './dec2bin';
 

@@ -1,4 +1,4 @@
-abstract class TypeFactory {
+export default abstract class TypeFactory {
 
 	static newPiecesMap(): PiecesMap {
 		return new Map<number, iPiece>();

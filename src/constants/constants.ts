@@ -1,4 +1,6 @@
 // import { Piece } from '../tsc/interfaces';
+import TypeFactory from '../classes/TypeFactory';
+
 
 /** This defines 6 pieces with 2 sides and 3 slots on each side.
  * slots are given integer values ie -1 for a hole, 0 for a blank, 1 for a nub
