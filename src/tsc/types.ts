@@ -5,7 +5,7 @@
 declare type SidePatternTuple = [number, number, number];
 
 /** Tuple representing 3x3 pattern produced by putting 3 pieces together */
-declare type PatternMatrixTuple = [number[], number[], number[]];
+declare type PatternMatrixTuple = [SidePatternTuple, SidePatternTuple, SidePatternTuple];
 
 declare type PieceGroupSidesTuple = [number, number, number];
 

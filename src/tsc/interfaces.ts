@@ -10,6 +10,7 @@ declare interface iPatternConfiguration {
 	matrix: PatternMatrixTuple;
 	pieceGroupId: string;
 	sidesUsed: PieceGroupSidesTuple;
+	getMatrixMirrored(): PatternMatrixTuple;
 }
 
 declare interface iPieceGroup {
@@ -19,7 +20,7 @@ declare interface iPieceGroup {
 
 	readonly configuration: [iPiece, iPiece, iPiece];
 
-	getMatrix(sidesUsed: PieceGroupSidesTuple): PatternMatrixTuple;
+	// getPatternMatrix(sidesUsed: PieceGroupSidesTuple): PatternMatrixTuple;
 	getPatterns(): iPatternConfiguration[];
 }
 

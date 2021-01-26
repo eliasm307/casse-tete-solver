@@ -14,10 +14,6 @@ class PieceGroupPermutation implements iPieceGroupPermutation {
 		this.configuration = pieceIdGroup.map(pieceId => availablePieces.get(pieceId) as iPiece) as Piece3Tuple;
 	}
 
-	getMatrix(sidesUsed: PieceGroupSidesTuple): PatternMatrixTuple {
-		throw new Error('Method not implemented.');
-	}
-
 	/**
 	 * Returns possible patterns that can be made by flipping the pieces in the group
 	 * @returns {iPatternConfiguration[]} Array of possible patterns

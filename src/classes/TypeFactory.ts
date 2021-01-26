@@ -10,5 +10,13 @@ abstract class TypeFactory {
 
 	static newPieceIdGroupsMap(...args: any[]): PieceIdGroupsMap {
 		return new Map<string, PieceIdGroupTuple>(...args);
-	}
+  }
+  
+  static newPatternMatrixTuple(): PatternMatrixTuple {
+    return [
+			[NaN, NaN, NaN],
+			[NaN, NaN, NaN],
+			[NaN, NaN, NaN],
+		];
+  }
 }
