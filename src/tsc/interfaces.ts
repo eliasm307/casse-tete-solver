@@ -17,14 +17,14 @@ declare interface iPieceGroup {
 	readonly id: string;
 	readonly pieceIdGroup: PieceIdGroupTuple;
 	readonly availablePieces: PiecesMap;
-
-	readonly configuration: [iPiece, iPiece, iPiece];
+	readonly configuration: Piece3Tuple;
 
 	// getPatternMatrix(sidesUsed: PieceGroupSidesTuple): PatternMatrixTuple;
 	getPatterns(): iPatternConfiguration[];
 }
 
 declare interface iPieceGroupUnique extends iPieceGroup {
+	readonly pieceGroupPermutations: iPieceGroupPermutation[];
 	getRemainderPieceIdGroup(): PieceIdGroupTuple;
 }
 

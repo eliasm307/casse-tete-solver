@@ -1,13 +1,14 @@
 import { AVAILABLE_PIECES_MAP, CONSOLE_SEPARATOR } from '../constants/constants';
 import PieceGroupPermutation from './PieceGroupPermutation';
+import PieceGroupUnique from './PieceGroupUnique';
 
-let testName: string = 'PieceGroupPermutation 1';
+let testName: string = 'iPieceGroupUnique test 1';
 test(testName, () => {
 	console.log(CONSOLE_SEPARATOR);
 
 	const testPieceIdGroup: PieceIdGroupTuple = [0, 1, 2];
 
-	const pieceGroup: iPieceGroupPermutation = new PieceGroupPermutation(testPieceIdGroup, AVAILABLE_PIECES_MAP);
+	const pieceGroup: iPieceGroupUnique = new PieceGroupUnique(testPieceIdGroup, AVAILABLE_PIECES_MAP);
 
 	console.log(__filename, {
 		testName,
@@ -25,7 +26,7 @@ test(testName, () => {
 		AVAILABLE_PIECES_MAP.get(2),
 	]);
 
-	expect(pieceGroup.getPatterns().length).toEqual(8);
+	expect(pieceGroup.getPatterns().length).toEqual(48);
 
 	// expect(pieceGroup.getPatterns())
 
