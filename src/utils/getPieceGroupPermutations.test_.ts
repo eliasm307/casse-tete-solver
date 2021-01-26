@@ -1,4 +1,4 @@
-import { CONSOLE_SEPARATOR } from '../constants/constants';
+import { CONSOLE_SEPARATOR } from '../constants/production';
 import { generateTestPieces } from '../test-utils/generateTestPieces';
 import getPieceGroupPermutations from './getPieceGroupPermutations';
 import getPossiblePieceGroups from './getPossiblePieceGroups';

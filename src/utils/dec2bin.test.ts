@@ -1,4 +1,4 @@
-import { CONSOLE_SEPARATOR } from './../constants/constants';
+import { CONSOLE_SEPARATOR } from '../constants/production';
 import dec2bin from './dec2bin';
 
 test('dec2bin covert 0 to binary', () => {

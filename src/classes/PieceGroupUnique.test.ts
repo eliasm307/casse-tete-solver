@@ -1,4 +1,4 @@
-import { AVAILABLE_PIECES_MAP, CONSOLE_SEPARATOR } from '../constants/constants';
+import { AVAILABLE_PIECES_MAP, CONSOLE_SEPARATOR } from '../constants/production';
 import PieceGroupPermutation from './PieceGroupPermutation';
 import PieceGroupUnique from './PieceGroupUnique';
 

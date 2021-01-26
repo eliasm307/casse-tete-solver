@@ -1,5 +1,5 @@
 import TypeFactory from '../classes/TypeFactory';
-import { AVAILABLE_PIECES_MAP } from './../constants/constants';
+import { AVAILABLE_PIECES_MAP } from '../constants/production';
 import dec2bin from './dec2bin';
 
 // function getPieceGroupPatterns( pieceGroupPermutations: PieceGroupPermutations ) { }
