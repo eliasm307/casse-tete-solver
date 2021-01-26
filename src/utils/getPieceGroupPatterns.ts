@@ -11,7 +11,7 @@ function getPieceGroupPatterns(
 	// get remainder piece groups
 	// const pieceGroupsWithRemainderGroups = getPieceGroupRemainders(pieceIdGroups);
 
-	if (!AVAILABLE_PIECES) return new Error(__filename + ' AVAILABLE_PIECES not defined');
+	if (!AVAILABLE_PIECES) new Error(__filename + ' AVAILABLE_PIECES not defined');
 
 	const patterns: PatternConfigurationsMap = TypeFactory.newPatternConfigurationsMap();
 
@@ -41,10 +41,10 @@ function getPieceGroupPatterns(
 					});
 
 					// Todo add some tracking info to the matrix, e.g. the ids of the AVAILABLE_PIECES used and the permuation etc
-					const pattern: iPatternConfiguration = { matrix };
+					// const pattern: iPatternConfiguration = { matrix };
 
 					// save pattern in a collection for the current piece group permutation
-					accumulated.push(pattern);
+					// accumulated.push(pattern);
 				}
 
 				return accumulated;
