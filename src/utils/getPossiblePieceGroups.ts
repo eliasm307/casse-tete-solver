@@ -1,26 +1,26 @@
-import combinations = require('combinations');
-
 /**
  * This function finds all possible ways to split the 6 pieces into 2 groups of 3 pieces
+import combinations = require('combinations');
+
  * and makes sure groups are not repeated ie a group with pieces 1,2,3 is the same as a group with pieces 3,2,1
  */
-function getPossiblePieceGroups(pieces: Pieces): PieceIdGroups {
+function getPossiblePieceGroups(pieces: PiecesMap): PieceIdGroupsMap {
 	// extract piece ids into a simple array
 	const pieceIDs: number[] = [...pieces].map((_, id) => id);
 
 	// produce the possible combinations of the available ids, in groups of 3, in the correct type (PieceIdGroup)
-	const combinationTuples: PieceIdGroup[] = combinations(pieceIDs, 3, 3).map(
-		pieceIDGroup => pieceIDGroup as PieceIdGroup
+	const combinationTuples: PieceIdGroupTuple[] = combinations(pieceIDs, 3, 3).map(
+		pieceIDGroup => pieceIDGroup as PieceIdGroupTuple
 	);
 
 	// generate an id for each combination
-	const combinationsWithIds: Array<[string, PieceIdGroup]> = combinationTuples.map(pieceIDGroup => [
+	const combinationsWithIds: Array<[string, PieceIdGroupTuple]> = combinationTuples.map(pieceIDGroup => [
 		pieceIDGroup.toString(),
-		pieceIDGroup as PieceIdGroup,
+		pieceIDGroup as PieceIdGroupTuple,
 	]);
 
 	// put the combinations in a map and use id as key
-	const pieceIDGroups: PieceIdGroups = new Map<string, PieceIdGroup>(combinationsWithIds);
+	const pieceIDGroups: PieceIdGroupsMap = new Map<string, PieceIdGroupTuple>(combinationsWithIds);
 
 	// console.log(__filename, { pieceIDs, combinationsWithIds, pieceIDGroups });
 

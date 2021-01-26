@@ -1,16 +1,16 @@
+function getPieceGroupPermutations(pieceIdGroups: PieceIdGroupsMap): PieceGroupPermutationsMap {
+	const pieceGroupPermutations: PieceGroupPermutationsMap = new Map<string, PieceIdGroupTuple[]>();
 import perm from 'array-permutation';
 
-function getPieceGroupPermutations(pieceIdGroups: PieceIdGroups): PieceGroupPermutations {
-	const pieceGroupPermutations: PieceGroupPermutations = new Map<string, PieceIdGroup[]>();
 
 	//
 	pieceIdGroups.forEach((pieceIdGroup, key) => {
-		const permutations: PieceIdGroup[] = [];
+		const permutations: PieceIdGroupTuple[] = [];
 
 		// print permutations
 		for (let permutation of perm(pieceIdGroup)) {
 			// console.log( __filename, { pieceIdGroup, permutation } );
-			permutations.push(permutation as PieceIdGroup);
+			permutations.push(permutation as PieceIdGroupTuple);
 		}
 
 		console.log(__filename, { pieceIdGroup, permutations });

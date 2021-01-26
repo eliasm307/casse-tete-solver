@@ -2,7 +2,7 @@
  * slots are given integer values ie -1 for a hole, 0 for a blank, 1 for a nub
  * each piece has a unique ID (pieces are reffered to by ID from here)
  */
-export const twoTestPieces: Map<number, Piece> = new Map([
+export const twoTestPieces: Map<number, iPiece> = new Map([
 	[
 		0,
 		{
@@ -23,7 +23,7 @@ export const twoTestPieces: Map<number, Piece> = new Map([
 	],
 ]);
 
-export const TEST_PIECE: Piece = {
+export const TEST_PIECE: iPiece = {
 	sides: [
 		[-1, -1, 1],
 		[-1, -1, 0],
