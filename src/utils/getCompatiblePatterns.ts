@@ -1,4 +1,4 @@
-function getCompatiblePatterns( pieceGroupPatterns: PieceGroupPatternsMap ) {
+function getCompatiblePatterns( pieceGroupPatterns: PatternConfigurationsMap ) {
   
 };
 

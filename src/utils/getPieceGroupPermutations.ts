@@ -1,7 +1,8 @@
-function getPieceGroupPermutations(pieceIdGroups: PieceIdGroupsMap): PieceGroupPermutationsMap {
-	const pieceGroupPermutations: PieceGroupPermutationsMap = new Map<string, PieceIdGroupTuple[]>();
 import perm from 'array-permutation';
 
+function getPieceGroupPermutations(pieceIdGroups: PieceIdGroupsMap): PieceGroupPermutationsMap {
+	// ? replace with factory instantiation
+	const pieceGroupPermutations: PieceGroupPermutationsMap = new Map<string, PieceIdGroupTuple[]>();
 
 	//
 	pieceIdGroups.forEach((pieceIdGroup, key) => {

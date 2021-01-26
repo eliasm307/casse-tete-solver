@@ -13,7 +13,7 @@ const pieceIdGroups: PieceIdGroupsMap = getPossiblePieceGroups(AVAILABLE_PIECES_
 const pieceGroupPermutations: PieceGroupPermutationsMap = getPieceGroupPermutations(pieceIdGroups);
 
 // For each permutation of the 3 positions, create all the possible patterns/surfaces by flipping the pieces, or all combinations of flipping the pieces, save these to the permutations object. Possible permutations for flips can be found by counting from 0 to 7 in 3 bit binary where 0 is side 0 and 1 is side 1 ie flipped, https://stackoverflow.com/questions/9939760/how-do-i-convert-an-integer-to-binary-in-javascript
-const pieceGroupPatterns: PieceGroupPatternsMap = getPieceGroupPatterns(pieceGroupPermutations, AVAILABLE_PIECES_MAP);
+const pieceGroupPatterns: PatternConfigurationsMap = getPieceGroupPatterns(pieceGroupPermutations, AVAILABLE_PIECES_MAP);
 
 
 

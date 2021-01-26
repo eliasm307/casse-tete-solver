@@ -6,14 +6,14 @@ import dec2bin from './dec2bin';
 function getPieceGroupPatterns(
 	pieceGroupPermutations: PieceGroupPermutationsMap,
 	AVAILABLE_PIECES: PiecesMap
-): PieceGroupPatternsMap {
+): PatternConfigurationsMap {
 	// For each pattern object, assign the ids of the AVAILABLE_PIECES it uses, so the patterns can be tracked when a solution is found. Ie for each combination, flatten all the resulting possible patterns and include information on the configuration to build the pattern.
 	// get remainder piece groups
 	// const pieceGroupsWithRemainderGroups = getPieceGroupRemainders(pieceIdGroups);
 
 	if (!AVAILABLE_PIECES) return new Error(__filename + ' AVAILABLE_PIECES not defined');
 
-	const patterns: PieceGroupPatternsMap = new Map<string, iPatternConfiguration[]>();
+	const patterns: PatternConfigurationsMap = TypeFactory.newPatternConfigurationsMap();
 
 	pieceGroupPermutations.forEach((permutations, pieceGroupKey) => {
 		const possiblePatterns: iPatternConfiguration[] = permutations.reduce(

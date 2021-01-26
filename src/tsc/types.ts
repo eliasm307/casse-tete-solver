@@ -38,6 +38,6 @@ declare type PieceGroupPermutationsMap = Map<string, PieceIdGroupTuple[]>;
  * @key PieceIdGroup array as a string
  * @value Array of pieceGroupPatterns
  */
-declare type PieceGroupPatternsMap = Map<string, iPatternConfiguration[]>;
+declare type PatternConfigurationsMap = Map<string, iPatternConfiguration[]>;
 
 de

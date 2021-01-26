@@ -1,7 +1,7 @@
-/**
- * This function finds all possible ways to split the 6 pieces into 2 groups of 3 pieces
 import combinations = require('combinations');
 
+/**
+ * This function finds all possible ways to split the 6 pieces into 2 groups of 3 pieces
  * and makes sure groups are not repeated ie a group with pieces 1,2,3 is the same as a group with pieces 3,2,1
  */
 function getPossiblePieceGroups(pieces: PiecesMap): PieceIdGroupsMap {
@@ -20,7 +20,7 @@ function getPossiblePieceGroups(pieces: PiecesMap): PieceIdGroupsMap {
 	]);
 
 	// put the combinations in a map and use id as key
-	const pieceIDGroups: PieceIdGroupsMap = new Map<string, PieceIdGroupTuple>(combinationsWithIds);
+	const pieceIDGroups: PieceIdGroupsMap = TypeFactory.newPieceIdGroupsMap(combinationsWithIds);
 
 	// console.log(__filename, { pieceIDs, combinationsWithIds, pieceIDGroups });
 
