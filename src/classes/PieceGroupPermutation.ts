@@ -1,7 +1,7 @@
-/** This class represents a permutation of an id group e.g. [1,2,3] and [3,2,1] would be different permutations */
-class PieceGroupPermutation implements iPieceGroupPermutation {
 import dec2bin from '../utils/dec2bin';
 
+/** This class represents a permutation of an id group e.g. [1,2,3] and [3,2,1] would be different permutations */
+class PieceGroupPermutation implements iPieceGroupPermutation {
 	readonly pieceIdGroup: PieceIdGroupTuple;
 	readonly availablePieces: Pieces;
 	constructor(pieceIdGroup: PieceIdGroupTuple, availablePieces: Pieces) {
@@ -11,10 +11,10 @@ import dec2bin from '../utils/dec2bin';
 
 	/** 
 	 * Returns possible patterns that can be made by flipping the pieces in the group
-	 * @returns {iPattern[]} Array of possible patterns
+	 * @returns {iPatternConfiguration[]} Array of possible patterns
 	 */
 	getPatterns(): iPattern[] {
-		const accumulated: iPattern[] = [];
+		const accumulated: iPatternConfiguration[] = [];
 		// for the current permutation, loop through all the possible configurations from flipping (ie same as counting to 7 in binary)
 		for (let config = 0; config < 8; config++) {
 			// get binary value of current config
@@ -22,7 +22,7 @@ import dec2bin from '../utils/dec2bin';
 
 			// define new blank pattern with blank pattern matrix
 			// Todo add some tracking info to the matrix, e.g. the ids of the AVAILABLE_PIECES used and the permuation etc
-			const pattern: iPattern = { matrix: [[], [], []] };
+			const pattern: iPatternConfiguration = { matrix: [[], [], []] };
 
 			// create pattern using current binary config
 			this.pieceIdGroup.forEach((pieceId: number, piecePosition: number, permutation: number[]) => {
