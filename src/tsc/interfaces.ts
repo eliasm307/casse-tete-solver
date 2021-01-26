@@ -1,15 +1,15 @@
 declare interface iPiece {
-	id: number;
-	sides: [SidePatternTuple, SidePatternTuple];
+	readonly id: number;
+	readonly sides: [SidePatternTuple, SidePatternTuple];
 }
 
 /**
  * A pattern that can be obtained by combining pieces in different orientations
  */
 declare interface iPatternConfiguration {
-	matrix: PatternMatrixTuple;
-	pieceGroupId: string;
-	sidesUsed: PieceGroupSidesTuple;
+	readonly matrix: PatternMatrixTuple;
+	readonly pieceGroupId: string;
+	readonly sidesUsed: PieceGroupSidesTuple;
 	getMatrixMirrored(): PatternMatrixTuple;
 }
 
@@ -32,4 +32,11 @@ declare interface iPieceGroupPermutation extends iPieceGroup {}
 
 declare interface iPieceGroupComparer {
 	findCompatiblePatterns(uniquePieceGroups: iPieceGroupUnique[]): iPatternConfiguration[];
+}
+
+declare interface iSolverFacade {
+	readonly availablePieces: PiecesMap;
+	readonly uniquePieceGroups: PieceGroupMap;
+	readonly pieceIdGroups: PieceIdGroupsMap;
+	solve(): iPatternConfiguration[];
 }
