@@ -11,7 +11,7 @@ export default class PatternConfiguration implements iPatternConfiguration {
 		this.sidesUsed = sidesUsed;
 		this.pieceGroupId = pieceGroup.id;
 		this.pieceGroup = pieceGroup;
-		this.matrix = getPatternMatrix(this.pieceGroup.configuration, this.sidesUsed);
+		this.matrix = getPatternMatrix(this.pieceGroup.layout, this.sidesUsed);
 	}
 	getMatrixMirrored(): PatternMatrixTuple {
 		return this.matrix.reduce((accumulator, sidePattern) => {
