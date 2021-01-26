@@ -41,7 +41,7 @@ export default class PieceGroupUnique implements iPieceGroupUnique {
 			pieceGroupPermutations.push(new PieceGroupPermutation(pieceIdGroupPermutation, this.availablePieces));
 		}
 
-		console.log(__filename, { pieceIdGroup: this.pieceIdGroup, pieceGroupPermutations });
+		// console.log(__filename, { pieceIdGroup: this.pieceIdGroup, pieceGroupPermutations });
 
 		return pieceGroupPermutations;
 	}
