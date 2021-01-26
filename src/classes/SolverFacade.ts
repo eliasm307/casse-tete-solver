@@ -5,7 +5,7 @@ import TypeFactory from './TypeFactory';
 
 export default class SolverFacade implements iSolverFacade {
 	availablePieces: PiecesMap;
-	uniquePieceGroups: PieceGroupMap;
+	uniquePieceGroups: PieceGroupUniqueMap;
 	pieceIdGroups: PieceIdGroupsMap;
 
 	constructor(availablePieces: PiecesMap) {

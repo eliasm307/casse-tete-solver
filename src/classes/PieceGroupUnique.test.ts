@@ -28,7 +28,7 @@ console.log(CONSOLE_SEPARATOR);
 		AVAILABLE_PIECES_MAP.get(2),
 	]);
 
-	expect(pieceGroup.getPatterns().length).toEqual(48);
+	expect(pieceGroup.patterns.length).toEqual(48);
 
 	expect(pieceGroup.oppositePieceIdGroup).toEqual([3, 4, 5]);
 });

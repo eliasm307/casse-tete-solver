@@ -19,7 +19,11 @@ export default abstract class TypeFactory {
 		];
 	}
 
-	static newPieceGroupMap(): PieceGroupMap {
-		return new Map<string, iPieceGroup>();
-	};
+	static newPieceGroupMap(): PieceGroupUniqueMap {
+		return new Map<string, iPieceGroupUnique>();
+	}
+
+	static newPatternComparisonHistoryMap(): PatternComparisonHistoryMap {
+		return new Map<string, boolean>();
+	}
 }

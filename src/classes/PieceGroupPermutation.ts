@@ -7,19 +7,21 @@ export default class PieceGroupPermutation implements iPieceGroupPermutation {
 	readonly availablePieces: PiecesMap;
 	readonly id: string;
 	readonly layout: Piece3Tuple;
+	readonly patterns: iPatternConfiguration[];
 
 	constructor(pieceIdGroup: PieceIdGroupTuple, availablePieces: PiecesMap) {
 		this.pieceIdGroup = pieceIdGroup;
 		this.availablePieces = availablePieces;
 		this.id = pieceIdGroup.toString();
-		this.layout = this.pieceIdGroup.map(pieceId => availablePieces.get(pieceId) as iPiece) as Piece3Tuple;
+		this.layout = this.pieceIdGroup.map( pieceId => availablePieces.get( pieceId ) as iPiece ) as Piece3Tuple;
+		this.patterns = this.getPatterns();
 	}
 
 	/**
 	 * Returns possible patterns that can be made by flipping the pieces in the group
 	 * @returns {iPatternConfiguration[]} Array of possible patterns
 	 */
-	getPatterns(): iPatternConfiguration[] {
+	private getPatterns(): iPatternConfiguration[] {
 		const accumulated: iPatternConfiguration[] = [];
 		// for the current permutation, loop through all the possible configurations from flipping (ie same as counting to 7 in binary)
 		for (let config = 0; config < 8; config++) {

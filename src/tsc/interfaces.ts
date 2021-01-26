@@ -7,27 +7,35 @@ declare interface iPiece {
  * A pattern that can be obtained by combining pieces in different orientations
  */
 declare interface iPatternConfiguration {
+	readonly id: string;
 	readonly matrix: PatternMatrixTuple;
+	readonly matrixMirrored: PatternMatrixTuple;
 	readonly pieceGroupId: string;
 	readonly sidesUsed: PieceGroupSidesTuple;
-	getMatrixMirrored(): PatternMatrixTuple;
+	// ? getMatrixMirrored(): PatternMatrixTuple;
+}
+
+declare interface iPatternConfigurationEvaluator {
+	patternsAreCompatible(
+		patternConfiguration1: iPatternConfiguration,
+		patternConfiguration2: iPatternConfiguration
+	): boolean;
 }
 
 declare interface iPieceGroup {
 	readonly id: string;
 	readonly pieceIdGroup: PieceIdGroupTuple;
-	// ? readonly availablePieces: PiecesMap;
 	readonly layout: Piece3Tuple;
+	readonly patterns: iPatternConfiguration[];
 
-	// getPatternMatrix(sidesUsed: PieceGroupSidesTuple): PatternMatrixTuple;
-	getPatterns(): iPatternConfiguration[];
+	// ? getPatternMatrix(sidesUsed: PieceGroupSidesTuple): PatternMatrixTuple;
+	// ? getPatterns(): iPatternConfiguration[];
 }
 
 declare interface iPieceGroupUnique extends iPieceGroup {
-	readonly pieceGroupPermutations: iPieceGroupPermutation[]; 
+	readonly pieceGroupPermutations: iPieceGroupPermutation[];
 	oppositePieceIdGroup: PieceIdGroupTuple;
 	patterns: iPatternConfiguration[];
-	// ? getOppositePieceIdGroup(): PieceIdGroupTuple;
 }
 
 declare interface iPieceGroupPermutation extends iPieceGroup {}
@@ -38,7 +46,11 @@ declare interface iPieceGroupComparer {
 
 declare interface iSolverFacade {
 	readonly availablePieces: PiecesMap;
-	readonly uniquePieceGroups: PieceGroupMap;
+	readonly uniquePieceGroups: PieceGroupUniqueMap;
 	readonly pieceIdGroups: PieceIdGroupsMap;
 	solve(): iPatternConfiguration[];
+}
+
+declare interface iCompatibilityFinder {
+	findCompatiblePatterns(): PatternConfiguration2Tuple[];
 }

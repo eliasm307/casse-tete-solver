@@ -12,7 +12,9 @@ declare type PieceGroupSidesTuple = [number, number, number];
 /** Tuple of 3 numbers representing 3 ids of pieces in a group */
 declare type PieceIdGroupTuple = [ number, number, number ];
 
-declare type Piece3Tuple = [iPiece, iPiece, iPiece];
+declare type Piece3Tuple = [ iPiece, iPiece, iPiece ];
+
+declare type PatternConfiguration2Tuple = [iPatternConfiguration, iPatternConfiguration];
 
 /**
  * Map of pieces
@@ -43,6 +45,9 @@ declare type PieceGroupPermutationsMap = Map<string, PieceIdGroupTuple[]>;
 declare type PatternConfigurationsMap = Map<string, iPatternConfiguration[]>;
 
 
-declare type PieceGroupMap = Map<string, iPieceGroup>;
+declare type PieceGroupUniqueMap = Map<string, iPieceGroupUnique>;
+
+/** Map used to cache any comparisons already made */
+declare type PatternComparisonHistoryMap = Map<string, boolean>;
 
 
