@@ -1,4 +1,4 @@
-function getPieceGroupRemainders( pieceIdGroups: PieceIdGroups ) {
+function getPieceGroupRemainders( pieceIdGroups: PieceIdGroupsMap ) {
   
 };
 

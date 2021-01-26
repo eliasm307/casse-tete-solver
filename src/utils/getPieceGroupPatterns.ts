@@ -1,33 +1,33 @@
+// function getPieceGroupPatterns( pieceGroupPermutations: PieceGroupPermutations ) { }
 import { AVAILABLE_PIECES } from './../constants/constants';
 import dec2bin from './dec2bin';
 
-// function getPieceGroupPatterns( pieceGroupPermutations: PieceGroupPermutations ) { }
 
 function getPieceGroupPatterns(
-	pieceGroupPermutations: PieceGroupPermutations,
-	AVAILABLE_PIECES: Pieces
-): PieceGroupPatterns {
+	pieceGroupPermutations: PieceGroupPermutationsMap,
+	AVAILABLE_PIECES: PiecesMap
+): PieceGroupPatternsMap {
 	// For each pattern object, assign the ids of the AVAILABLE_PIECES it uses, so the patterns can be tracked when a solution is found. Ie for each combination, flatten all the resulting possible patterns and include information on the configuration to build the pattern.
 	// get remainder piece groups
 	// const pieceGroupsWithRemainderGroups = getPieceGroupRemainders(pieceIdGroups);
 
 	if (!AVAILABLE_PIECES) return new Error(__filename + ' AVAILABLE_PIECES not defined');
 
-	const patterns: PieceGroupPatterns = new Map<string, iPattern[]>();
+	const patterns: PieceGroupPatternsMap = new Map<string, iPattern[]>();
 
 	pieceGroupPermutations.forEach((permutations, pieceGroupKey) => {
 		const possiblePatterns: iPattern[] = permutations.reduce(
 			(
 				accumulated: iPattern[],
-				currentPermutation: PieceIdGroup,
+				currentPermutation: PieceIdGroupTuple,
 				i: number,
-				arr: PieceIdGroup[]
+				arr: PieceIdGroupTuple[]
 			): iPattern[] => {
 				// for the current permutation, loop through all the possible configurations from flipping (ie same as counting to 7 in binary)
 				for (let config = 0; config < 8; config++) {
 					const binaryConfig = dec2bin(config);
 
-					const matrix: PatternMatrix = [[], [], []];
+					const matrix: PatternMatrixTuple = [[], [], []];
 
 					// create pattern using current binary config
 					currentPermutation.forEach((pieceId: number, piecePosition: number, permutation: number[]) => {

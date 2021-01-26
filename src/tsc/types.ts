@@ -2,38 +2,37 @@
  * Tuple of 3 numbers representing the segments of a piece's side
  * where -1 = hole, 0 = blank, and 1 = bump
  */
-declare type SidePattern = number[];
+declare type SidePatternTuple = [number, number, number];
 
 /**
  * Map of pieces
  * @key id of piece
  * @value Piece object
  */
-declare type Pieces = Map<number, iPiece>;
+declare type PiecesMap = Map<number, iPiece>;
 
 /** Tuple of 3 numbers representing 3 ids */
-declare type PieceIdGroup = [number, number, number];
+declare type PieceIdGroupTuple = [number, number, number];
 
 /**
  * Map of all possible groups of 3 piece id groups possible
  * @key value as a string
  * @value PieceIdGroup tuple of ids in a group of 3, sorted in ascending order
  */
-declare type PieceIdGroups = Map<string, PieceIdGroup>;
+declare type PieceIdGroupsMap = Map<string, PieceIdGroupTuple>;
 
 /**
  * Map with piece group strings as keys and an array of permutations
  * @key base PieceIdGroup (sorted in ascending order) as a string
  * @value array of possible PieceIdGroup permutations of the base sorted PieceIdGroup
  */
-declare type PieceGroupPermutations = Map<string, PieceIdGroup[]>;
+declare type PieceGroupPermutationsMap = Map<string, PieceIdGroupTuple[]>;
 
 /**
  * Map of piece group permutations and their corresponding possible patterns
  * @key PieceIdGroup array as a string
  * @value Array of pieceGroupPatterns
  */
-declare type PieceGroupPatterns = Map<string, iPattern[]>;
+declare type PieceGroupPatternsMap = Map<string, iPattern[]>;
 
-declare type PatternMatrix = [number[], number[], number[]];
-
+declare type PatternMatrixTuple = [number[], number[], number[]];

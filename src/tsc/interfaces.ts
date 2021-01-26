@@ -1,25 +1,25 @@
 declare interface iPiece {
-	sides: [SidePattern, SidePattern];
+	sides: [SidePatternTuple, SidePatternTuple];
 }
 
 /**
  * A pattern that can be obtained by combining pieces in different orientations
  */
 declare interface iPattern {
-	matrix: PatternMatrix;
+	matrix: PatternMatrixTuple;
 	pieceGroupId: string;
 }
 
 declare interface iPieceGroup {
 	readonly id: string;
-	readonly pieceIdGroup: PieceIdGroup;
-	readonly availablePieces: Pieces;
+	readonly pieceIdGroup: PieceIdGroupTuple;
+	readonly availablePieces: PiecesMap;
 
 	getPatterns(): iPattern[];
 }
 
 declare interface iPieceGroupUnique extends iPieceGroup {
-	getRemainderPieceIdGroup(): PieceIdGroup;
+	getRemainderPieceIdGroup(): PieceIdGroupTuple;
 }
 
 declare interface iPieceGroupPermutation extends iPieceGroup {

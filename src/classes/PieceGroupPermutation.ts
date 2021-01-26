@@ -1,10 +1,10 @@
-import dec2bin from '../utils/dec2bin';
-
 /** This class represents a permutation of an id group e.g. [1,2,3] and [3,2,1] would be different permutations */
 class PieceGroupPermutation implements iPieceGroupPermutation {
-	readonly pieceIdGroup: PieceIdGroup;
+import dec2bin from '../utils/dec2bin';
+
+	readonly pieceIdGroup: PieceIdGroupTuple;
 	readonly availablePieces: Pieces;
-	constructor(pieceIdGroup: PieceIdGroup, availablePieces: Pieces) {
+	constructor(pieceIdGroup: PieceIdGroupTuple, availablePieces: Pieces) {
 		this.pieceIdGroup = pieceIdGroup;
 		this.availablePieces = availablePieces;
 	}
