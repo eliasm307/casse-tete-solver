@@ -31,10 +31,6 @@ export default class PieceGroupUnique implements iPieceGroupUnique {
 		return Array.from(idSet.values()) as PieceIdGroupTuple;
 	}
 
-	getPatterns(): iPatternConfiguration[] {
-		throw new Error('Method not implemented.');
-	}
-
 	private createPermutations(): iPieceGroupPermutation[] {
 		const pieceGroupPermutations: iPieceGroupPermutation[] = [];
 
@@ -48,5 +44,13 @@ export default class PieceGroupUnique implements iPieceGroupUnique {
 		console.log(__filename, { pieceIdGroup: this.pieceIdGroup, pieceGroupPermutations });
 
 		return pieceGroupPermutations;
+	}
+
+	getPatterns(): iPatternConfiguration[] {
+		// get the patterns for each permutation of this group and add return them as one array
+		return this.pieceGroupPermutations.reduce((acc, pieceGroup) => {
+			acc.push(...pieceGroup.getPatterns());
+			return acc;
+		}, [] as iPatternConfiguration[]);
 	}
 }
