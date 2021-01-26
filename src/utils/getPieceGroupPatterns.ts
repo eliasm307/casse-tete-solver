@@ -13,16 +13,16 @@ function getPieceGroupPatterns(
 
 	if (!AVAILABLE_PIECES) return new Error(__filename + ' AVAILABLE_PIECES not defined');
 
-	const patterns: PieceGroupPatterns = new Map<string, PieceGroupPattern[]>();
+	const patterns: PieceGroupPatterns = new Map<string, iPattern[]>();
 
 	pieceGroupPermutations.forEach((permutations, pieceGroupKey) => {
-		const possiblePatterns: PieceGroupPattern[] = permutations.reduce(
+		const possiblePatterns: iPattern[] = permutations.reduce(
 			(
-				accumulated: PieceGroupPattern[],
+				accumulated: iPattern[],
 				currentPermutation: PieceIdGroup,
 				i: number,
 				arr: PieceIdGroup[]
-			): PieceGroupPattern[] => {
+			): iPattern[] => {
 				// for the current permutation, loop through all the possible configurations from flipping (ie same as counting to 7 in binary)
 				for (let config = 0; config < 8; config++) {
 					const binaryConfig = dec2bin(config);
@@ -34,14 +34,14 @@ function getPieceGroupPatterns(
 						const sideToUse: number = parseInt(binaryConfig[piecePosition]);
 
 						// get current piece in question
-						const piece: Piece = AVAILABLE_PIECES.get(pieceId) as Piece;
+						const piece: iPiece = AVAILABLE_PIECES.get(pieceId) as iPiece;
 
 						// assign a copy of the piece side to the relavant position in the pattern
 						matrix[piecePosition] = [...piece.sides[sideToUse]];
 					});
 
 					// Todo add some tracking info to the matrix, e.g. the ids of the AVAILABLE_PIECES used and the permuation etc
-					const pattern: PieceGroupPattern = { matrix };
+					const pattern: iPattern = { matrix };
 
 					// save pattern in a collection for the current piece group permutation
 					accumulated.push(pattern);
@@ -49,7 +49,7 @@ function getPieceGroupPatterns(
 
 				return accumulated;
 			},
-			[] as PieceGroupPattern[]
+			[] as iPattern[]
 		);
 	});
 

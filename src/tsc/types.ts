@@ -9,7 +9,7 @@ declare type SidePattern = number[];
  * @key id of piece
  * @value Piece object
  */
-declare type Pieces = Map<number, Piece>;
+declare type Pieces = Map<number, iPiece>;
 
 /** Tuple of 3 numbers representing 3 ids */
 declare type PieceIdGroup = [number, number, number];
@@ -33,7 +33,7 @@ declare type PieceGroupPermutations = Map<string, PieceIdGroup[]>;
  * @key PieceIdGroup array as a string
  * @value Array of pieceGroupPatterns
  */
-declare type PieceGroupPatterns = Map<string, PieceGroupPattern[]>;
+declare type PieceGroupPatterns = Map<string, iPattern[]>;
 
 declare type PatternMatrix = [number[], number[], number[]];
 
