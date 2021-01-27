@@ -15,9 +15,12 @@ declare interface iPatternConfiguration {
 	// ? getMatrixMirrored(): PatternMatrixTuple;
 }
 
-declare interface iPatternConfigurationEvaluator {
+declare interface iPatternEvaluator {
 	evaluatedCount: number;
-	getValidSolutions(
+
+	solutions: iSolution[];
+	
+	evaluate(
 		patternConfiguration1: iPatternConfiguration,
 		patternConfiguration2: iPatternConfiguration
 	): iSolution[];
@@ -47,17 +50,22 @@ declare interface iPieceGroupComparer {
 
 declare interface iSolverFacade {
 	readonly availablePieces: PieceMap;
+	readonly pieceGroupFacade: iPieceGroupFacade;
+	/*
 	readonly allPieceGroupUniques: PieceGroupUniqueMap;
 	readonly allPieceGroupPermutations: PieceGroupPermutationMap;
 	readonly uniquePieceGroupPermutations: PieceGroupPermutationMap;
 	readonly allPatterns: PatternConfigurationMap;
 	readonly uniquePatterns: PatternConfigurationMap;
 	readonly uniquePieceIdGroups: PieceIdGroupMap;
+	*/
 	readonly solutions: iSolution[];
 }
 
-declare interface iSolutionFinder {
+declare interface iCompatibilityFinder {
 	solutions: iSolution[];
+	getPieceGroupPatternEvaluations(pieceGroupId: string): string[];
+
 }
 
 declare interface iSolution {
@@ -65,4 +73,14 @@ declare interface iSolution {
 	readonly pattern1RotationDeg: number;
 	readonly pattern2: iPatternConfiguration;
 	readonly pattern2RotationDeg: number;
+}
+
+declare interface iPieceGroupFacade {
+	readonly availablePieces: PieceMap;
+	readonly allPieceGroupUniques: PieceGroupUniqueMap;
+	readonly allPieceGroupPermutations: PieceGroupPermutationMap;
+	readonly uniquePieceGroupPermutations: PieceGroupPermutationMap;
+	readonly allPatterns: PatternConfigurationMap;
+	readonly uniquePatterns: PatternConfigurationMap;
+	readonly uniquePieceIdGroups: PieceIdGroupMap;
 }

@@ -13,7 +13,7 @@ test(testName, () => {
 
 	// const pattern1 = new PatternConfiguration(pieceGroup, [0, 0, 0]);
 
-	const solutions = patternEvaluator.getValidSolutions(pieceGroup.patterns[0], pieceGroup.patterns[1]);
+	const solutions = patternEvaluator.evaluate(pieceGroup.patterns[0], pieceGroup.patterns[1]);
 
 	/*
 	console.log( CONSOLE_SEPARATOR );
