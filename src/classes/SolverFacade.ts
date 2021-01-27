@@ -5,30 +5,44 @@ import PieceGroupUnique from './PieceGroupUnique';
 import TypeFactory from './TypeFactory';
 
 export default class SolverFacade implements iSolverFacade {
-	availablePieces: PiecesMap;
+	availablePieces: PieceMap;
 	uniquePieceGroups: PieceGroupUniqueMap;
-	pieceIdGroups: PieceIdGroupsMap;
+	uniquePieceGroupPermutations: PieceGroupPermutationMap;
+	uniquePatterns: PatternConfigurationMap;
+	pieceIdGroups: PieceIdGroupMap;
 	solutions: iSolution[];
 
-	constructor(availablePieces: PiecesMap) {
+	constructor(availablePieces: PieceMap) {
 		this.availablePieces = availablePieces;
 		this.pieceIdGroups = this.getPossiblePieceGroups();
 		this.uniquePieceGroups = TypeFactory.newPieceGroupMap();
+		this.uniquePatterns = TypeFactory.newPatternConfigurationMap();
+		this.uniquePieceGroupPermutations = TypeFactory.newPieceGroupPermutationMap();
 		// convert pieceIdGroups to PieceGroup objects
 		this.pieceIdGroups.forEach((idGroup, id) =>
 			this.uniquePieceGroups.set(id, new PieceGroupUnique(idGroup, availablePieces))
 		);
 		let allPatternsCount = 0;
-		let patternMatrixSet = new Set<string>();
+		// let allPieceGroupPermutationCount = 0;
+		// const patternMatrixSet = new Set<string>();
+		// const pieceGroupIdSet = new Set<string>();
 		this.uniquePieceGroups.forEach(pieceGroup => {
 			allPatternsCount += pieceGroup.patterns.length;
+			// 	allPieceGroupPermutationCount += pieceGroup.pieceGroupPermutations.length;
+
+			// track all unique piece groups
+			pieceGroup.pieceGroupPermutations.forEach(pieceGroupPermutation => {
+				if (!this.uniquePieceGroupPermutations.has(pieceGroupPermutation.id)) {
+					this.uniquePieceGroupPermutations.set(pieceGroupPermutation.id, pieceGroupPermutation);
+				}
+			});
 
 			// track all the unique piece groups
 			pieceGroup.patterns.forEach(pattern => {
-				if (patternMatrixSet.has(pattern.matrix.toString())) {
+				if (this.uniquePatterns.has(pattern.matrix.toString())) {
 					// console.warn(__filename, 'Duplicate pattern', { patternId: pattern.id, pieceGroupId: pieceGroup.id });
 				} else {
-					patternMatrixSet.add(pattern.matrix.toString());
+					this.uniquePatterns.set(pattern.matrix.toString(), pattern);
 				}
 			});
 		});
@@ -36,12 +50,14 @@ export default class SolverFacade implements iSolverFacade {
 			availablePiecesCount: this.availablePieces.size,
 			pieceIdGroupsCount: this.pieceIdGroups.size,
 			uniquePieceGroupsCount: this.uniquePieceGroups.size,
+			uniquePieceGroupPermutationsCount: this.uniquePieceGroupPermutations.size,
 			allPatternsCount: allPatternsCount,
-			uniquePatternsCount: patternMatrixSet.size,
+			uniquePatternsCount: this.uniquePatterns.size,
 		});
 		this.solutions = this.solve();
 	}
-	private getPossiblePieceGroups(): PieceIdGroupsMap {
+
+	private getPossiblePieceGroups(): PieceIdGroupMap {
 		// extract piece ids into a simple array
 		const pieceIDs: number[] = [...this.availablePieces].map((_, id) => id);
 
@@ -57,7 +73,7 @@ export default class SolverFacade implements iSolverFacade {
 		]);
 
 		// put the combinations in a map and use id as key
-		const pieceIDGroups: PieceIdGroupsMap = TypeFactory.newPieceIdGroupsMap(combinationsWithIds);
+		const pieceIDGroups: PieceIdGroupMap = TypeFactory.newPieceIdGroupMap(combinationsWithIds);
 
 		// return piece groups, with piece ids
 		return pieceIDGroups;

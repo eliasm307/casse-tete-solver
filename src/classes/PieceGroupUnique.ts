@@ -5,13 +5,13 @@ import PieceGroupPermutation from './PieceGroupPermutation';
 export default class PieceGroupUnique implements iPieceGroupUnique {
 	id: string;
 	pieceIdGroup: PieceIdGroupTuple;
-	availablePieces: PiecesMap;
+	availablePieces: PieceMap;
 	layout: Piece3Tuple;
 	pieceGroupPermutations: iPieceGroupPermutation[];
 	oppositePieceIdGroup: PieceIdGroupTuple;
 	patterns: iPatternConfiguration[];
 
-	constructor(pieceIdGroup: PieceIdGroupTuple, availablePieces: PiecesMap) {
+	constructor(pieceIdGroup: PieceIdGroupTuple, availablePieces: PieceMap) {
 		this.pieceIdGroup = pieceIdGroup;
 		this.availablePieces = availablePieces;
 		this.id = pieceIdGroup.toString();

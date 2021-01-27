@@ -6,7 +6,7 @@ import TypeFactory from '../classes/TypeFactory';
  * This function finds all possible ways to split the 6 pieces into 2 groups of 3 pieces
  * and makes sure groups are not repeated ie a group with pieces 1,2,3 is the same as a group with pieces 3,2,1
  */
-function getPossiblePieceGroups(pieces: PiecesMap): PieceIdGroupsMap {
+function getPossiblePieceGroups(pieces: PieceMap): PieceIdGroupMap {
 	// extract piece ids into a simple array
 	const pieceIDs: number[] = [...pieces].map((_, id) => id);
 
@@ -22,7 +22,7 @@ function getPossiblePieceGroups(pieces: PiecesMap): PieceIdGroupsMap {
 	]);
 
 	// put the combinations in a map and use id as key
-	const pieceIDGroups: PieceIdGroupsMap = TypeFactory.newPieceIdGroupsMap(combinationsWithIds);
+	const pieceIDGroups: PieceIdGroupMap = TypeFactory.newPieceIdGroupMap(combinationsWithIds);
 
 	// console.log(__filename, { pieceIDs, combinationsWithIds, pieceIDGroups });
 

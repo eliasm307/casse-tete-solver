@@ -1,6 +1,6 @@
 import perm from 'array-permutation';
 
-function getPieceGroupPermutations(pieceIdGroups: PieceIdGroupsMap): PieceGroupPermutationsMap {
+function getPieceGroupPermutations(pieceIdGroups: PieceIdGroupMap): PieceGroupPermutationsMap {
 	// ? replace with factory instantiation
 	const pieceGroupPermutations: PieceGroupPermutationsMap = new Map<string, PieceIdGroupTuple[]>();
 

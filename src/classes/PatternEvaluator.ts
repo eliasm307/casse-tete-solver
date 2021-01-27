@@ -5,11 +5,11 @@ import Solution from './Solution';
 import TypeFactory from './TypeFactory';
 
 export default class PatternEvaluator implements iPatternConfigurationEvaluator {
-	private comparisonHistory: PatternComparisonHistoryMap;
+	private comparisonHistory: SolutionsArrayMap;
 	evaluatedCount: number = 0;
 
 	constructor() {
-		this.comparisonHistory = TypeFactory.newPatternComparisonHistoryMap();
+		this.comparisonHistory = TypeFactory.newSolutionsArrayMap();
 	}
 	getValidSolutions(pattern1: iPatternConfiguration, pattern2: iPatternConfiguration): iSolution[] {
 		const patternCoupleId1 = this.getPatternCoupleId(pattern1, pattern2);

@@ -10,9 +10,9 @@ declare type PatternMatrixTuple = [SidePatternTuple, SidePatternTuple, SidePatte
 declare type PieceGroupSidesTuple = [number, number, number];
 
 /** Tuple of 3 numbers representing 3 ids of pieces in a group */
-declare type PieceIdGroupTuple = [ number, number, number ];
+declare type PieceIdGroupTuple = [number, number, number];
 
-declare type Piece3Tuple = [ iPiece, iPiece, iPiece ];
+declare type Piece3Tuple = [iPiece, iPiece, iPiece];
 
 declare type PatternConfiguration2Tuple = [iPatternConfiguration, iPatternConfiguration];
 
@@ -21,14 +21,14 @@ declare type PatternConfiguration2Tuple = [iPatternConfiguration, iPatternConfig
  * @key id of piece
  * @value Piece object
  */
-declare type PiecesMap = Map<number, iPiece>;
+declare type PieceMap = Map<number, iPiece>;
 
 /**
  * Map of all possible groups of 3 piece id groups possible
  * @key value as a string
  * @value PieceIdGroup tuple of ids in a group of 3, sorted in ascending order
  */
-declare type PieceIdGroupsMap = Map<string, PieceIdGroupTuple>;
+declare type PieceIdGroupMap = Map<string, PieceIdGroupTuple>;
 
 /**
  * Map with piece group strings as keys and an array of permutations
@@ -42,12 +42,12 @@ declare type PieceGroupPermutationsMap = Map<string, PieceIdGroupTuple[]>;
  * @key PieceIdGroup array as a string
  * @value Array of pieceGroupPatterns
  */
-declare type PatternConfigurationsMap = Map<string, iPatternConfiguration[]>;
+declare type PatternConfigurationsArrayMap = Map<string, iPatternConfiguration[]>;
 
-
+declare type PatternConfigurationMap = Map<string, iPatternConfiguration>;
 declare type PieceGroupUniqueMap = Map<string, iPieceGroupUnique>;
 
+declare type PieceGroupPermutationMap = Map<string, iPieceGroupPermutation>;
+
 /** Map used to cache any comparisons already made */
-declare type PatternComparisonHistoryMap = Map<string, iSolution[]>;
-
-
+declare type SolutionsArrayMap = Map<string, iSolution[]>;
