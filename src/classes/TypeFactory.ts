@@ -24,6 +24,6 @@ export default abstract class TypeFactory {
 	}
 
 	static newPatternComparisonHistoryMap(): PatternComparisonHistoryMap {
-		return new Map<string, boolean>();
+		return new Map<string, iSolution[]>();
 	}
 }

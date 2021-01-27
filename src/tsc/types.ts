@@ -48,6 +48,6 @@ declare type PatternConfigurationsMap = Map<string, iPatternConfiguration[]>;
 declare type PieceGroupUniqueMap = Map<string, iPieceGroupUnique>;
 
 /** Map used to cache any comparisons already made */
-declare type PatternComparisonHistoryMap = Map<string, boolean>;
+declare type PatternComparisonHistoryMap = Map<string, iSolution[]>;
 
 

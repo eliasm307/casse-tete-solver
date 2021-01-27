@@ -8,7 +8,7 @@ test('process test', () => {
 
 	// console.log(__filename, 'dec2bin covert 0 to binary', { decimal, binaryResult });
 	// testPieceGroupPermutations.forEach((value, key) => console.log(__filename, { key, value }));
-	expect( solver.pieceIdGroups.size ).toEqual( 20 );
+	expect(solver.pieceIdGroups.size).toEqual(20);
 	expect(solver.uniquePieceGroups.size).toEqual(20);
 
 	// console.log(CONSOLE_SEPARATOR);

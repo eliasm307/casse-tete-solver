@@ -16,10 +16,10 @@ declare interface iPatternConfiguration {
 }
 
 declare interface iPatternConfigurationEvaluator {
-	patternsAreCompatible(
+	getValidSolutions(
 		patternConfiguration1: iPatternConfiguration,
 		patternConfiguration2: iPatternConfiguration
-	): boolean;
+	): iSolution[];
 }
 
 declare interface iPieceGroup {
@@ -48,11 +48,11 @@ declare interface iSolverFacade {
 	readonly availablePieces: PiecesMap;
 	readonly uniquePieceGroups: PieceGroupUniqueMap;
 	readonly pieceIdGroups: PieceIdGroupsMap;
-	solve(): iPatternConfiguration[];
+	readonly solutions: iSolution[];
 }
 
-declare interface iCompatibilityFinder {
-	findCompatiblePatterns(): PatternConfiguration2Tuple[];
+declare interface iSolutionFinder {
+	solutions: iSolution[];
 }
 
 declare interface iSolution {
