@@ -16,6 +16,7 @@ declare interface iPatternConfiguration {
 }
 
 declare interface iPatternConfigurationEvaluator {
+	evaluatedCount: number;
 	getValidSolutions(
 		patternConfiguration1: iPatternConfiguration,
 		patternConfiguration2: iPatternConfiguration

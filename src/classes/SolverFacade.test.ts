@@ -10,6 +10,6 @@ test('process test', () => {
 	// testPieceGroupPermutations.forEach((value, key) => console.log(__filename, { key, value }));
 	expect(solver.pieceIdGroups.size).toEqual(20);
 	expect(solver.uniquePieceGroups.size).toEqual(20);
-
+	expect(solver.solutions.length).toBeGreaterThan(0);
 	// console.log(CONSOLE_SEPARATOR);
 });

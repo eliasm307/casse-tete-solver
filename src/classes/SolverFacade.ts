@@ -18,6 +18,16 @@ export default class SolverFacade implements iSolverFacade {
 		this.pieceIdGroups.forEach((idGroup, id) =>
 			this.uniquePieceGroups.set(id, new PieceGroupUnique(idGroup, availablePieces))
 		);
+		let patternsCount = 0;
+		this.uniquePieceGroups.forEach(pg => {
+			pg.patterns.forEach(_ => patternsCount++);
+		});
+		console.log(__filename, 'BEFORE SOLVE', {
+			availablePiecesCount: this.availablePieces.size,
+			pieceIdGroupsCount: this.pieceIdGroups.size,
+			uniquePieceGroupsCount: this.uniquePieceGroups.size,
+			patternsCount,
+		});
 		this.solutions = this.solve();
 	}
 	private getPossiblePieceGroups(): PieceIdGroupsMap {
@@ -44,6 +54,7 @@ export default class SolverFacade implements iSolverFacade {
 
 	private solve(): iSolution[] {
 		const compatibilityFinder = new CompatibilityFinder(this.uniquePieceGroups);
+		console.log(__filename, { patternComparisonCount: compatibilityFinder.patternComparisonCount });
 		return compatibilityFinder.solutions;
 	}
 }

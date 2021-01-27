@@ -21,8 +21,8 @@ export default class PatternConfiguration implements iPatternConfiguration {
 		throw new Error('Method not implemented.');
 	}
 	private getMatrixMirrored(): PatternMatrixTuple {
-		return this.matrix.reduce((accumulator, sidePattern) => {
-			accumulator.unshift(sidePattern);
+		return this.matrix.reduce((accumulator, sidePattern, i) => {
+			accumulator[this.matrix.length - i - 1] = sidePattern;
 			return accumulator;
 		}, TypeFactory.newPatternMatrixTuple());
 	}
