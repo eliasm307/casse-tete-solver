@@ -32,9 +32,9 @@ export default class CompatibilityFinder implements iSolutionFinder {
 
 		// check opposite piece group exists
 		if (!this.uniquePieceGroups.has(oppositePieceGroupId)) {
-			new Error(
-				`Opposite pieceGroup id "${oppositePieceGroupId}" for pieceGroup with id "${pieceGroup1.id}" not found`
-			);
+			const errorMessage = `Opposite pieceGroup id "${oppositePieceGroupId}" for pieceGroup with id "${pieceGroup1.id}" not found`;
+			console.error(__filename, errorMessage);
+			new Error(errorMessage);
 		}
 
 		// get opposite piece group object

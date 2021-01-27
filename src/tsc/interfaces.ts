@@ -34,7 +34,7 @@ declare interface iPieceGroup {
 }
 
 declare interface iPieceGroupUnique extends iPieceGroup {
-	readonly pieceGroupPermutations: iPieceGroupPermutation[];
+	readonly permutations: iPieceGroupPermutation[];
 	oppositePieceIdGroup: PieceIdGroupTuple;
 	patterns: iPatternConfiguration[];
 }
@@ -47,10 +47,12 @@ declare interface iPieceGroupComparer {
 
 declare interface iSolverFacade {
 	readonly availablePieces: PieceMap;
-	readonly uniquePieceGroups: PieceGroupUniqueMap;
+	readonly allPieceGroupUniques: PieceGroupUniqueMap;
+	readonly allPieceGroupPermutations: PieceGroupPermutationMap;
 	readonly uniquePieceGroupPermutations: PieceGroupPermutationMap;
+	readonly allPatterns: PatternConfigurationMap;
 	readonly uniquePatterns: PatternConfigurationMap;
-	readonly pieceIdGroups: PieceIdGroupMap;
+	readonly uniquePieceIdGroups: PieceIdGroupMap;
 	readonly solutions: iSolution[];
 }
 

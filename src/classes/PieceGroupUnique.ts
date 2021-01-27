@@ -7,7 +7,7 @@ export default class PieceGroupUnique implements iPieceGroupUnique {
 	pieceIdGroup: PieceIdGroupTuple;
 	availablePieces: PieceMap;
 	layout: Piece3Tuple;
-	pieceGroupPermutations: iPieceGroupPermutation[];
+	permutations: iPieceGroupPermutation[];
 	oppositePieceIdGroup: PieceIdGroupTuple;
 	patterns: iPatternConfiguration[];
 
@@ -16,7 +16,7 @@ export default class PieceGroupUnique implements iPieceGroupUnique {
 		this.availablePieces = availablePieces;
 		this.id = pieceIdGroup.toString();
 		this.layout = this.getLayout();
-		this.pieceGroupPermutations = this.getPermutations();
+		this.permutations = this.getPermutations();
 		this.oppositePieceIdGroup = this.getOppositePieceIdGroup();
 		this.patterns = this.getPatterns();
 	}
@@ -56,7 +56,7 @@ export default class PieceGroupUnique implements iPieceGroupUnique {
 
 	getPatterns(): iPatternConfiguration[] {
 		// get the patterns for each permutation of this group and add return them as one array
-		const patternMap = this.pieceGroupPermutations.reduce((acc, pieceGroup) => {
+		const patternMap = this.permutations.reduce((acc, pieceGroup) => {
 			// acc.push(...pieceGroup.patterns);
 
 			// do not add duplicates

@@ -6,39 +6,47 @@ import TypeFactory from './TypeFactory';
 
 export default class SolverFacade implements iSolverFacade {
 	availablePieces: PieceMap;
-	uniquePieceGroups: PieceGroupUniqueMap;
-	uniquePieceGroupPermutations: PieceGroupPermutationMap;
-	uniquePatterns: PatternConfigurationMap;
-	pieceIdGroups: PieceIdGroupMap;
+	allPieceGroupUniques: PieceGroupUniqueMap = TypeFactory.newPieceGroupUniqueMap();
+	allPieceGroupPermutations: PieceGroupPermutationMap = TypeFactory.newPieceGroupPermutationMap();
+	uniquePieceGroupPermutations: PieceGroupPermutationMap = TypeFactory.newPieceGroupPermutationMap();
+	allPatterns: PatternConfigurationMap = TypeFactory.newPatternConfigurationMap();
+	uniquePatterns: PatternConfigurationMap = TypeFactory.newPatternConfigurationMap();
+	uniquePieceIdGroups: PieceIdGroupMap;
 	solutions: iSolution[];
 
 	constructor(availablePieces: PieceMap) {
 		this.availablePieces = availablePieces;
-		this.pieceIdGroups = this.getPossiblePieceGroups();
-		this.uniquePieceGroups = TypeFactory.newPieceGroupMap();
-		this.uniquePatterns = TypeFactory.newPatternConfigurationMap();
-		this.uniquePieceGroupPermutations = TypeFactory.newPieceGroupPermutationMap();
+		this.uniquePieceIdGroups = this.getPossiblePieceGroups();
+
+		// todo handle setup of piece groups via a piece group facade
 		// convert pieceIdGroups to PieceGroup objects
-		this.pieceIdGroups.forEach((idGroup, id) =>
-			this.uniquePieceGroups.set(id, new PieceGroupUnique(idGroup, availablePieces))
+		this.uniquePieceIdGroups.forEach((idGroup, id) =>
+			this.allPieceGroupUniques.set(id, new PieceGroupUnique(idGroup, availablePieces))
 		);
-		let allPatternsCount = 0;
+		// let allPatternsCount = 0;
 		// let allPieceGroupPermutationCount = 0;
 		// const patternMatrixSet = new Set<string>();
 		// const pieceGroupIdSet = new Set<string>();
-		this.uniquePieceGroups.forEach(pieceGroup => {
-			allPatternsCount += pieceGroup.patterns.length;
+		this.allPieceGroupUniques.forEach(pieceGroup => {
+			// allPatternsCount += pieceGroup.patterns.length;
+
 			// 	allPieceGroupPermutationCount += pieceGroup.pieceGroupPermutations.length;
 
-			// track all unique piece groups
-			pieceGroup.pieceGroupPermutations.forEach(pieceGroupPermutation => {
+			pieceGroup.permutations.forEach(pieceGroupPermutation => {
+				// record all piece group permutations
+				this.allPieceGroupPermutations.set(pieceGroupPermutation.id, pieceGroupPermutation);
+
+				// record unique piece group permutations
 				if (!this.uniquePieceGroupPermutations.has(pieceGroupPermutation.id)) {
 					this.uniquePieceGroupPermutations.set(pieceGroupPermutation.id, pieceGroupPermutation);
 				}
 			});
 
-			// track all the unique piece groups
 			pieceGroup.patterns.forEach(pattern => {
+				// record all patterns
+				this.allPatterns.set(pattern.id, pattern);
+
+				// record unique patterns
 				if (this.uniquePatterns.has(pattern.matrix.toString())) {
 					// console.warn(__filename, 'Duplicate pattern', { patternId: pattern.id, pieceGroupId: pieceGroup.id });
 				} else {
@@ -48,10 +56,11 @@ export default class SolverFacade implements iSolverFacade {
 		});
 		console.log(__filename, 'BEFORE SOLVE', {
 			availablePiecesCount: this.availablePieces.size,
-			pieceIdGroupsCount: this.pieceIdGroups.size,
-			uniquePieceGroupsCount: this.uniquePieceGroups.size,
+			pieceIdGroupsCount: this.uniquePieceIdGroups.size,
+			allPieceGroupUniquesCount: this.allPieceGroupUniques.size,
+			allPieceGroupPermutationsCount: this.allPieceGroupPermutations.size,
 			uniquePieceGroupPermutationsCount: this.uniquePieceGroupPermutations.size,
-			allPatternsCount: allPatternsCount,
+			allPatternsCount: this.allPatterns.size,
 			uniquePatternsCount: this.uniquePatterns.size,
 		});
 		this.solutions = this.solve();
@@ -80,7 +89,7 @@ export default class SolverFacade implements iSolverFacade {
 	}
 
 	private solve(): iSolution[] {
-		const compatibilityFinder = new CompatibilityFinder(this.uniquePieceGroups);
+		const compatibilityFinder = new CompatibilityFinder(this.allPieceGroupUniques);
 		console.log(__filename, { patternComparisonCount: compatibilityFinder.patternComparisonCount });
 		return compatibilityFinder.solutions;
 	}

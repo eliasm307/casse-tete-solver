@@ -22,7 +22,7 @@ export default abstract class TypeFactory {
 		];
 	}
 
-	static newPieceGroupMap(): PieceGroupUniqueMap {
+	static newPieceGroupUniqueMap(): PieceGroupUniqueMap {
 		return new Map<string, iPieceGroupUnique>();
 	}
 
@@ -32,5 +32,8 @@ export default abstract class TypeFactory {
 
 	static newPieceGroupPermutationMap(): PieceGroupPermutationMap {
 		return new Map<string, iPieceGroupPermutation>();
+	}
+	static newPieceGroupMap(): PieceGroupMap {
+		return new Map<string, iPieceGroup>();
 	}
 }

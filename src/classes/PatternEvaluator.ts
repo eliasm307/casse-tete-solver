@@ -5,12 +5,10 @@ import Solution from './Solution';
 import TypeFactory from './TypeFactory';
 
 export default class PatternEvaluator implements iPatternConfigurationEvaluator {
-	private comparisonHistory: SolutionsArrayMap;
+	private comparisonHistory: SolutionsArrayMap = TypeFactory.newSolutionsArrayMap();
 	evaluatedCount: number = 0;
 
-	constructor() {
-		this.comparisonHistory = TypeFactory.newSolutionsArrayMap();
-	}
+	constructor() {}
 	getValidSolutions(pattern1: iPatternConfiguration, pattern2: iPatternConfiguration): iSolution[] {
 		const patternCoupleId1 = this.getPatternCoupleId(pattern1, pattern2);
 		const patternCoupleId2 = this.getPatternCoupleId(pattern2, pattern1);
@@ -18,20 +16,21 @@ export default class PatternEvaluator implements iPatternConfigurationEvaluator 
 		// check if the patterns have already been compared before, if they have then skip them
 		if (this.comparisonHistory.has(patternCoupleId1)) {
 			// console.log(__filename, `Cache hit for "${patternCoupleId1}`);
-			return [];
+			// todo readd this // return [];
 		} else if (this.comparisonHistory.has(patternCoupleId2)) {
 			// console.log(__filename, `Cache hit for "${patternCoupleId2}`);
-			return [];
+			// todo readd this // return [];
 		}
 
 		this.evaluatedCount++;
 		const solutions = [];
 		const matrix2Mirrored = pattern2.matrixMirrored;
-		
+
+		// todo confirm this is looping through all possibilities correctly
+
 		// compare patterns for 4 rotations
-		for (let i = 0; i < 3; i++) {
+		for (let i = 0; i < 4; i++) {
 			const matrix1Rotated = rotateMatrix(pattern1.matrix, i) as PatternMatrixTuple;
-			
 
 			if (this.matrixSumIsGood(matrix1Rotated, matrix2Mirrored)) {
 				console.info(__filename, 'matrixSumIsGood', {
@@ -77,7 +76,7 @@ export default class PatternEvaluator implements iPatternConfigurationEvaluator 
 
 		for (let iRow = 0; iRow < matrix1.length; iRow++) {
 			for (let iCol = 0; iCol < matrix1[0].length; iCol++) {
-				if ((matrix1[iRow][iCol] + matrix2[iRow][iCol]) > 0) {
+				if (matrix1[iRow][iCol] + matrix2[iRow][iCol] > 0) {
 					/**/
 					/*console.log(__filename, 'NOT matrixSumIsGood\n\\n\\\nNEW LINE', {
 						matrix1,

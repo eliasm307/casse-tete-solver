@@ -46,7 +46,7 @@ declare type PatternConfigurationsArrayMap = Map<string, iPatternConfiguration[]
 
 declare type PatternConfigurationMap = Map<string, iPatternConfiguration>;
 declare type PieceGroupUniqueMap = Map<string, iPieceGroupUnique>;
-
+declare type PieceGroupMap = Map<string, iPieceGroup>;
 declare type PieceGroupPermutationMap = Map<string, iPieceGroupPermutation>;
 
 /** Map used to cache any comparisons already made */
