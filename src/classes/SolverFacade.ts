@@ -3,11 +3,11 @@ import PieceGroupFacade from './PieceGroupFacade';
 import PieceGroupUnique from './PieceGroupUnique';
 import TypeFactory from './TypeFactory';
 
-
-
 export default class SolverFacade implements iSolverFacade {
 	availablePieces: PieceMap;
 	pieceGroupFacade: iPieceGroupFacade;
+	patternEvaluations: PatternEvaluationsMap;
+	patternComparisonCount: number = 0;
 	solutions: iSolution[];
 	/*
 	allPieceGroupUniques: PieceGroupUniqueMap = TypeFactory.newPieceGroupUniqueMap();
@@ -33,8 +33,23 @@ export default class SolverFacade implements iSolverFacade {
 		});
 
 		const compatibilityFinder = new CompatibilityFinder(pieceGroupFacade);
-		console.log(__filename, { patternComparisonCount: compatibilityFinder.patternEvaluationCount });
+
+		this.patternEvaluations = compatibilityFinder.patternEvaluations;
+
+		// console.log(__filename, { patternComparisonCount: compatibilityFinder.getPatternEvaluations(pieceGroupId) });
 
 		this.solutions = compatibilityFinder.solutions;
+	}
+
+	// count all pattern comparisons
+	countPatternComparisons(): number {
+		let patternComparisonCount = 0;
+		this.patternEvaluations.forEach(patternEvaluators => {
+			patternComparisonCount += patternEvaluators.reduce((sum: number, patternEvaluator: iPatternEvaluator) => {
+				return sum + patternEvaluator.patternComparisons.length;
+			}, 0);
+		});
+
+		return patternComparisonCount;
 	}
 }

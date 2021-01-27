@@ -8,6 +8,7 @@ export default class PatternEvaluator implements iPatternEvaluator {
 	private comparisonHistory: SolutionsArrayMap = TypeFactory.newSolutionsArrayMap();
 	evaluatedCount: number = 0;
 	solutions: iSolution[];
+	patternComparisons: iPatternComparison[] = [];
 
 	constructor(pattern1: iPatternConfiguration, pattern2: iPatternConfiguration) {
 		this.solutions = this.evaluate(pattern1, pattern2);
@@ -35,14 +36,30 @@ export default class PatternEvaluator implements iPatternEvaluator {
 		// compare patterns for 4 rotations
 		for (let i = 0; i < 4; i++) {
 			const matrix1Rotated = rotateMatrix(pattern1.matrix, i) as PatternMatrixTuple;
+			const isCompatible: boolean = this.matrixSumIsGood(matrix1Rotated, matrix2Mirrored);
 
-			if (this.matrixSumIsGood(matrix1Rotated, matrix2Mirrored)) {
+			/*const m1 = matrix(matrix1);
+			const m2 = matrix(matrix2);
+			const mSum = m1.add( m2 );*/
+
+			const patternComparison: iPatternComparison = {
+				matrix1Original: pattern1.matrix,
+				matrix1Rotated,
+				matrix1RotationAngleDeg: i * 90,
+				matrix2Mirrored,
+				matrix2Original: pattern2.matrix,
+				matrixSum: matrix(matrix1Rotated).add(matrix(matrix2Mirrored)),
+				pattern1,
+				pattern2,
+				isCompatible,
+			};
+
+			// record current comparison
+			this.patternComparisons.push(patternComparison);
+
+			if (isCompatible) {
 				console.info(__filename, 'matrixSumIsGood', {
-					angle: i * 90,
-					matrix1og: pattern1.matrix,
-					matrix1rt: matrix1Rotated,
-					matrix2og: pattern2.matrix,
-					matrix2mr: matrix2Mirrored,
+					patternComparison,
 				});
 				solutions.push(new Solution(pattern1, i * 90, pattern2, 0));
 			} else {
@@ -74,10 +91,6 @@ export default class PatternEvaluator implements iPatternEvaluator {
 		// console.log(__filename, { mSum });
 		/**/
 
-		const m1 = matrix(matrix1);
-		const m2 = matrix(matrix2);
-		const mSum = m1.add(m2);
-
 		for (let iRow = 0; iRow < matrix1.length; iRow++) {
 			for (let iCol = 0; iCol < matrix1[0].length; iCol++) {
 				if (matrix1[iRow][iCol] + matrix2[iRow][iCol] > 0) {
@@ -96,12 +109,13 @@ export default class PatternEvaluator implements iPatternEvaluator {
 				}
 			}
 		}
-
+		/*
 		console.log(__filename, 'matrixSumIsGood', {
 			matrix1,
 			matrix2,
 			mSum,
 		});
+		*/
 		// getting here means all element sums are good
 		return true;
 	}

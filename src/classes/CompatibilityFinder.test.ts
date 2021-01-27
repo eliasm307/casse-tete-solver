@@ -8,12 +8,18 @@ test(__filename, () => {
 
 	const pieceGroupFacade = new PieceGroupFacade(AVAILABLE_PIECES_MAP);
 
-	const compatibilityFinder: iCompatibilityFinder = new CompatibilityFinder(pieceGroupFacade);
+	const compatibilityFinder: iCompatibilityFinder = new CompatibilityFinder(pieceGroupFacade) as iCompatibilityFinder;
 
 	// console.log(__filename, 'dec2bin covert 0 to binary', { decimal, binaryResult });
 	// testPieceGroupPermutations.forEach((value, key) => console.log(__filename, { key, value }));
-	expect(compatibilityFinder.getPieceGroupPatternEvaluations('0,1,2').length).toEqual(2304);
-	expect(compatibilityFinder.getPieceGroupPatternComparisons('0,1,2').length).toEqual(9216);
+	expect(compatibilityFinder.patternEvaluations.get('0,1,2')?.length).toEqual(2304);
+	expect(
+		compatibilityFinder.patternEvaluations
+			.get('0,1,2')
+			?.reduce((comparisonCount: number, patternEvaluation: iPatternEvaluator) => {
+				return comparisonCount + patternEvaluation.patternComparisons.length;
+			}, 0)
+	).toEqual(9216);
 	// 	expect(solver.uniquePieceGroupPermutations.size).toEqual(120);
 	// expect(solver.allPatterns.size).toEqual(960);
 	// expect(solver.solutions.length).toBeGreaterThan(0);

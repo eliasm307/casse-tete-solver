@@ -30,8 +30,8 @@ test(testName, () => {
 
 	// testPieceGroupPermutations.forEach((value, key) => console.log(__filename, { key, value }));
 	expect(solutions.length).toEqual(0);
-
-	expect(pieceGroup.patterns.length).toEqual(8);
+	expect( patternEvaluator.patternComparisons.length ).toEqual( 4 );
+	// expect( pieceGroup.patterns.length ).toEqual( 8 );
 
 	// expect(pieceGroup.getPatterns())
 });

@@ -6,8 +6,7 @@ export default class CompatibilityFinder implements iCompatibilityFinder {
 	private pieceGroupUniques: PieceGroupUniqueMap;
 	// private patternEvaluator: iPatternConfigurationEvaluator;
 
-	private pieceGroupPatternEvaluations: PatternEvaluationsMap = TypeFactory.newPieceGroupPatternEvaluationsMap();
-	private pieceGroupComparisonEvaluations: PatternComparisonsMap = TypeFactory.newPieceGroupPatternComparisonsMap();
+	patternEvaluations: PatternEvaluationsMap = TypeFactory.newPieceGroupPatternEvaluationsMap();
 
 	solutions: iSolution[];
 	// patternEvaluationCount: number = 0;
@@ -18,7 +17,7 @@ export default class CompatibilityFinder implements iCompatibilityFinder {
 
 		// console.log(__filename, { patternComparisonCount: this.patternEvaluationCount, solutionsFound: this.solutions });
 	}
-	getPieceGroupPatternEvaluations(pieceGroupId: string): PatternEvaluator[] {
+	getPatternEvaluations(pieceGroupId: string): PatternEvaluator[] {
 		throw new Error('Method not implemented.');
 	}
 	private findSolutions(): iSolution[] {
@@ -66,7 +65,7 @@ export default class CompatibilityFinder implements iCompatibilityFinder {
 			});
 		});
 
-		this.pieceGroupPatternEvaluations.set(pieceGroup1.id, patternEvaluations);
+		this.patternEvaluations.set(pieceGroup1.id, patternEvaluations);
 
 		return validSolutions;
 	}
