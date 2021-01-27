@@ -5,7 +5,7 @@
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
-		"test": "rm -rf dist && tsc && jest --coverage",
+		"test": "rm -rf dist && tsc && jest",
 		"build": "tsc",
 		"prepublish": "tsc"
 	},
@@ -36,6 +36,9 @@
 	"jest": {
 		"preset": "ts-jest",
 		"testEnvironment": "node",
-		"verbose": false
+		"verbose": false,
+		"modulePathIgnorePatterns": [
+			"dist"
+		]
 	}
 }

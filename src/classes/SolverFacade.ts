@@ -39,6 +39,7 @@ export default class SolverFacade implements iSolverFacade {
 		// console.log(__filename, { patternComparisonCount: compatibilityFinder.getPatternEvaluations(pieceGroupId) });
 
 		this.solutions = compatibilityFinder.solutions;
+		this.patternComparisonCount = this.countPatternComparisons();
 	}
 
 	// count all pattern comparisons
