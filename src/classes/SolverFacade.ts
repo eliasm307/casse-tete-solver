@@ -18,15 +18,26 @@ export default class SolverFacade implements iSolverFacade {
 		this.pieceIdGroups.forEach((idGroup, id) =>
 			this.uniquePieceGroups.set(id, new PieceGroupUnique(idGroup, availablePieces))
 		);
-		let patternsCount = 0;
-		this.uniquePieceGroups.forEach(pg => {
-			pg.patterns.forEach(_ => patternsCount++);
+		let allPatternsCount = 0;
+		let patternMatrixSet = new Set<string>();
+		this.uniquePieceGroups.forEach(pieceGroup => {
+			allPatternsCount += pieceGroup.patterns.length;
+
+			// track all the unique piece groups
+			pieceGroup.patterns.forEach(pattern => {
+				if (patternMatrixSet.has(pattern.matrix.toString())) {
+					// console.warn(__filename, 'Duplicate pattern', { patternId: pattern.id, pieceGroupId: pieceGroup.id });
+				} else {
+					patternMatrixSet.add(pattern.matrix.toString());
+				}
+			});
 		});
 		console.log(__filename, 'BEFORE SOLVE', {
 			availablePiecesCount: this.availablePieces.size,
 			pieceIdGroupsCount: this.pieceIdGroups.size,
 			uniquePieceGroupsCount: this.uniquePieceGroups.size,
-			patternsCount,
+			allPatternsCount: allPatternsCount,
+			uniquePatternsCount: patternMatrixSet.size,
 		});
 		this.solutions = this.solve();
 	}

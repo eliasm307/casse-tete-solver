@@ -15,7 +15,7 @@ export default class PatternConfiguration implements iPatternConfiguration {
 		this.pieceGroup = pieceGroup;
 		this.matrix = getPatternMatrix(this.pieceGroup.layout, this.sidesUsed);
 		this.matrixMirrored = this.getMatrixMirrored();
-		this.id = `[pieceGroupId:"${this.pieceGroupId}"--sidesUsed:"${this.sidesUsed.toString()}"]`;
+		this.id = `[pieceGroupId:"${this.pieceGroupId}"//sidesUsed:"${this.sidesUsed.toString()}"]`;
 	}
 	isCompatibleWith(patternConfiguration: iPatternConfiguration): boolean {
 		throw new Error('Method not implemented.');

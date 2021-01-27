@@ -56,15 +56,22 @@ export default class PieceGroupUnique implements iPieceGroupUnique {
 
 	getPatterns(): iPatternConfiguration[] {
 		// get the patterns for each permutation of this group and add return them as one array
-		// todo make this check and remove any duplicates
-		const patternMap =  this.pieceGroupPermutations.reduce((acc, pieceGroup) => {
+		const patternMap = this.pieceGroupPermutations.reduce((acc, pieceGroup) => {
 			// acc.push(...pieceGroup.patterns);
 
-			pieceGroup.patterns.forEach( pattern => {
-				
-			})
-			
+			// do not add duplicates
+			pieceGroup.patterns.forEach(pattern => {
+				if ( !acc.has( pattern.id ) ) {
+					acc.set( pattern.id, pattern );
+				}
+				else {
+					console.warn( __filename, "Pattern ID has already been saved", {id:pattern.id, acc})
+				}
+			});
+
 			return acc;
-		}, [] as iPatternConfiguration[]);
+		}, new Map<string, iPatternConfiguration>());
+
+		return Array.from(patternMap.values());
 	}
 }

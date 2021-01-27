@@ -26,11 +26,12 @@ export default class PatternEvaluator implements iPatternConfigurationEvaluator 
 
 		this.evaluatedCount++;
 		const solutions = [];
-
+		const matrix2Mirrored = pattern2.matrixMirrored;
+		
 		// compare patterns for 4 rotations
 		for (let i = 0; i < 3; i++) {
 			const matrix1Rotated = rotateMatrix(pattern1.matrix, i) as PatternMatrixTuple;
-			const matrix2Mirrored = pattern2.matrixMirrored;
+			
 
 			if (this.matrixSumIsGood(matrix1Rotated, matrix2Mirrored)) {
 				console.info(__filename, 'matrixSumIsGood', {
@@ -76,7 +77,7 @@ export default class PatternEvaluator implements iPatternConfigurationEvaluator 
 
 		for (let iRow = 0; iRow < matrix1.length; iRow++) {
 			for (let iCol = 0; iCol < matrix1[0].length; iCol++) {
-				if (matrix1[iRow][iCol] + matrix2[iRow][iCol] > 0) {
+				if ((matrix1[iRow][iCol] + matrix2[iRow][iCol]) > 0) {
 					/**/
 					/*console.log(__filename, 'NOT matrixSumIsGood\n\\n\\\nNEW LINE', {
 						matrix1,
