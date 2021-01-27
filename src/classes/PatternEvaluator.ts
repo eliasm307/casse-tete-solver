@@ -7,8 +7,12 @@ import TypeFactory from './TypeFactory';
 export default class PatternEvaluator implements iPatternEvaluator {
 	private comparisonHistory: SolutionsArrayMap = TypeFactory.newSolutionsArrayMap();
 	evaluatedCount: number = 0;
+	solutions: iSolution[];
 
-	constructor(pattern1: iPatternConfiguration, pattern2: iPatternConfiguration) {}
+	constructor(pattern1: iPatternConfiguration, pattern2: iPatternConfiguration) {
+		this.solutions = this.evaluate(pattern1, pattern2);
+	}
+
 	evaluate(pattern1: iPatternConfiguration, pattern2: iPatternConfiguration): iSolution[] {
 		const patternCoupleId1 = this.getPatternCoupleId(pattern1, pattern2);
 		const patternCoupleId2 = this.getPatternCoupleId(pattern2, pattern1);

@@ -6,14 +6,13 @@ import PieceGroupPermutation from './PieceGroupPermutation';
 let testName: string = 'PieceGroupPermutation 1';
 test(testName, () => {
 	const testPieceIdGroup: PieceIdGroupTuple = [0, 1, 2];
-
-	const patternEvaluator = new PatternEvaluator();
-
 	const pieceGroup: iPieceGroupPermutation = new PieceGroupPermutation(testPieceIdGroup, AVAILABLE_PIECES_MAP);
+
+	const patternEvaluator = new PatternEvaluator(pieceGroup.patterns[0], pieceGroup.patterns[1]);
 
 	// const pattern1 = new PatternConfiguration(pieceGroup, [0, 0, 0]);
 
-	const solutions = patternEvaluator.evaluate(pieceGroup.patterns[0], pieceGroup.patterns[1]);
+	const solutions = patternEvaluator.solutions;
 
 	/*
 	console.log( CONSOLE_SEPARATOR );

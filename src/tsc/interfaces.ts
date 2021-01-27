@@ -1,3 +1,5 @@
+
+
 declare interface iPiece {
 	readonly id: number;
 	readonly sides: [SidePatternTuple, SidePatternTuple];
@@ -11,8 +13,7 @@ declare interface iPatternConfiguration {
 	readonly matrix: PatternMatrixTuple;
 	readonly matrixMirrored: PatternMatrixTuple;
 	readonly pieceGroupId: string;
-	readonly sidesUsed: PieceGroupSidesTuple;
-	// ? getMatrixMirrored(): PatternMatrixTuple;
+	readonly sidesUsed: PieceGroupSidesTuple; 
 }
 
 declare interface iPatternEvaluator {
@@ -64,8 +65,9 @@ declare interface iSolverFacade {
 
 declare interface iCompatibilityFinder {
 	solutions: iSolution[];
-	getPieceGroupPatternEvaluations(pieceGroupId: string): string[];
+	getPieceGroupPatternEvaluations(pieceGroupId: string): iPatternEvaluator[];
 
+	// getPieceGroupPatternComparisons(pieceGroupId: string): string[];
 }
 
 declare interface iSolution {

@@ -1,5 +1,3 @@
-import PatternEvaluator from '../classes/PatternEvaluator';
-
 /**
  * Tuple of 3 numbers representing the segments of a piece's side
  * where -1 = hole, 0 = blank, and 1 = bump
@@ -48,7 +46,7 @@ declare type PatternConfigurationsArrayMap = Map<string, iPatternConfiguration[]
 
 declare type PatternConfigurationMap = Map<string, iPatternConfiguration>;
 declare type PieceGroupUniqueMap = Map<string, iPieceGroupUnique>;
-declare type PatternEvaluationMap = Map<string, PatternEvaluator>;
+declare type PatternEvaluationsMap = Map<string, iPatternEvaluator[]>;
 declare type PatternComparisonsMap = Map<string, string[]>;
 declare type PieceGroupMap = Map<string, iPieceGroup>;
 declare type PieceGroupPermutationMap = Map<string, iPieceGroupPermutation>;

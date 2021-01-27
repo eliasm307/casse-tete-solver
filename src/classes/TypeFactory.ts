@@ -38,7 +38,7 @@ export default abstract class TypeFactory {
 	}
 
 	static newPieceGroupPatternEvaluationsMap(): PatternEvaluationsMap {
-		return new Map<string, string[]>();
+		return new Map<string, iPatternEvaluator[]>();
 	}
 	static newPieceGroupPatternComparisonsMap(): PatternComparisonsMap {
 		return new Map<string, string[]>();

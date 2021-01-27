@@ -10,15 +10,15 @@ export default class CompatibilityFinder implements iCompatibilityFinder {
 	private pieceGroupComparisonEvaluations: PatternComparisonsMap = TypeFactory.newPieceGroupPatternComparisonsMap();
 
 	solutions: iSolution[];
-	patternEvaluationCount: number = 0;
+	// patternEvaluationCount: number = 0;
 	constructor(pieceGroupFacade: PieceGroupFacade) {
 		this.pieceGroupUniques = pieceGroupFacade.allPieceGroupUniques;
 		// this.patternEvaluator = new PatternEvaluator();
 		this.solutions = this.findSolutions();
 
-		console.log(__filename, { patternComparisonCount: this.patternEvaluationCount, solutionsFound: this.solutions });
+		// console.log(__filename, { patternComparisonCount: this.patternEvaluationCount, solutionsFound: this.solutions });
 	}
-	getPieceGroupPatternEvaluations(pieceGroupId: string): string[] {
+	getPieceGroupPatternEvaluations(pieceGroupId: string): PatternEvaluator[] {
 		throw new Error('Method not implemented.');
 	}
 	private findSolutions(): iSolution[] {
@@ -50,15 +50,23 @@ export default class CompatibilityFinder implements iCompatibilityFinder {
 
 		const validSolutions: iSolution[] = [];
 
+		const patternEvaluations: PatternEvaluator[] = [];
+
 		// compare all patterns in the 2 groups to each other and find valid solutions
 		pieceGroup1.patterns.forEach((pattern1: iPatternConfiguration) => {
-			pieceGroup2.patterns.forEach( ( pattern2: iPatternConfiguration ) => {
+			pieceGroup2.patterns.forEach((pattern2: iPatternConfiguration) => {
 				const patternEvaluator = new PatternEvaluator(pattern1, pattern2);
-				validSolutions.push( ...patternEvaluator.solutions );
-				this.pieceGroupPatternEvaluations.set( pieceGroup1.id, patternEvaluator );
-				this.patternEvaluationCount++;
+
+				// record any solutions found from the evaluation
+				validSolutions.push(...patternEvaluator.solutions);
+
+				// record evaluation
+				patternEvaluations.push(patternEvaluator);
+				// this.patternEvaluationCount++;
 			});
 		});
+
+		this.pieceGroupPatternEvaluations.set(pieceGroup1.id, patternEvaluations);
 
 		return validSolutions;
 	}
