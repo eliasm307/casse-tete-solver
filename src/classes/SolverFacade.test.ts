@@ -1,5 +1,5 @@
-import SolverFacade from './classes/SolverFacade';
-import { AVAILABLE_PIECES_MAP, CONSOLE_SEPARATOR } from './constants/production';
+import { AVAILABLE_PIECES_MAP, CONSOLE_SEPARATOR } from '../constants/production';
+import SolverFacade from './SolverFacade';
 
 test('process test', () => {
 	// console.log(CONSOLE_SEPARATOR);

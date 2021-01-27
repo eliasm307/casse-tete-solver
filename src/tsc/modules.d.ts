@@ -9,6 +9,6 @@ declare module 'matrix-js' {
 }
 
 declare module 'rotate-matrix' {
-	function rotate(arr: any[][]): any[][];
+	function rotate(arr: any[][], byRightAngles: number): any[][];
 	export = rotate;
 }

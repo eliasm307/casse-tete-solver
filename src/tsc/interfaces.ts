@@ -54,3 +54,10 @@ declare interface iSolverFacade {
 declare interface iCompatibilityFinder {
 	findCompatiblePatterns(): PatternConfiguration2Tuple[];
 }
+
+declare interface iSolution {
+	readonly pattern1: iPatternConfiguration;
+	readonly pattern1RotationDeg: number;
+	readonly pattern2: iPatternConfiguration;
+	readonly pattern2RotationDeg: number;
+}
