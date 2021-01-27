@@ -61,11 +61,10 @@ export default class PieceGroupUnique implements iPieceGroupUnique {
 
 			// do not add duplicates
 			pieceGroup.patterns.forEach(pattern => {
-				if ( !acc.has( pattern.id ) ) {
-					acc.set( pattern.id, pattern );
-				}
-				else {
-					console.warn( __filename, "Pattern ID has already been saved", {id:pattern.id, acc})
+				if (!acc.has(pattern.id)) {
+					acc.set(pattern.id, pattern);
+				} else {
+					// console.warn( __filename, "Pattern ID has already been saved", {id:pattern.id, acc})
 				}
 			});
 

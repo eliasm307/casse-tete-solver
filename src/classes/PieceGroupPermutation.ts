@@ -13,7 +13,7 @@ export default class PieceGroupPermutation implements iPieceGroupPermutation {
 		this.pieceIdGroup = pieceIdGroup;
 		this.availablePieces = availablePieces;
 		this.id = pieceIdGroup.toString();
-		this.layout = this.pieceIdGroup.map( pieceId => availablePieces.get( pieceId ) as iPiece ) as Piece3Tuple;
+		this.layout = this.pieceIdGroup.map(pieceId => availablePieces.get(pieceId) as iPiece) as Piece3Tuple;
 		this.patterns = this.getPatterns();
 	}
 
@@ -23,19 +23,44 @@ export default class PieceGroupPermutation implements iPieceGroupPermutation {
 	 */
 	private getPatterns(): iPatternConfiguration[] {
 		const accumulated: iPatternConfiguration[] = [];
+
+		// todo this accounts for flipping pieces but needs to also account for rotating pieces
+
 		// for the current permutation, loop through all the possible configurations from flipping (ie same as counting to 7 in binary)
-		for (let config = 0; config < 8; config++) {
+		for (let flipConfig = 0; flipConfig < 8; flipConfig++) {
 			// get binary value of current config
-			const binaryConfig: string = dec2bin(config);
+			const binaryFlipConfig: string = dec2bin(flipConfig);
 
 			// convert config string to an array of numbers
-			const sidesTuple: PieceGroupSidesTuple = [...binaryConfig].map(char => parseInt(char)) as PieceGroupSidesTuple;
+			const sidesConfigTuple: PieceGroupSidesTuple = [...binaryFlipConfig].map(char =>
+				parseInt(char)
+			) as PieceGroupSidesTuple;
 
-			// define new blank pattern config
-			const pattern: iPatternConfiguration = new PatternConfiguration(this, sidesTuple);
+			// define pattern config
+			// const patternFlipped: iPatternConfiguration = new PatternConfiguration(this, sidesTuple);
 
-			// save pattern in a collection for the current piece group permutation
-			accumulated.push(pattern);
+			for (let rotationConfig = 0; rotationConfig < 8; rotationConfig++) {
+				// get binary value of current config
+				const binaryRotationConfig: string = dec2bin(rotationConfig);
+
+				const rotationConfigTuple: [number, number, number] = [...binaryRotationConfig].map(char => parseInt(char)) as [
+					number,
+					number,
+					number
+				];
+
+				// rotate pieces as required
+
+				// define pattern config with pieces flipped and rotated
+				const patternFlippedAndRotated: iPatternConfiguration = new PatternConfiguration(
+					this,
+					sidesConfigTuple,
+					rotationConfigTuple
+				);
+
+				// save pattern in a collection for the current piece group permutation
+				accumulated.push(patternFlippedAndRotated);
+			}
 		}
 
 		return accumulated;

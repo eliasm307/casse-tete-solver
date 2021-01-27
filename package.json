@@ -38,7 +38,9 @@
 		"testEnvironment": "node",
 		"verbose": false,
 		"modulePathIgnorePatterns": [
-			"dist"
+			"dist",
+			"node_modules",
+			"coverage"
 		]
 	}
 }

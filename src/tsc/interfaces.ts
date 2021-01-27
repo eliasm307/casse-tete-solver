@@ -11,7 +11,8 @@ declare interface iPatternConfiguration {
 	readonly matrix: PatternMatrixTuple;
 	readonly matrixMirrored: PatternMatrixTuple;
 	readonly pieceGroupId: string;
-	readonly sidesUsed: PieceGroupSidesTuple;
+	readonly pieceSides: PieceGroupSidesTuple;
+	readonly pieceRotations: PieceGroupSidesTuple;
 }
 
 declare interface iPatternEvaluator {

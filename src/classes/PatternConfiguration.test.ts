@@ -9,7 +9,7 @@ test(testName, () => {
 
 	const pieceGroup: iPieceGroupPermutation = new PieceGroupPermutation(testPieceIdGroup, AVAILABLE_PIECES_MAP);
 
-	const pattern = new PatternConfiguration(pieceGroup, [0, 0, 0]);
+	const pattern = new PatternConfiguration(pieceGroup, [0, 0, 0], [0, 0, 0]);
 
 	/*
 	console.log( CONSOLE_SEPARATOR );
