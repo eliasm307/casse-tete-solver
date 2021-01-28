@@ -55,3 +55,5 @@ declare type PieceGroupPermutationMap = Map<string, iPieceGroupPermutation>;
 /** Map used to cache any comparisons already made */
 declare type SolutionsArrayMap = Map<string, iSolution[]>;
 declare type PieceIdGroupArrayMap = Map<string, PieceIdGroupTuple[]>;
+
+declare type PieceGroupPatternEvaluationMap = Map<string, iPieceGroupPatternEvaluation>;

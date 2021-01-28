@@ -6,29 +6,30 @@ export default class CompatibilityFinder implements iCompatibilityFinder {
 	private pieceGroupUniques: PieceGroupUniqueMap;
 	// private patternEvaluator: iPatternConfigurationEvaluator;
 
-	patternEvaluations: PatternEvaluationsMap = TypeFactory.newPieceGroupPatternEvaluationsMap();
+	pieceGroupPatternEvaluations: PieceGroupPatternEvaluationMap = TypeFactory.newPieceGroupPatternEvaluationsMap();
 
-	solutions: iSolution[];
+	pieceGroupSolutions: SolutionsArrayMap;
 	// patternEvaluationCount: number = 0;
 	constructor(pieceGroupFacade: PieceGroupFacade) {
 		this.pieceGroupUniques = pieceGroupFacade.allPieceGroupUniques;
 		// this.patternEvaluator = new PatternEvaluator();
-		this.solutions = this.findSolutions();
+		this.pieceGroupSolutions = this.findSolutions();
+	}
 
-		console.log(__filename, {
-			patternEvaluationCount: this.patternEvaluations.size,
-			solutionsFoundCount: this.solutions.length,
-		});
-	}
-	getPatternEvaluations(pieceGroupId: string): PatternEvaluator[] {
-		throw new Error('Method not implemented.');
-	}
-	private findSolutions(): iSolution[] {
-		const validSolutions: iSolution[] = [];
+	private findSolutions(): SolutionsArrayMap {
+		const validSolutions: SolutionsArrayMap = TypeFactory.newSolutionsArrayMap();
+		const oppositePieceGroupIdsEvaluated: Set<string> = new Set<string>();
 
 		// compare each unique pieceGroup to its remainder piece group
 		this.pieceGroupUniques.forEach((pieceGroup: iPieceGroupUnique) => {
-			validSolutions.push(...this.evaluatePieceGroup(pieceGroup));
+			/* 
+			Only evaluate unique group pairs once ie dont evaluate solutions for [0,1,2] (where its internal opposite is [3,4,5])
+			AND evaluating also the unique group [3,4,5] (where its internal opposite is [0,1,2])
+			*/
+			if (!oppositePieceGroupIdsEvaluated.has(pieceGroup.id)) {
+				validSolutions.set(pieceGroup.id, this.evaluatePieceGroup(pieceGroup));
+				oppositePieceGroupIdsEvaluated.add(pieceGroup.oppositePieceIdGroup.toString());
+			}
 		});
 
 		// console.log(__filename, { patternEvaluations: this.patternEvaluations });
@@ -37,42 +38,47 @@ export default class CompatibilityFinder implements iCompatibilityFinder {
 	}
 
 	/** Evaluate a PieceGroup against its opposite group to find any compatible patterns */
-	evaluatePieceGroup(pieceGroup1: iPieceGroupUnique): iSolution[] {
-		const oppositePieceGroupId = pieceGroup1.oppositePieceIdGroup.toString();
+	evaluatePieceGroup(pieceGroupMain: iPieceGroupUnique): iSolution[] {
+		const pieceGroupOppositeId = pieceGroupMain.oppositePieceIdGroup.toString();
 
 		// check opposite piece group exists
-		if (!this.pieceGroupUniques.has(oppositePieceGroupId)) {
-			const errorMessage = `Opposite pieceGroup id "${oppositePieceGroupId}" for pieceGroup with id "${pieceGroup1.id}" not found`;
+		if (!this.pieceGroupUniques.has(pieceGroupOppositeId)) {
+			const errorMessage = `Opposite pieceGroup id "${pieceGroupOppositeId}" for pieceGroup with id "${pieceGroupMain.id}" not found`;
 			console.error(__filename, errorMessage);
 			new Error(errorMessage);
 		}
 
 		// get opposite piece group object
-		const pieceGroup2: iPieceGroupUnique = this.pieceGroupUniques.get(oppositePieceGroupId) as iPieceGroupUnique;
+		const pieceGroupOpposite: iPieceGroupUnique = this.pieceGroupUniques.get(pieceGroupOppositeId) as iPieceGroupUnique;
 
 		const validSolutions: iSolution[] = [];
 
-		const patternEvaluations: PatternEvaluator[] = [];
-		let patternEvaluationCount
+		// const patternEvaluators: PatternEvaluator[] = [];
+		const pieceGroupPatternEvaluation: iPieceGroupPatternEvaluation = {
+			mainPieceGroupId: pieceGroupMain.id,
+			oppositePieceGroupId: pieceGroupOpposite.id,
+			patternComparisonCount: 0,
+			patternEvaluationCount: 0,
+		};
 
 		// compare all patterns in the 2 groups to each other and find valid solutions
-		pieceGroup1.patterns.forEach((pattern1: iPatternConfiguration) => {
-			pieceGroup2.patterns.forEach((pattern2: iPatternConfiguration) => {
+		pieceGroupMain.patterns.forEach((pattern1: iPatternConfiguration) => {
+			// record main pattern evaluation
+			pieceGroupPatternEvaluation.patternEvaluationCount++;
+
+			pieceGroupOpposite.patterns.forEach((pattern2: iPatternConfiguration) => {
+				// record pattern comparison for current pattern
+				pieceGroupPatternEvaluation.patternComparisonCount++;
+
 				const patternEvaluator = new PatternEvaluator(pattern1, pattern2);
 
-				
 				// record any solutions found from the evaluation
 				validSolutions.push(...patternEvaluator.solutions);
-
-				// record evaluation
-				patternEvaluations.push(patternEvaluator);
-				// this.patternEvaluationCount++;
 			});
 		});
 
 		// record pattern evaluations for this piece group
-		// todo is it necessary to collect all the failed pattern evaluations? would a count not suffice?
-		this.patternEvaluations.set(pieceGroup1.id, patternEvaluations);
+		this.pieceGroupPatternEvaluations.set(pieceGroupMain.id, pieceGroupPatternEvaluation);
 
 		return validSolutions;
 	}

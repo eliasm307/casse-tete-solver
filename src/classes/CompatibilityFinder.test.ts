@@ -10,20 +10,32 @@ test(__filename, () => {
 
 	const compatibilityFinder: iCompatibilityFinder = new CompatibilityFinder(pieceGroupFacade) as iCompatibilityFinder;
 
-	// console.log(__filename, { compatibilityFinder });
+	const examplePieceGroupPatternEvaluation = compatibilityFinder.pieceGroupPatternEvaluations.get(
+		'0,1,2'
+	) as iPieceGroupPatternEvaluation;
+
+	const patternEvaluationsPerPieceGroup: number = examplePieceGroupPatternEvaluation.patternEvaluationCount;
+	const patternComparisonsPerPieceGroup: number = examplePieceGroupPatternEvaluation.patternComparisonCount;
+
+	const originalPatternEvaluationsPerPieceGroup: number = 147456;
+	const originalPatternComparisonsPerPieceGroup: number = 589824;
+
+	console.log(__filename, {
+		patternEvaluationsPerPieceGroupDiffValue: patternEvaluationsPerPieceGroup - originalPatternEvaluationsPerPieceGroup,
+		patternEvaluationsPerPieceGroupDiffPercentage:
+			(100 * (patternEvaluationsPerPieceGroup - originalPatternEvaluationsPerPieceGroup)) /
+			originalPatternEvaluationsPerPieceGroup,
+		patternComparisonsPerPieceGroupDiffValue: patternComparisonsPerPieceGroup - originalPatternComparisonsPerPieceGroup,
+		patternComparisonsPerPieceGroupDiffPercentage:
+			(100 * (patternComparisonsPerPieceGroup - originalPatternComparisonsPerPieceGroup)) /
+			originalPatternComparisonsPerPieceGroup,
+	});
 
 	// console.log(__filename, 'dec2bin covert 0 to binary', { decimal, binaryResult });
 	// testPieceGroupPermutations.forEach((value, key) => console.log(__filename, { key, value }));
-	expect(compatibilityFinder.patternEvaluations.get('0,1,2')?.length).toEqual(147456);
-	expect(
-		compatibilityFinder.patternEvaluations
-			.get('0,1,2')
-			?.reduce((comparisonCount: number, patternEvaluation: iPatternEvaluator) => {
-				return comparisonCount + patternEvaluation.patternComparisons.length;
-			}, 0)
-	).toEqual(589824);
+	expect(patternEvaluationsPerPieceGroup).toBeLessThan(originalPatternEvaluationsPerPieceGroup);
+	expect(patternComparisonsPerPieceGroup).toBeLessThan(originalPatternComparisonsPerPieceGroup);
 	// 	expect(solver.uniquePieceGroupPermutations.size).toEqual(120);
 	// expect(solver.allPatterns.size).toEqual(960);
-	// expect(solver.solutions.length).toBeGreaterThan(0);
-	// console.log(CONSOLE_SEPARATOR);
+	// expect(solver.solutions.length).toBeGreaterThan(0); 
 });
