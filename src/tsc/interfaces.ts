@@ -105,3 +105,10 @@ declare interface iPieceGroupFacade {
 	readonly uniquePatterns: PatternConfigurationMap;
 	readonly uniquePieceIdGroups: PieceIdGroupMap;
 }
+
+declare interface iSolution {
+	readonly id: string;
+	readonly pattern1: iPatternConfiguration;
+	readonly pattern1RotationDeg: number;
+	readonly pattern2: iPatternConfiguration;
+}
