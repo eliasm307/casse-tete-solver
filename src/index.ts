@@ -1,8 +1,10 @@
 import { AVAILABLE_PIECES_MAP } from './constants/production';
-import getCompatiblePatterns from './utils/getCompatiblePatterns';
 import getPieceGroupPatterns from './utils/getPieceGroupPatterns';
 import getPieceGroupPermutations from './utils/getPieceGroupPermutations';
 import getPossiblePieceGroups from './utils/getPossiblePieceGroups';
+
+// import getCompatiblePatterns from './utils/getCompatiblePatterns';
+// todo update this file
 
 // for the pieces available, find all possible ways to split the 6 pieces into 2 groups of 3 pieces
 // make sure groups are not repeated ie a group with pieces 1,2,3 is the same as a group with pieces 3,2,1
@@ -19,4 +21,4 @@ const pieceGroupPatterns: PatternConfigurationsArrayMap = getPieceGroupPatterns(
 );
 
 // For each unique group of 3 pieces , get its remainder group then loop through all the possible patterns to see if there's a mirrored map, ie can 2 patterns be merged together such that none of the slots are greater than 0 ie mirror remainder pattern matrix and add it to primary pattern matrix and sheet if any elements are greater that 0 (if greater than 0 this means there is a nub which doesn't have a corresponding hole so the patterns don't fit
-const compatiblePatterns = getCompatiblePatterns(pieceGroupPatterns);
+// const compatiblePatterns = getCompatiblePatterns(pieceGroupPatterns);

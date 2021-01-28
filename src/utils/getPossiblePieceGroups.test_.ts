@@ -2,6 +2,8 @@ import { CONSOLE_SEPARATOR } from '../constants/production';
 import { generateTestPieces } from '../test-utils/generateTestPieces';
 import getPossiblePieceGroups from './getPossiblePieceGroups';
 
+// todo delete this file
+
 test('getPossiblePieceGroups for 3 pieces with ids 0 to 2', () => {
 	const testPieces = generateTestPieces(3);
 	const testPieceGroups = getPossiblePieceGroups(testPieces);

@@ -2,6 +2,8 @@ import perm from 'array-permutation';
 
 import TypeFactory from '../classes/TypeFactory';
 
+// todo delete this file
+
 function getPieceGroupPermutations(pieceIdGroups: PieceIdGroupMap): PieceIdGroupsMap {
 	const pieceGroupPermutations: PieceIdGroupsMap = TypeFactory.newPieceIdGroupArrayMap();
 	pieceIdGroups.forEach((pieceIdGroup, key) => {
