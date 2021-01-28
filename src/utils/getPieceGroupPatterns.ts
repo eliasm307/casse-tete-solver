@@ -4,6 +4,8 @@ import dec2bin from './dec2bin';
 
 // function getPieceGroupPatterns( pieceGroupPermutations: PieceGroupPermutations ) { }
 
+// todo delete this file
+
 function getPieceGroupPatterns(
 	pieceGroupPermutations: PieceIdGroupsMap,
 	AVAILABLE_PIECES: PieceMap

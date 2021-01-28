@@ -27,7 +27,12 @@ export default class CompatibilityFinder implements iCompatibilityFinder {
 			AND evaluating also the unique group [3,4,5] (where its internal opposite is [0,1,2])
 			*/
 			if (!oppositePieceGroupIdsEvaluated.has(pieceGroup.id)) {
-				validSolutions.set(pieceGroup.id, this.evaluatePieceGroup(pieceGroup));
+				const pieceGroupSolutions: iSolution[] = this.evaluatePieceGroup(pieceGroup);
+
+				// only add an entry if there were solutions found for this unique piece group
+				if (pieceGroupSolutions.length) validSolutions.set(pieceGroup.id, pieceGroupSolutions);
+
+				// record that its opposite group has also been processed
 				oppositePieceGroupIdsEvaluated.add(pieceGroup.oppositePieceIdGroup.toString());
 			}
 		});

@@ -30,6 +30,10 @@ export default abstract class TypeFactory {
 		return new Map<string, iSolution[]>();
 	}
 
+	static newSolutionMap(): SolutionMap {
+		return new Map<string, iSolution>();
+	}
+
 	static newPieceGroupPermutationMap(): PieceGroupPermutationMap {
 		return new Map<string, iPieceGroupPermutation>();
 	}

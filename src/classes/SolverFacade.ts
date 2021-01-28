@@ -41,6 +41,18 @@ export default class SolverFacade implements iSolverFacade {
 	private logResultsToConsole(): void {
 		const randomSolutionNumber = Math.round(Math.random() * this.solutionsAll.length);
 		const randomSolution: iSolution = this.solutionsAll[randomSolutionNumber];
+		const uniqueSolutions: SolutionMap = this.solutionsAll.reduce((solutionMap: SolutionMap, solution: iSolution) => {
+			// create possible combinations of pattern ids to get solution ids
+			const solutionId1: string = `${solution.pattern1.id}-AND-${solution.pattern2.id}`;
+			const solutionId2: string = `${solution.pattern2.id}-AND-${solution.pattern1.id}`;
+
+			// check if any of the solution ids have already been added, if not add this as a unique one
+			if (!solutionMap.has(solutionId1) || !solutionMap.has(solutionId2)) {
+				solutionMap.set(solutionId1, solution);
+			}
+
+			return solutionMap;
+		}, TypeFactory.newSolutionMap());
 
 		console.log(__filename, 'FINAL REPORT', {
 			availablePiecesCount: this.availablePieces.size.toLocaleString(),
@@ -51,9 +63,11 @@ export default class SolverFacade implements iSolverFacade {
 			allPatternsCount: this.pieceGroupFacade.allPatterns.size.toLocaleString(),
 			uniquePatternsCount: this.pieceGroupFacade.uniquePatterns.size.toLocaleString(),
 			patternComparisonCount: this.patternComparisonCount.toLocaleString(),
-			randomSolution: randomSolution.id,
+
 			pieceGroupsWithSolutionsCount: this.compatibilityFinder.pieceGroupSolutions.size.toLocaleString(),
 			allSolutionsCount: this.solutionsAll.length.toLocaleString(),
+			uniqueSolutionsCount: uniqueSolutions.size,
+			exampleSolutionId: randomSolution.id,
 		});
 	}
 

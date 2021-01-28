@@ -21,14 +21,19 @@ test(__filename, () => {
 	const originalPatternComparisonsPerPieceGroup: number = 589824;
 
 	console.log(__filename, {
-		patternEvaluationsPerPieceGroupDiffValue: patternEvaluationsPerPieceGroup - originalPatternEvaluationsPerPieceGroup,
-		patternEvaluationsPerPieceGroupDiffPercentage:
+		patternEvaluationsPerPieceGroupDiffValue:
+			(patternEvaluationsPerPieceGroup - originalPatternEvaluationsPerPieceGroup).toLocaleString() + '%',
+		patternEvaluationsPerPieceGroupDiffPercentage: (
 			(100 * (patternEvaluationsPerPieceGroup - originalPatternEvaluationsPerPieceGroup)) /
-			originalPatternEvaluationsPerPieceGroup,
-		patternComparisonsPerPieceGroupDiffValue: patternComparisonsPerPieceGroup - originalPatternComparisonsPerPieceGroup,
-		patternComparisonsPerPieceGroupDiffPercentage:
+			originalPatternEvaluationsPerPieceGroup
+		).toLocaleString(),
+		patternComparisonsPerPieceGroupDiffValue: (
+			patternComparisonsPerPieceGroup - originalPatternComparisonsPerPieceGroup
+		).toLocaleString(),
+		patternComparisonsPerPieceGroupDiffPercentage: (
 			(100 * (patternComparisonsPerPieceGroup - originalPatternComparisonsPerPieceGroup)) /
-			originalPatternComparisonsPerPieceGroup,
+			originalPatternComparisonsPerPieceGroup
+		).toLocaleString(),
 	});
 
 	// console.log(__filename, 'dec2bin covert 0 to binary', { decimal, binaryResult });
@@ -37,5 +42,5 @@ test(__filename, () => {
 	expect(patternComparisonsPerPieceGroup).toBeLessThan(originalPatternComparisonsPerPieceGroup);
 	// 	expect(solver.uniquePieceGroupPermutations.size).toEqual(120);
 	// expect(solver.allPatterns.size).toEqual(960);
-	// expect(solver.solutions.length).toBeGreaterThan(0); 
+	// expect(solver.solutions.length).toBeGreaterThan(0);
 });
