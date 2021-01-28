@@ -5,7 +5,8 @@
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
-		"test": "rm -rf dist && tsc && node --max-old-space-size=4096 ./node_modules/jest-cli/bin/jest.js --logHeapUsage",
+		"test": "rm -rf dist && tsc && jest --logHeapUsage",
+		"test:increased-memory": "rm -rf dist && tsc && node --max-old-space-size=4096 ./node_modules/jest-cli/bin/jest.js --logHeapUsage",
 		"build": "tsc",
 		"prepublish": "tsc"
 	},
@@ -38,7 +39,7 @@
 		"testEnvironment": "node",
 		"verbose": false,
 		"modulePathIgnorePatterns": [
-			"dist",
+			"dist/.*\\.test\\.",
 			"node_modules",
 			"coverage"
 		]

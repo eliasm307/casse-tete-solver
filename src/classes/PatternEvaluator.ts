@@ -18,20 +18,18 @@ export default class PatternEvaluator implements iPatternEvaluator {
 		const patternCoupleId1 = this.getPatternCoupleId(pattern1, pattern2);
 		const patternCoupleId2 = this.getPatternCoupleId(pattern2, pattern1);
 
-		// check if the patterns have already been compared before, if they have then skip them
+		// check if the patterns have already been compared before, if they have then skip them, ie dont output equivalent solutions
 		if (this.comparisonHistory.has(patternCoupleId1)) {
 			// console.log(__filename, `Cache hit for "${patternCoupleId1}`);
-			// todo readd this // return [];
+			return [];
 		} else if (this.comparisonHistory.has(patternCoupleId2)) {
 			// console.log(__filename, `Cache hit for "${patternCoupleId2}`);
-			// todo readd this // return [];
+			return [];
 		}
 
 		this.evaluatedCount++;
 		const solutions = [];
 		const matrix2Mirrored = pattern2.matrixMirrored;
-
-		// todo confirm this is looping through all possibilities correctly
 
 		// compare patterns for 4 rotations
 		for (let i = 0; i < 4; i++) {

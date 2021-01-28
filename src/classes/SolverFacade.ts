@@ -6,9 +6,11 @@ import TypeFactory from './TypeFactory';
 export default class SolverFacade implements iSolverFacade {
 	availablePieces: PieceMap;
 	pieceGroupFacade: iPieceGroupFacade;
-	patternEvaluations: PatternEvaluationsMap;
+	pieceGroupPatternEvaluations: PieceGroupPatternEvaluationMap;
 	patternComparisonCount: number = 0;
-	solutions: iSolution[];
+	solutionsAll: iSolution[];
+	solutionsMap: SolutionsArrayMap = TypeFactory.newSolutionsArrayMap();
+	private compatibilityFinder: iCompatibilityFinder;
 	/*
 	allPieceGroupUniques: PieceGroupUniqueMap = TypeFactory.newPieceGroupUniqueMap();
 	allPieceGroupPermutations: PieceGroupPermutationMap = TypeFactory.newPieceGroupPermutationMap();
@@ -21,34 +23,59 @@ export default class SolverFacade implements iSolverFacade {
 	constructor(pieceGroupFacade: PieceGroupFacade) {
 		this.availablePieces = pieceGroupFacade.availablePieces;
 		this.pieceGroupFacade = new PieceGroupFacade(this.availablePieces);
-
-		console.log(__filename, 'BEFORE SOLVE', {
-			availablePiecesCount: this.availablePieces.size,
-			pieceIdGroupsCount: this.pieceGroupFacade.uniquePieceIdGroups.size,
-			allPieceGroupUniquesCount: this.pieceGroupFacade.allPieceGroupUniques.size,
-			allPieceGroupPermutationsCount: this.pieceGroupFacade.allPieceGroupPermutations.size,
-			uniquePieceGroupPermutationsCount: this.pieceGroupFacade.uniquePieceGroupPermutations.size,
-			allPatternsCount: this.pieceGroupFacade.allPatterns.size,
-			uniquePatternsCount: this.pieceGroupFacade.uniquePatterns.size,
-		});
-
-		const compatibilityFinder = new CompatibilityFinder(pieceGroupFacade);
-
-		this.patternEvaluations = compatibilityFinder.patternEvaluations;
-
-		// console.log(__filename, { patternComparisonCount: compatibilityFinder.getPatternEvaluations(pieceGroupId) });
-
-		this.solutions = compatibilityFinder.solutions;
-		this.patternComparisonCount = this.countPatternComparisons();
+		this.compatibilityFinder = new CompatibilityFinder(pieceGroupFacade);
+		this.pieceGroupPatternEvaluations = this.compatibilityFinder.pieceGroupPatternEvaluations;
+		this.patternComparisonCount = this.countPatternComparisons(this.pieceGroupPatternEvaluations);
+		this.solutionsAll = this.getAllSolutions(this.compatibilityFinder);
+		this.logResultsToConsole();
+		// todo add method to print a plain text summary of solutions
 	}
 
-	// count all pattern comparisons
-	countPatternComparisons(): number {
+	/**  Puts all solutions into a flat array */
+	private getAllSolutions(compatibilityFinder: iCompatibilityFinder): iSolution[] {
+		const solutionsAll: iSolution[] = [];
+		compatibilityFinder.pieceGroupSolutions.forEach((solutions: iSolution[]) => solutionsAll.push(...solutions));
+		return solutionsAll;
+	}
+
+	private logResultsToConsole(): void {
+		const randomSolutionNumber = Math.round(Math.random() * this.solutionsAll.length);
+		const randomSolution: iSolution = this.solutionsAll[randomSolutionNumber];
+		const uniqueSolutions: SolutionMap = this.solutionsAll.reduce((solutionMap: SolutionMap, solution: iSolution) => {
+			// create possible combinations of pattern ids to get solution ids
+			const solutionId1: string = `${solution.pattern1.id}-AND-${solution.pattern2.id}`;
+			const solutionId2: string = `${solution.pattern2.id}-AND-${solution.pattern1.id}`;
+
+			// check if any of the solution ids have already been added, if not add this as a unique one
+			if (!solutionMap.has(solutionId1) || !solutionMap.has(solutionId2)) {
+				solutionMap.set(solutionId1, solution);
+			}
+
+			return solutionMap;
+		}, TypeFactory.newSolutionMap());
+
+		console.log(__filename, 'FINAL REPORT', {
+			availablePiecesCount: this.availablePieces.size.toLocaleString(),
+			pieceIdGroupsCount: this.pieceGroupFacade.uniquePieceIdGroups.size.toLocaleString(),
+			allPieceGroupUniquesCount: this.pieceGroupFacade.allPieceGroupUniques.size.toLocaleString(),
+			allPieceGroupPermutationsCount: this.pieceGroupFacade.allPieceGroupPermutations.size.toLocaleString(),
+			uniquePieceGroupPermutationsCount: this.pieceGroupFacade.uniquePieceGroupPermutations.size.toLocaleString(),
+			allPatternsCount: this.pieceGroupFacade.allPatterns.size.toLocaleString(),
+			uniquePatternsCount: this.pieceGroupFacade.uniquePatterns.size.toLocaleString(),
+			patternComparisonCount: this.patternComparisonCount.toLocaleString(),
+
+			pieceGroupsWithSolutionsCount: this.compatibilityFinder.pieceGroupSolutions.size.toLocaleString(),
+			allSolutionsCount: this.solutionsAll.length.toLocaleString(),
+			uniqueSolutionsCount: uniqueSolutions.size,
+			exampleSolutionId: randomSolution.id,
+		});
+	}
+
+	/** counts all pattern comparisons */
+	countPatternComparisons(pieceGroupPatternEvaluations: PieceGroupPatternEvaluationMap): number {
 		let patternComparisonCount = 0;
-		this.patternEvaluations.forEach(patternEvaluators => {
-			patternComparisonCount += patternEvaluators.reduce((sum: number, patternEvaluator: iPatternEvaluator) => {
-				return sum + patternEvaluator.patternComparisons.length;
-			}, 0);
+		pieceGroupPatternEvaluations.forEach(patternEvaluators => {
+			patternComparisonCount += patternEvaluators.patternComparisonCount;
 		});
 
 		return patternComparisonCount;

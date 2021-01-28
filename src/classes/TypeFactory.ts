@@ -30,6 +30,10 @@ export default abstract class TypeFactory {
 		return new Map<string, iSolution[]>();
 	}
 
+	static newSolutionMap(): SolutionMap {
+		return new Map<string, iSolution>();
+	}
+
 	static newPieceGroupPermutationMap(): PieceGroupPermutationMap {
 		return new Map<string, iPieceGroupPermutation>();
 	}
@@ -37,10 +41,13 @@ export default abstract class TypeFactory {
 		return new Map<string, iPieceGroup>();
 	}
 
-	static newPieceGroupPatternEvaluationsMap(): PatternEvaluationsMap {
-		return new Map<string, iPatternEvaluator[]>();
+	static newPieceGroupPatternEvaluationsMap(): PieceGroupPatternEvaluationMap {
+		return new Map<string, iPieceGroupPatternEvaluation>();
 	}
 	static newPieceGroupPatternComparisonsMap(): PatternComparisonsMap {
 		return new Map<string, string[]>();
+	}
+	static newPieceIdGroupArrayMap(): PieceIdGroupArrayMap {
+		return new Map<string, PieceIdGroupTuple[]>();
 	}
 }

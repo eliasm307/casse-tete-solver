@@ -13,12 +13,15 @@ export default class PieceGroupFacade implements iPieceGroupFacade {
 	uniquePieceIdGroups: PieceIdGroupMap;
 	constructor(availablePieces: PieceMap) {
 		this.availablePieces = availablePieces;
-		this.uniquePieceIdGroups = this.getPossiblePieceGroups();
-		// todo handle setup of piece groups via a piece group facade
+		this.uniquePieceIdGroups = this.getPossiblePieceIdGroups();
+		
+		
 		// convert pieceIdGroups to PieceGroup objects
 		this.uniquePieceIdGroups.forEach((idGroup, id) =>
 			this.allPieceGroupUniques.set(id, new PieceGroupUnique(idGroup, availablePieces))
 		);
+
+		
 		// let allPatternsCount = 0;
 		// let allPieceGroupPermutationCount = 0;
 		// const patternMatrixSet = new Set<string>();
@@ -51,7 +54,7 @@ export default class PieceGroupFacade implements iPieceGroupFacade {
 			});
 		});
 	}
-	private getPossiblePieceGroups(): PieceIdGroupMap {
+	private getPossiblePieceIdGroups(): PieceIdGroupMap {
 		// extract piece ids into a simple array
 		const pieceIDs: number[] = [...this.availablePieces].map((_, id) => id);
 
