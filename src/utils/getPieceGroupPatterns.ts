@@ -30,7 +30,7 @@ function getPieceGroupPatterns(
 				for (let config = 0; config < 8; config++) {
 					const binaryConfig = dec2bin(config);
 
-					// ! const matrix: PatternMatrixTuple = [[], [], []];
+					// const matrix: PatternMatrixTuple = [[], [], []];
 
 					// create pattern using current binary config
 					currentPermutation.forEach((pieceId: number, piecePosition: number, permutation: number[]) => {
@@ -40,10 +40,11 @@ function getPieceGroupPatterns(
 						const piece: iPiece = AVAILABLE_PIECES.get(pieceId) as iPiece;
 
 						// assign a copy of the piece side to the relavant position in the pattern
-						// ! matrix[piecePosition] = [...piece.sides[sideToUse]];
+						//  matrix[piecePosition] = [...piece.sides[sideToUse]];
 					});
 
-					// Todo add some tracking info to the matrix, e.g. the ids of the AVAILABLE_PIECES used and the permuation etc
+					// add some tracking info to the matrix, e.g. the ids of the AVAILABLE_PIECES used and the permuation etc
+					
 					// const pattern: iPatternConfiguration = { matrix };
 
 					// save pattern in a collection for the current piece group permutation
