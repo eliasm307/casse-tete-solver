@@ -31,15 +31,17 @@ declare interface iPatternEvaluator {
 }
 
 declare interface iPatternComparison {
-	matrix1Original: PatternMatrixTuple;
-	matrix2Original: PatternMatrixTuple;
-	matrix1Rotated: PatternMatrixTuple;
+	// matrix1Original: PatternMatrixTuple;
+	// matrix2Original: PatternMatrixTuple;
+	// matrix1Rotated: PatternMatrixTuple;
 	matrix1RotationAngleDeg: number;
-	matrix2Mirrored: PatternMatrixTuple;
-	matrixSum: PatternMatrixTuple;
+	// matrix2Mirrored: PatternMatrixTuple;
+	// matrixSum: PatternMatrixTuple;
 	isCompatible: boolean;
-	pattern1: iPatternConfiguration;
-	pattern2: iPatternConfiguration;
+	pattern1Id: string;
+	pattern2Id: string;
+	// pattern1: iPatternConfiguration;
+	// pattern2: iPatternConfiguration;
 }
 
 declare interface iPieceGroup {
@@ -91,7 +93,7 @@ declare interface iSolution {
 	readonly pattern1: iPatternConfiguration;
 	readonly pattern1RotationDeg: number;
 	readonly pattern2: iPatternConfiguration;
-	readonly pattern2RotationDeg: number;
+	// readonly pattern2RotationDeg: number;
 }
 
 declare interface iPieceGroupFacade {

@@ -43,14 +43,16 @@ export default class PatternEvaluator implements iPatternEvaluator {
 			const mSum = m1.add( m2 );*/
 
 			const patternComparison: iPatternComparison = {
-				matrix1Original: pattern1.matrix,
-				matrix1Rotated,
+				// matrix1Original: pattern1.matrix,
+				// matrix1Rotated,
 				matrix1RotationAngleDeg: i * 90,
-				matrix2Mirrored,
-				matrix2Original: pattern2.matrix,
-				matrixSum: matrix(matrix1Rotated).add(matrix(matrix2Mirrored)),
-				pattern1,
-				pattern2,
+				// matrix2Mirrored,
+				// matrix2Original: pattern2.matrix,
+				pattern1Id: pattern1.id,
+				pattern2Id: pattern2.id,
+				// matrixSum: matrix(matrix1Rotated).add(matrix(matrix2Mirrored)),
+				// pattern1,
+				// pattern2,
 				isCompatible,
 			};
 
@@ -58,10 +60,12 @@ export default class PatternEvaluator implements iPatternEvaluator {
 			this.patternComparisons.push(patternComparison);
 
 			if (isCompatible) {
+				/*
 				console.info(__filename, 'matrixSumIsGood', {
 					patternComparison,
 				});
-				solutions.push(new Solution(pattern1, i * 90, pattern2, 0));
+				*/
+				solutions.push(new Solution(pattern1, i * 90, pattern2));
 			} else {
 				/*
 				console.warn(__filename, 'NOT matrixSumIsGood', {
@@ -79,7 +83,7 @@ export default class PatternEvaluator implements iPatternEvaluator {
 		this.comparisonHistory.set(patternCoupleId1, solutions);
 		this.comparisonHistory.set(patternCoupleId2, solutions);
 		if (solutions.length) {
-			console.log(__filename, `${solutions.length} Solution(s) found for "${patternCoupleId1}"`);
+			// console.log(__filename, `${solutions.length} Solution(s) found for "${patternCoupleId1}"`);
 		} else {
 			// console.warn(__filename, `No solutions found for "${patternCoupleId1}`);
 		}
