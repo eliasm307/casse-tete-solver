@@ -10,8 +10,7 @@ test(__filename, () => {
 
 	const compatibilityFinder: iCompatibilityFinder = new CompatibilityFinder(pieceGroupFacade) as iCompatibilityFinder;
 
-
-	
+	console.log(__filename, { compatibilityFinder });
 
 	// console.log(__filename, 'dec2bin covert 0 to binary', { decimal, binaryResult });
 	// testPieceGroupPermutations.forEach((value, key) => console.log(__filename, { key, value }));
