@@ -60,6 +60,7 @@ export default class CompatibilityFinder implements iCompatibilityFinder {
 			pieceGroup2.patterns.forEach((pattern2: iPatternConfiguration) => {
 				const patternEvaluator = new PatternEvaluator(pattern1, pattern2);
 
+				
 				// record any solutions found from the evaluation
 				validSolutions.push(...patternEvaluator.solutions);
 

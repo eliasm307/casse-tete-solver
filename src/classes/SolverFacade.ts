@@ -41,6 +41,8 @@ export default class SolverFacade implements iSolverFacade {
 
 		const randomSolution : iSolution = this.solutions[ randomSolutionNumber ];
 
+		// todo add method to print a plain text summary of solutions
+
 		console.log(__filename, 'AFTER SAVE', {
 			patternComparisonCount: this.patternComparisonCount,
 			randomSolution: randomSolution.id
