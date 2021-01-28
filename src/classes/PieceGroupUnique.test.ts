@@ -29,7 +29,7 @@ console.log(CONSOLE_SEPARATOR);
 	]);
 
 	expect(pieceGroup.permutations.length).toEqual(6);
-	expect(pieceGroup.patterns.length).toEqual(48);
+	expect(pieceGroup.patterns.length).toEqual(384);
 
 	expect(pieceGroup.oppositePieceIdGroup).toEqual([3, 4, 5]);
 });

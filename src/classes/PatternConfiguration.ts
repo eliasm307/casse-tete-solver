@@ -10,15 +10,17 @@ export default class PatternConfiguration implements iPatternConfiguration {
 	pieceRotations: PieceGroupSidesTuple;
 	private pieceGroup: iPieceGroup;
 
-	constructor(pieceGroup: iPieceGroupPermutation, sidesUsed: PieceGroupSidesTuple, pieceRotations: Number3Tuple) {
-		this.pieceSides = sidesUsed;
+	constructor(pieceGroup: iPieceGroupPermutation, pieceSides: Number3Tuple, pieceRotations: Number3Tuple) {
+		this.pieceSides = pieceSides;
 		this.pieceRotations = pieceRotations;
 		this.pieceGroupId = pieceGroup.id;
 		this.pieceGroup = pieceGroup;
 		this.matrix = getPatternMatrix(this.pieceGroup.layout, this.pieceSides, this.pieceRotations);
 
 		this.matrixMirrored = this.getMatrixMirrored();
-		this.id = `[pieceGroupId:"${this.pieceGroupId}"//sidesUsed:"${this.pieceSides.toString()}"]`;
+		this.id = `[pieceGroupId:"${
+			this.pieceGroupId
+		}"//pieceSides:"${this.pieceSides.toString()}"//pieceRotations:"${this.pieceRotations.toString()}"]`;
 	}
 
 	isCompatibleWith(patternConfiguration: iPatternConfiguration): boolean {

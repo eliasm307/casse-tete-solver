@@ -27,7 +27,7 @@ test(testName, () => {
 		AVAILABLE_PIECES_MAP.get(2),
 	]);
 
-	expect(pieceGroup.patterns.length).toEqual(8);
+	expect(pieceGroup.patterns.length).toEqual(64);
 
 	// expect(pieceGroup.getPatterns())
 });

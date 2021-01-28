@@ -28,7 +28,7 @@ export default class CompatibilityFinder implements iCompatibilityFinder {
 			validSolutions.push(...this.evaluatePieceGroup(pieceGroup));
 		});
 
-		// console.log(__filename, { patternEvaluatorCount: this.patternEvaluator.evaluatedCount });
+		console.log(__filename, { patternEvaluations: this.patternEvaluations });
 
 		return validSolutions;
 	}
