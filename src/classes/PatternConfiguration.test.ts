@@ -1,14 +1,18 @@
 import { AVAILABLE_PIECES_MAP, CONSOLE_SEPARATOR } from '../constants/production';
+import PatternConfiguration from './PatternConfiguration';
+import PatternEvaluator from './PatternEvaluator';
 import PieceGroupPermutation from './PieceGroupPermutation';
-import PieceGroupUnique from './PieceGroupUnique';
 
-let testName: string = 'iPieceGroupUnique test 1';
+let testName: string = 'PieceGroupPermutation 1';
 test(testName, () => {
 	const testPieceIdGroup: PieceIdGroupTuple = [0, 1, 2];
 
-	const pieceGroup: iPieceGroupUnique = new PieceGroupUnique(testPieceIdGroup, AVAILABLE_PIECES_MAP);
-	/* 
-console.log(CONSOLE_SEPARATOR);
+	const pieceGroup: iPieceGroupPermutation = new PieceGroupPermutation(testPieceIdGroup, AVAILABLE_PIECES_MAP);
+
+	const pattern = new PatternConfiguration(pieceGroup, [0, 0, 0], [0, 0, 0]);
+
+	/*
+	console.log( CONSOLE_SEPARATOR );
 	console.log(__filename, {
 		testName,
 		testPieceIdGroup,
@@ -17,19 +21,13 @@ console.log(CONSOLE_SEPARATOR);
 		pieceGroupGetPatternsMatrices: pieceGroup
 			.getPatterns()
 			.map(pattern => pattern.matrix.reduce((acc, row) => (acc += `[ ${row.toString()} ]`), '')),
-	});
-	console.log(CONSOLE_SEPARATOR);
+	} );
+	console.log( CONSOLE_SEPARATOR );
 	*/
 
 	// testPieceGroupPermutations.forEach((value, key) => console.log(__filename, { key, value }));
-	expect(pieceGroup.layout).toEqual([
-		AVAILABLE_PIECES_MAP.get(0),
-		AVAILABLE_PIECES_MAP.get(1),
-		AVAILABLE_PIECES_MAP.get(2),
-	]);
+	expect(pattern.matrix.length).toEqual(3);
+	expect(pattern.matrixMirrored.length).toEqual(3);
 
-	expect(pieceGroup.permutations.length).toEqual(6);
-	expect(pieceGroup.patterns.length).toEqual(384);
-
-	expect(pieceGroup.oppositePieceIdGroup).toEqual([3, 4, 5]);
+	// expect(pieceGroup.getPatterns())
 });

@@ -5,7 +5,7 @@
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
-		"test": "rm -rf dist && tsc && jest --coverage",
+		"test": "rm -rf dist && tsc && node --max-old-space-size=4096 ./node_modules/jest-cli/bin/jest.js --logHeapUsage",
 		"build": "tsc",
 		"prepublish": "tsc"
 	},
@@ -29,11 +29,18 @@
 	"dependencies": {
 		"@types/node": "^14.14.22",
 		"array-permutation": "^0.2.0",
-		"combinations": "^1.0.0"
+		"combinations": "^1.0.0",
+		"matrix-js": "^1.5.1",
+		"rotate-matrix": "^0.0.3"
 	},
 	"jest": {
 		"preset": "ts-jest",
 		"testEnvironment": "node",
-		"verbose": false
+		"verbose": false,
+		"modulePathIgnorePatterns": [
+			"dist",
+			"node_modules",
+			"coverage"
+		]
 	}
 }

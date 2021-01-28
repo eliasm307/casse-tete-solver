@@ -1,6 +1,6 @@
-// import { Piece } from '../tsc/interfaces';
 import TypeFactory from '../classes/TypeFactory';
 
+// import { Piece } from '../tsc/interfaces';
 
 /** This defines 6 pieces with 2 sides and 3 slots on each side.
  * slots are given integer values ie -1 for a hole, 0 for a blank, 1 for a nub
@@ -51,7 +51,7 @@ const AVAILABLE_PIECES_ARRAY: iPiece[] = [
 	},
 ];
 
-const AVAILABLE_PIECES_MAP: PiecesMap = TypeFactory.newPiecesMap();
+const AVAILABLE_PIECES_MAP: PieceMap = TypeFactory.newPiecesMap();
 
 // add available pieces to map
 AVAILABLE_PIECES_ARRAY.forEach(piece => AVAILABLE_PIECES_MAP.set(piece.id, piece));

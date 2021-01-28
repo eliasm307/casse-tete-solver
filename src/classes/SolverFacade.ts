@@ -1,44 +1,56 @@
-import combinations from 'combinations';
-
+import CompatibilityFinder from './CompatibilityFinder';
+import PieceGroupFacade from './PieceGroupFacade';
 import PieceGroupUnique from './PieceGroupUnique';
 import TypeFactory from './TypeFactory';
 
 export default class SolverFacade implements iSolverFacade {
-	availablePieces: PiecesMap;
-	uniquePieceGroups: PieceGroupMap;
-	pieceIdGroups: PieceIdGroupsMap;
+	availablePieces: PieceMap;
+	pieceGroupFacade: iPieceGroupFacade;
+	patternEvaluations: PatternEvaluationsMap;
+	patternComparisonCount: number = 0;
+	solutions: iSolution[];
+	/*
+	allPieceGroupUniques: PieceGroupUniqueMap = TypeFactory.newPieceGroupUniqueMap();
+	allPieceGroupPermutations: PieceGroupPermutationMap = TypeFactory.newPieceGroupPermutationMap();
+	uniquePieceGroupPermutations: PieceGroupPermutationMap = TypeFactory.newPieceGroupPermutationMap();
+	allPatterns: PatternConfigurationMap = TypeFactory.newPatternConfigurationMap();
+	uniquePatterns: PatternConfigurationMap = TypeFactory.newPatternConfigurationMap();
+	uniquePieceIdGroups: PieceIdGroupMap;
+	*/
 
-	constructor(availablePieces: PiecesMap) {
-		this.availablePieces = availablePieces;
-		this.pieceIdGroups = this.getPossiblePieceGroups();
-		this.uniquePieceGroups = TypeFactory.newPieceGroupMap();
-		this.pieceIdGroups.forEach((idGroup, id) =>
-			this.uniquePieceGroups.set(id, new PieceGroupUnique(idGroup, availablePieces))
-		);
+	constructor(pieceGroupFacade: PieceGroupFacade) {
+		this.availablePieces = pieceGroupFacade.availablePieces;
+		this.pieceGroupFacade = new PieceGroupFacade(this.availablePieces);
+
+		console.log(__filename, 'BEFORE SOLVE', {
+			availablePiecesCount: this.availablePieces.size,
+			pieceIdGroupsCount: this.pieceGroupFacade.uniquePieceIdGroups.size,
+			allPieceGroupUniquesCount: this.pieceGroupFacade.allPieceGroupUniques.size,
+			allPieceGroupPermutationsCount: this.pieceGroupFacade.allPieceGroupPermutations.size,
+			uniquePieceGroupPermutationsCount: this.pieceGroupFacade.uniquePieceGroupPermutations.size,
+			allPatternsCount: this.pieceGroupFacade.allPatterns.size,
+			uniquePatternsCount: this.pieceGroupFacade.uniquePatterns.size,
+		});
+
+		const compatibilityFinder = new CompatibilityFinder(pieceGroupFacade);
+
+		this.patternEvaluations = compatibilityFinder.patternEvaluations;
+
+		// console.log(__filename, { patternComparisonCount: compatibilityFinder.getPatternEvaluations(pieceGroupId) });
+
+		this.solutions = compatibilityFinder.solutions;
+		this.patternComparisonCount = this.countPatternComparisons();
 	}
-	getPossiblePieceGroups(): PieceIdGroupsMap {
-		// extract piece ids into a simple array
-		const pieceIDs: number[] = [...this.availablePieces].map((_, id) => id);
 
-		// produce the possible combinations of the available ids, in groups of 3, in the correct type (PieceIdGroup)
-		const combinationTuples: PieceIdGroupTuple[] = combinations(pieceIDs, 3, 3)
-			.filter((pieceIDGroup: number[]) => pieceIDGroup.length === 3) // make sure id groups are 3 items long
-			.map(pieceIDGroup => pieceIDGroup as PieceIdGroupTuple); // map id groups to tuple type
+	// count all pattern comparisons
+	countPatternComparisons(): number {
+		let patternComparisonCount = 0;
+		this.patternEvaluations.forEach(patternEvaluators => {
+			patternComparisonCount += patternEvaluators.reduce((sum: number, patternEvaluator: iPatternEvaluator) => {
+				return sum + patternEvaluator.patternComparisons.length;
+			}, 0);
+		});
 
-		// generate an id for each combination
-		const combinationsWithIds: Array<[string, PieceIdGroupTuple]> = combinationTuples.map(pieceIDGroup => [
-			pieceIDGroup.toString(),
-			pieceIDGroup as PieceIdGroupTuple,
-		]);
-
-		// put the combinations in a map and use id as key
-		const pieceIDGroups: PieceIdGroupsMap = TypeFactory.newPieceIdGroupsMap(combinationsWithIds); 
-
-		// return piece groups, with piece ids
-		return pieceIDGroups;
-	}
-
-	solve(): iPatternConfiguration[] {
-		throw new Error('Method not implemented.');
+		return patternComparisonCount;
 	}
 }
