@@ -6,7 +6,7 @@ import getPossiblePieceGroups from './getPossiblePieceGroups';
 test('getPieceGroupPermutations for 1 piece group [0,1,2]', () => {
 	const testPieces = generateTestPieces(3);
 	const testPieceGroups = getPossiblePieceGroups(testPieces);
-	const testPieceGroupPermutations: PieceGroupPermutationsMap = getPieceGroupPermutations( testPieceGroups );
+	const testPieceGroupPermutations: PieceIdGroupsMap = getPieceGroupPermutations( testPieceGroups );
 	const testPieceGroupPermutationsValues = Array.from(testPieceGroupPermutations.values())[0];
 	const testPieceGroupPermutationsEntries = Array.from(testPieceGroupPermutations.entries())[0];
 

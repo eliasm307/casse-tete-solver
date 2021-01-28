@@ -15,7 +15,10 @@ export default class CompatibilityFinder implements iCompatibilityFinder {
 		// this.patternEvaluator = new PatternEvaluator();
 		this.solutions = this.findSolutions();
 
-		// console.log(__filename, { patternComparisonCount: this.patternEvaluationCount, solutionsFound: this.solutions });
+		console.log(__filename, {
+			patternEvaluationCount: this.patternEvaluations.size,
+			solutionsFoundCount: this.solutions.length,
+		});
 	}
 	getPatternEvaluations(pieceGroupId: string): PatternEvaluator[] {
 		throw new Error('Method not implemented.');
@@ -50,6 +53,7 @@ export default class CompatibilityFinder implements iCompatibilityFinder {
 		const validSolutions: iSolution[] = [];
 
 		const patternEvaluations: PatternEvaluator[] = [];
+		let patternEvaluationCount
 
 		// compare all patterns in the 2 groups to each other and find valid solutions
 		pieceGroup1.patterns.forEach((pattern1: iPatternConfiguration) => {
@@ -65,6 +69,8 @@ export default class CompatibilityFinder implements iCompatibilityFinder {
 			});
 		});
 
+		// record pattern evaluations for this piece group
+		// todo is it necessary to collect all the failed pattern evaluations? would a count not suffice?
 		this.patternEvaluations.set(pieceGroup1.id, patternEvaluations);
 
 		return validSolutions;

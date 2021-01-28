@@ -1,8 +1,10 @@
 import perm from 'array-permutation';
 
-function getPieceGroupPermutations(pieceIdGroups: PieceIdGroupMap): PieceGroupPermutationsMap {
+import TypeFactory from '../classes/TypeFactory';
+
+function getPieceGroupPermutations(pieceIdGroups: PieceIdGroupMap): PieceIdGroupsMap {
 	// ? replace with factory instantiation
-	const pieceGroupPermutations: PieceGroupPermutationsMap = new Map<string, PieceIdGroupTuple[]>();
+	const pieceGroupPermutations: PieceIdGroupsMap = TypeFactory.newPieceIdGroupArrayMap();
 
 	//
 	pieceIdGroups.forEach((pieceIdGroup, key) => {

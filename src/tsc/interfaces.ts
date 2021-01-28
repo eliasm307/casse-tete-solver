@@ -49,9 +49,6 @@ declare interface iPieceGroup {
 	readonly pieceIdGroup: PieceIdGroupTuple;
 	readonly layout: Piece3Tuple;
 	readonly patterns: iPatternConfiguration[];
-
-	// ? getPatternMatrix(sidesUsed: PieceGroupSidesTuple): PatternMatrixTuple;
-	// ? getPatterns(): iPatternConfiguration[];
 }
 
 declare interface iPieceGroupUnique extends iPieceGroup {

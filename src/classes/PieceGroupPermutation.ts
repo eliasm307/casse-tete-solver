@@ -24,8 +24,6 @@ export default class PieceGroupPermutation implements iPieceGroupPermutation {
 	private getPatterns(): iPatternConfiguration[] {
 		const accumulated: iPatternConfiguration[] = [];
 
-		// todo this accounts for flipping pieces but needs to also account for rotating pieces
-
 		// for the current permutation, loop through all the possible configurations from flipping (ie same as counting to 7 in binary)
 		for (let flipConfig = 0; flipConfig < 8; flipConfig++) {
 			// get binary value of current config

@@ -38,7 +38,7 @@
 		"testEnvironment": "node",
 		"verbose": false,
 		"modulePathIgnorePatterns": [
-			"dist",
+			"dist/.*\\.test\\.",
 			"node_modules",
 			"coverage"
 		]

@@ -43,4 +43,7 @@ export default abstract class TypeFactory {
 	static newPieceGroupPatternComparisonsMap(): PatternComparisonsMap {
 		return new Map<string, string[]>();
 	}
+	static newPieceIdGroupArrayMap(): PieceIdGroupArrayMap {
+		return new Map<string, PieceIdGroupTuple[]>();
+	}
 }

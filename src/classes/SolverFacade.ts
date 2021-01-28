@@ -33,13 +33,18 @@ export default class SolverFacade implements iSolverFacade {
 		});
 
 		const compatibilityFinder = new CompatibilityFinder(pieceGroupFacade);
-
 		this.patternEvaluations = compatibilityFinder.patternEvaluations;
-
-		// console.log(__filename, { patternComparisonCount: compatibilityFinder.getPatternEvaluations(pieceGroupId) });
-
 		this.solutions = compatibilityFinder.solutions;
 		this.patternComparisonCount = this.countPatternComparisons();
+
+		const randomSolutionNumber = Math.round( Math.random() * this.solutions.length );
+
+		const randomSolution : iSolution = this.solutions[ randomSolutionNumber ];
+
+		console.log(__filename, 'AFTER SAVE', {
+			patternComparisonCount: this.patternComparisonCount,
+			randomSolution: randomSolution.id
+		});
 	}
 
 	// count all pattern comparisons

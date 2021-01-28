@@ -14,7 +14,6 @@ export default class PieceGroupFacade implements iPieceGroupFacade {
 	constructor(availablePieces: PieceMap) {
 		this.availablePieces = availablePieces;
 		this.uniquePieceIdGroups = this.getPossiblePieceGroups();
-		// todo handle setup of piece groups via a piece group facade
 		// convert pieceIdGroups to PieceGroup objects
 		this.uniquePieceIdGroups.forEach((idGroup, id) =>
 			this.allPieceGroupUniques.set(id, new PieceGroupUnique(idGroup, availablePieces))

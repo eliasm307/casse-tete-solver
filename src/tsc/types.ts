@@ -1,21 +1,21 @@
+declare type Piece3Tuple = [iPiece, iPiece, iPiece];
+
 /**
  * Tuple of 3 numbers representing the segments of a piece's side
  * where -1 = hole, 0 = blank, and 1 = bump
  */
-declare type SidePatternTuple = [number, number, number];
+declare type SidePatternTuple = Number3Tuple;
 
 /** Tuple representing 3x3 pattern produced by putting 3 pieces together */
 declare type PatternMatrixTuple = [SidePatternTuple, SidePatternTuple, SidePatternTuple];
 
 // todo use general Number3Tuple for this
-declare type PieceGroupSidesTuple = [number, number, number];
+declare type PieceGroupSidesTuple = Number3Tuple;
 
 // todo use general Number3Tuple for this
 /** Tuple of 3 numbers representing 3 ids of pieces in a group */
-declare type PieceIdGroupTuple = [ number, number, number ];
+declare type PieceIdGroupTuple = Number3Tuple;
 declare type Number3Tuple = [number, number, number];
-
-declare type Piece3Tuple = [iPiece, iPiece, iPiece];
 
 declare type PatternConfiguration2Tuple = [iPatternConfiguration, iPatternConfiguration];
 
@@ -38,7 +38,7 @@ declare type PieceIdGroupMap = Map<string, PieceIdGroupTuple>;
  * @key base PieceIdGroup (sorted in ascending order) as a string
  * @value array of possible PieceIdGroup permutations of the base sorted PieceIdGroup
  */
-declare type PieceGroupPermutationsMap = Map<string, PieceIdGroupTuple[]>;
+declare type PieceIdGroupsMap = Map<string, PieceIdGroupTuple[]>;
 
 /**
  * Map of piece group permutations and their corresponding possible patterns
@@ -56,3 +56,4 @@ declare type PieceGroupPermutationMap = Map<string, iPieceGroupPermutation>;
 
 /** Map used to cache any comparisons already made */
 declare type SolutionsArrayMap = Map<string, iSolution[]>;
+declare type PieceIdGroupArrayMap = Map<string, PieceIdGroupTuple[]>;
