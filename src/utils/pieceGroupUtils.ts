@@ -13,6 +13,9 @@ export function getPatternMatrix(
 }
 
 function rotateSide(side: Number3Tuple): Number3Tuple {
-	// todo generalise this
-	return [side[2], side[1], side[0]];
+	return side.reduce( ( acc: number[], slotValue: number ) => {
+		// reverse order of side 
+		acc.unshift(slotValue);
+		return acc;
+	}, [] ) as Number3Tuple;
 }

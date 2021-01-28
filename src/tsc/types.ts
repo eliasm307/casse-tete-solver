@@ -9,10 +9,8 @@ declare type SidePatternTuple = Number3Tuple;
 /** Tuple representing 3x3 pattern produced by putting 3 pieces together */
 declare type PatternMatrixTuple = [SidePatternTuple, SidePatternTuple, SidePatternTuple];
 
-// todo use general Number3Tuple for this
 declare type PieceGroupSidesTuple = Number3Tuple;
 
-// todo use general Number3Tuple for this
 /** Tuple of 3 numbers representing 3 ids of pieces in a group */
 declare type PieceIdGroupTuple = Number3Tuple;
 declare type Number3Tuple = [number, number, number];
