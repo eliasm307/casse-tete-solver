@@ -21,19 +21,22 @@ test(__filename, () => {
 	const originalPatternComparisonsPerPieceGroup: number = 589824;
 
 	console.log(__filename, {
-		patternEvaluationsPerPieceGroupDiffValue:
-			(patternEvaluationsPerPieceGroup - originalPatternEvaluationsPerPieceGroup).toLocaleString() + '%',
-		patternEvaluationsPerPieceGroupDiffPercentage: (
-			(100 * (patternEvaluationsPerPieceGroup - originalPatternEvaluationsPerPieceGroup)) /
-			originalPatternEvaluationsPerPieceGroup
+		patternEvaluationsPerPieceGroupDiffValue: (
+			patternEvaluationsPerPieceGroup - originalPatternEvaluationsPerPieceGroup
 		).toLocaleString(),
+		patternEvaluationsPerPieceGroupDiffPercentage:
+			(
+				(100 * (patternEvaluationsPerPieceGroup - originalPatternEvaluationsPerPieceGroup)) /
+				originalPatternEvaluationsPerPieceGroup
+			).toLocaleString() + '%',
 		patternComparisonsPerPieceGroupDiffValue: (
 			patternComparisonsPerPieceGroup - originalPatternComparisonsPerPieceGroup
 		).toLocaleString(),
-		patternComparisonsPerPieceGroupDiffPercentage: (
-			(100 * (patternComparisonsPerPieceGroup - originalPatternComparisonsPerPieceGroup)) /
-			originalPatternComparisonsPerPieceGroup
-		).toLocaleString(),
+		patternComparisonsPerPieceGroupDiffPercentage:
+			(
+				(100 * (patternComparisonsPerPieceGroup - originalPatternComparisonsPerPieceGroup)) /
+				originalPatternComparisonsPerPieceGroup
+			).toLocaleString() + '%',
 	});
 
 	// console.log(__filename, 'dec2bin covert 0 to binary', { decimal, binaryResult });
