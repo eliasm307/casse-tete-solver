@@ -118,7 +118,7 @@ declare interface iSolution {
 	readonly pattern2: iPatternConfiguration;
 }
 
-declare interface iExporter {
+declare interface iExporter { 
 	exportSolutions(): void;
 	exportPieces(): void;
 }

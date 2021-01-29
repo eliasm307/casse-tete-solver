@@ -58,4 +58,4 @@ AVAILABLE_PIECES_ARRAY.forEach(piece => AVAILABLE_PIECES_MAP.set(piece.id, piece
 
 const CONSOLE_SEPARATOR = '----------------------------------------';
 
-export { CONSOLE_SEPARATOR, AVAILABLE_PIECES_MAP };
+export { CONSOLE_SEPARATOR, AVAILABLE_PIECES_MAP, AVAILABLE_PIECES_ARRAY };

@@ -1,21 +1,32 @@
-import fs from 'fs-extra';
+import fs, { WriteOptions } from 'fs-extra';
 
 export default class Exporter implements iExporter {
 	private pieceGroupFacade: iPieceGroupFacade;
 	private solverFacade: iSolverFacade;
 
-	constructor(pieceGroupFacade: iPieceGroupFacade, solverFacade: iSolverFacade) {
+	private availablePieces: iPiece[];
+
+	constructor(availablePieces: iPiece[], pieceGroupFacade: iPieceGroupFacade, solverFacade: iSolverFacade) {
 		this.pieceGroupFacade = pieceGroupFacade;
 		this.solverFacade = solverFacade;
+		this.availablePieces = availablePieces;
 	}
 	exportSolutions(): void {
-		const solutions: iSolution[] = this.solverFacade.solutionsAll;
-
-		const outputData: string = JSON.stringify(solutions, null, 2);
-
-		fs.writeJSONSync('Exports/Solutions', solutions);
+		// ? customise data export?
+		this.exportDataToFile(this.solverFacade.solutionsAll, 'src/exports/solutions.json');
 	}
 	exportPieces(): void {
-		throw new Error('Method not implemented.');
+		// ? customise data export?
+		this.exportDataToFile(this.availablePieces, 'src/exports/pieces.json');
+	}
+
+	private exportDataToFile(data: any, outputFilePath: string): void {
+		const writeOptions: WriteOptions = {
+			spaces: 2,
+		};
+		fs.ensureFile(outputFilePath)
+			.then(_ => fs.writeJSON(outputFilePath, data, writeOptions))
+			.then(_ => console.log(__filename, `File: "${outputFilePath}" created successfully`))
+			.catch(error => console.error(__filename, `ERROR creating File: "${outputFilePath}"`, { error }));
 	}
 }
