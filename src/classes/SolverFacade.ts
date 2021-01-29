@@ -61,8 +61,7 @@ export default class SolverFacade implements iSolverFacade {
 		}, TypeFactory.newSolutionMap());
 
 		console.log(__filename, 'FINAL REPORT', {
-			availablePiecesCount: this.availablePieces.size.toLocaleString(),
-			pieceIdGroupsCount: this.pieceGroupFacade.uniquePieceIdGroups.size.toLocaleString(),
+			availablePiecesCount: this.availablePieces.size.toLocaleString(), 
 			allPieceGroupUniquesCount: this.pieceGroupFacade.allPieceGroupUniques.size.toLocaleString(),
 			allPieceGroupPermutationsCount: this.pieceGroupFacade.allPieceGroupPermutations.size.toLocaleString(),
 			uniquePieceGroupPermutationsCount: this.pieceGroupFacade.uniquePieceGroupPermutations.size.toLocaleString(),

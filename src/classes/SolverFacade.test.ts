@@ -6,14 +6,18 @@ test(__filename, () => {
 	const pieceGroupFacade = new PieceGroupFacade(AVAILABLE_PIECES_MAP);
 	const solverFacade: SolverFacade = new SolverFacade(pieceGroupFacade);
 
-	const maxPatternComparisons: number = 11796480;
-	const patternComparisonCount: number = solverFacade.patternComparisonCount;
+	const oldMaxPatternComparisons: number = 11796480; // pattern comparisons when looking at all combinations
+	const newPatternComparisonCount: number = solverFacade.patternComparisonCount;
 
 	console.log(__filename, {
-		patternComparisonCountDiffVal: (patternComparisonCount - maxPatternComparisons).toLocaleString(),
-		patternComparisonCountDiffPercentage: `${100 * (patternComparisonCount - maxPatternComparisons) / maxPatternComparisons}%)`,
+		maxPatternComparisons: oldMaxPatternComparisons,
+		patternComparisonCount: newPatternComparisonCount,
+		patternComparisonCountDiffVal: (newPatternComparisonCount - oldMaxPatternComparisons).toLocaleString(),
+		patternComparisonCountDiffPercentage: `${
+			(100 * (newPatternComparisonCount - oldMaxPatternComparisons)) / oldMaxPatternComparisons
+		}%)`,
 	});
 
-	expect(solverFacade.patternComparisonCount).toBeLessThan(maxPatternComparisons); // pattern comparisons when looking at all combinations
+	expect(solverFacade.patternComparisonCount).toBeLessThan(oldMaxPatternComparisons);
 	expect(solverFacade.solutionsAll.length).toBeGreaterThan(0);
 });
