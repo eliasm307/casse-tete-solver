@@ -8,14 +8,14 @@ export default class PatternConfiguration implements iPatternConfiguration {
 	pieceGroupId: string;
 	pieceSides: PieceGroupSidesTuple;
 	pieceRotations: PieceGroupSidesTuple;
-	private pieceGroup: iPieceGroup;
+	// private pieceGroup: iPieceGroup;
 
 	constructor(pieceGroup: iPieceGroupPermutation, pieceSides: Number3Tuple, pieceRotations: Number3Tuple) {
 		this.pieceSides = pieceSides;
 		this.pieceRotations = pieceRotations;
 		this.pieceGroupId = pieceGroup.id;
-		this.pieceGroup = pieceGroup;
-		this.matrix = getPatternMatrix(this.pieceGroup.layout, this.pieceSides, this.pieceRotations);
+		// this.pieceGroup = pieceGroup;
+		this.matrix = getPatternMatrix(pieceGroup.layout, this.pieceSides, this.pieceRotations);
 
 		this.matrixMirrored = this.getMatrixMirrored();
 		this.id = `[pieceGroupId:"${

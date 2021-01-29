@@ -20,13 +20,19 @@ export default class SolverFacade implements iSolverFacade {
 	uniquePieceIdGroups: PieceIdGroupMap;
 	*/
 
-	constructor(pieceGroupFacade: PieceGroupFacade) {
+	constructor ( pieceGroupFacade: PieceGroupFacade ) {
+		// start time to record how long it takes to solve
+		console.time('time-to-solve');
+
 		this.availablePieces = pieceGroupFacade.availablePieces;
 		this.pieceGroupFacade = new PieceGroupFacade(this.availablePieces);
 		this.compatibilityFinder = new CompatibilityFinder(pieceGroupFacade);
 		this.pieceGroupPatternEvaluations = this.compatibilityFinder.pieceGroupPatternEvaluations;
 		this.patternComparisonCount = this.countPatternComparisons(this.pieceGroupPatternEvaluations);
 		this.solutionsAll = this.getAllSolutions(this.compatibilityFinder);
+
+		console.timeEnd('time-to-solve');
+
 		this.logResultsToConsole();
 		// todo add method to print a plain text summary of solutions
 	}
@@ -55,8 +61,7 @@ export default class SolverFacade implements iSolverFacade {
 		}, TypeFactory.newSolutionMap());
 
 		console.log(__filename, 'FINAL REPORT', {
-			availablePiecesCount: this.availablePieces.size.toLocaleString(),
-			pieceIdGroupsCount: this.pieceGroupFacade.uniquePieceIdGroups.size.toLocaleString(),
+			availablePiecesCount: this.availablePieces.size.toLocaleString(), 
 			allPieceGroupUniquesCount: this.pieceGroupFacade.allPieceGroupUniques.size.toLocaleString(),
 			allPieceGroupPermutationsCount: this.pieceGroupFacade.allPieceGroupPermutations.size.toLocaleString(),
 			uniquePieceGroupPermutationsCount: this.pieceGroupFacade.uniquePieceGroupPermutations.size.toLocaleString(),
@@ -72,7 +77,7 @@ export default class SolverFacade implements iSolverFacade {
 	}
 
 	/** counts all pattern comparisons */
-	countPatternComparisons(pieceGroupPatternEvaluations: PieceGroupPatternEvaluationMap): number {
+	private countPatternComparisons(pieceGroupPatternEvaluations: PieceGroupPatternEvaluationMap): number {
 		let patternComparisonCount = 0;
 		pieceGroupPatternEvaluations.forEach(patternEvaluators => {
 			patternComparisonCount += patternEvaluators.patternComparisonCount;

@@ -117,3 +117,8 @@ declare interface iSolution {
 	readonly pattern1RotationDeg: number;
 	readonly pattern2: iPatternConfiguration;
 }
+
+declare interface iExporter { 
+	exportSolutions(): void;
+	exportPieces(): void;
+}

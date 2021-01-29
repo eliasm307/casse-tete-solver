@@ -5,6 +5,7 @@
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
+		"start": "tsc && node dist/index.js",
 		"test": "rm -rf dist && tsc && jest --logHeapUsage",
 		"test:increased-memory": "rm -rf dist && tsc && node --max-old-space-size=4096 ./node_modules/jest-cli/bin/jest.js --logHeapUsage",
 		"build": "tsc",
@@ -22,6 +23,7 @@
 	"homepage": "https://github.com/eliasm307/casse-tete-solver#readme",
 	"devDependencies": {
 		"@types/combinations": "^1.0.0",
+		"@types/fs-extra": "^9.0.6",
 		"@types/jest": "^26.0.20",
 		"jest": "^26.6.3",
 		"ts-jest": "^26.4.4",
@@ -31,6 +33,7 @@
 		"@types/node": "^14.14.22",
 		"array-permutation": "^0.2.0",
 		"combinations": "^1.0.0",
+		"fs-extra": "^9.1.0",
 		"matrix-js": "^1.5.1",
 		"rotate-matrix": "^0.0.3"
 	},
