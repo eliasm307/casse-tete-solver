@@ -83,7 +83,7 @@ declare interface iSolverFacade {
 
 declare interface iCompatibilityFinder {
 	pieceGroupSolutions: SolutionsArrayMap;
-	pieceGroupPatternEvaluations: PieceGroupPatternEvaluationMap; 
+	pieceGroupPatternEvaluations: PieceGroupPatternEvaluationMap;
 
 	// getPieceGroupPatternComparisons(pieceGroupId: string): string[];
 }
@@ -99,7 +99,7 @@ declare interface iSolution {
 	readonly pattern1: iPatternConfiguration;
 	readonly pattern1RotationDeg: number;
 	readonly pattern2: iPatternConfiguration;
-	// readonly pattern2RotationDeg: number;
+	readonly matrix1Rotated: PatternMatrixTuple;
 }
 
 declare interface iPieceGroupFacade {

@@ -63,7 +63,7 @@ export default class PatternEvaluator implements iPatternEvaluator {
 					patternComparison,
 				});
 				*/
-				solutions.push(new Solution(pattern1, i * 90, pattern2));
+				solutions.push(new Solution(pattern1, i * 90, pattern2, matrix1Rotated));
 			} else {
 				/*
 				console.warn(__filename, 'NOT matrixSumIsGood', {
