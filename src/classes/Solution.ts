@@ -3,6 +3,7 @@ export default class Solution implements iSolution {
 	readonly pattern1: iPatternConfiguration;
 	readonly pattern1RotationDeg: number;
 	readonly pattern2: iPatternConfiguration;
+	readonly matrix1Rotated: PatternMatrixTuple;
 
 	// todo add toString or print method
 	constructor(
@@ -14,7 +15,7 @@ export default class Solution implements iSolution {
 		this.pattern1 = pattern1;
 		this.pattern1RotationDeg = pattern1RotationDeg;
 		this.pattern2 = pattern2;
-		this.id = `${ pattern1.id }-AND-${ pattern2.id }-RotatedBy-${ this.pattern1RotationDeg }degrees`;
+		this.id = `${pattern1.id}-AND-${pattern2.id}-RotatedBy-${this.pattern1RotationDeg}degrees`;
 		this.matrix1Rotated = matrix1Rotated;
 	}
 }

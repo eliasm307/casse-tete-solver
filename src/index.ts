@@ -11,3 +11,4 @@ const exporter = new Exporter(AVAILABLE_PIECES_ARRAY, pieceGroupFacade, solverFa
 exporter.exportAllSolutions();
 exporter.exportUniqueSolutions();
 exporter.exportPieces();
+exporter.exportSolutionsFromUniquePieceGroups();

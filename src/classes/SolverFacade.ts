@@ -9,9 +9,7 @@ export default class SolverFacade implements iSolverFacade {
 	pieceGroupFacade: iPieceGroupFacade;
 	pieceGroupPatternEvaluations: PieceGroupPatternEvaluationMap;
 	patternComparisonCount: number = 0;
-	solutionsAll: iSolution[];
-	solutionsUnique: iSolution[];
-	solutionsMap: SolutionsArrayMap = TypeFactory.newSolutionsArrayMap();
+	solutionReporter: iSolutionReporter;
 	private compatibilityFinder: iCompatibilityFinder;
 	/*
 	allPieceGroupUniques: PieceGroupUniqueMap = TypeFactory.newPieceGroupUniqueMap();
@@ -31,19 +29,16 @@ export default class SolverFacade implements iSolverFacade {
 		this.compatibilityFinder = new CompatibilityFinder(pieceGroupFacade);
 		this.pieceGroupPatternEvaluations = this.compatibilityFinder.pieceGroupPatternEvaluations;
 		this.patternComparisonCount = this.countPatternComparisons(this.pieceGroupPatternEvaluations);
-		const solutionGroup = new SolutionReporter(this.compatibilityFinder);
-
-		this.solutionsAll = solutionGroup.solutionsAll;
-		this.solutionsUnique = solutionGroup.solutionsUnique;
+		this.solutionReporter = new SolutionReporter(this.compatibilityFinder);
 
 		console.timeEnd('time-to-solve');
 
-		this.logResultsToConsole(); 
+		this.logResultsToConsole();
 	}
 
 	private logResultsToConsole(): void {
-		const randomSolutionNumber = Math.round(Math.random() * this.solutionsAll.length);
-		const randomSolution: iSolution = this.solutionsAll[randomSolutionNumber];
+		const randomSolutionNumber = Math.round(Math.random() * this.solutionReporter.solutionsAll.length);
+		const randomSolution: iSolution = this.solutionReporter.solutionsAll[randomSolutionNumber];
 
 		console.log(__filename, 'FINAL REPORT', {
 			availablePiecesCount: this.availablePieces.size.toLocaleString(),
@@ -54,9 +49,9 @@ export default class SolverFacade implements iSolverFacade {
 			uniquePatternsCount: this.pieceGroupFacade.uniquePatterns.size.toLocaleString(),
 			patternComparisonCount: this.patternComparisonCount.toLocaleString(),
 
-			pieceGroupsWithSolutionsCount: this.compatibilityFinder.pieceGroupSolutions.size.toLocaleString(),
-			allSolutionsCount: this.solutionsAll.length.toLocaleString(),
-			uniqueSolutionsCount: this.solutionsUnique.length,
+			pieceGroupsWithSolutionsCount: this.compatibilityFinder.solutionsByPieceGroup.size.toLocaleString(),
+			allSolutionsCount: this.solutionReporter.solutionsAll.length.toLocaleString(),
+			uniqueSolutionsCount: this.solutionReporter.solutionsUnique.length,
 			exampleSolutionId: randomSolution.id,
 		});
 	}

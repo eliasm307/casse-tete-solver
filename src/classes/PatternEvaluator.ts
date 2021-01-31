@@ -36,6 +36,8 @@ export default class PatternEvaluator implements iPatternEvaluator {
 			const matrix1Rotated = rotateMatrix(pattern1.matrix, i) as PatternMatrixTuple;
 			const isCompatible: boolean = this.matrixSumIsGood(matrix1Rotated, matrix2Mirrored);
 
+			// todo delete old comments
+
 			/*const m1 = matrix(matrix1);
 			const m2 = matrix(matrix2);
 			const mSum = m1.add( m2 );*/
