@@ -38,8 +38,7 @@ export default class SolverFacade implements iSolverFacade {
 
 		console.timeEnd('time-to-solve');
 
-		this.logResultsToConsole();
-		// todo add method to print a plain text summary of solutions
+		this.logResultsToConsole(); 
 	}
 
 	private logResultsToConsole(): void {
