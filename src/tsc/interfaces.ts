@@ -69,6 +69,7 @@ declare interface iSolverFacade {
 	readonly pieceGroupFacade: iPieceGroupFacade;
 	readonly pieceGroupPatternEvaluations: PieceGroupPatternEvaluationMap;
 	readonly solutionsAll: iSolution[];
+	readonly solutionsUnique: iSolution[];
 	readonly solutionsMap: SolutionsArrayMap;
 	/*
 	readonly allPieceGroupUniques: PieceGroupUniqueMap;
