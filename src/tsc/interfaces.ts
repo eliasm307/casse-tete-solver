@@ -122,3 +122,8 @@ declare interface iExporter {
 	exportSolutions(): void;
 	exportPieces(): void;
 }
+declare interface iSolutionGroup {
+	solutionsAll: iSolution[];
+	solutionsUnique: iSolution[];
+	solutionsMap: SolutionsArrayMap;
+}

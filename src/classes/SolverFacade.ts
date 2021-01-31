@@ -1,6 +1,7 @@
 import CompatibilityFinder from './CompatibilityFinder';
 import PieceGroupFacade from './PieceGroupFacade';
 import PieceGroupUnique from './PieceGroupUnique';
+import SolutionGroup from './SolutionGroup';
 import TypeFactory from './TypeFactory';
 
 export default class SolverFacade implements iSolverFacade {
@@ -20,7 +21,7 @@ export default class SolverFacade implements iSolverFacade {
 	uniquePieceIdGroups: PieceIdGroupMap;
 	*/
 
-	constructor ( pieceGroupFacade: PieceGroupFacade ) {
+	constructor(pieceGroupFacade: PieceGroupFacade) {
 		// start time to record how long it takes to solve
 		console.time('time-to-solve');
 
@@ -29,19 +30,14 @@ export default class SolverFacade implements iSolverFacade {
 		this.compatibilityFinder = new CompatibilityFinder(pieceGroupFacade);
 		this.pieceGroupPatternEvaluations = this.compatibilityFinder.pieceGroupPatternEvaluations;
 		this.patternComparisonCount = this.countPatternComparisons(this.pieceGroupPatternEvaluations);
-		this.solutionsAll = this.getAllSolutions(this.compatibilityFinder);
+		const solutionGroup = new SolutionGroup(this.compatibilityFinder);
+
+		this.solutionsAll = solutionGroup.solutionsAll;
 
 		console.timeEnd('time-to-solve');
 
 		this.logResultsToConsole();
 		// todo add method to print a plain text summary of solutions
-	}
-
-	/**  Puts all solutions into a flat array */
-	private getAllSolutions(compatibilityFinder: iCompatibilityFinder): iSolution[] {
-		const solutionsAll: iSolution[] = [];
-		compatibilityFinder.pieceGroupSolutions.forEach((solutions: iSolution[]) => solutionsAll.push(...solutions));
-		return solutionsAll;
 	}
 
 	private logResultsToConsole(): void {
@@ -61,7 +57,7 @@ export default class SolverFacade implements iSolverFacade {
 		}, TypeFactory.newSolutionMap());
 
 		console.log(__filename, 'FINAL REPORT', {
-			availablePiecesCount: this.availablePieces.size.toLocaleString(), 
+			availablePiecesCount: this.availablePieces.size.toLocaleString(),
 			allPieceGroupUniquesCount: this.pieceGroupFacade.allPieceGroupUniques.size.toLocaleString(),
 			allPieceGroupPermutationsCount: this.pieceGroupFacade.allPieceGroupPermutations.size.toLocaleString(),
 			uniquePieceGroupPermutationsCount: this.pieceGroupFacade.uniquePieceGroupPermutations.size.toLocaleString(),
