@@ -123,7 +123,7 @@ declare interface iExporter {
 	exportSolutions(): void;
 	exportPieces(): void;
 }
-declare interface iSolutionGroup {
+declare interface iSolutionReporter {
 	solutionsAll: iSolution[];
 	solutionsUnique: iSolution[];
 	solutionsMap: SolutionsArrayMap;

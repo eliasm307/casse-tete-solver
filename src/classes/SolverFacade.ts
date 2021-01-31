@@ -1,7 +1,7 @@
 import CompatibilityFinder from './CompatibilityFinder';
 import PieceGroupFacade from './PieceGroupFacade';
 import PieceGroupUnique from './PieceGroupUnique';
-import SolutionReporter from './SolutionGroup';
+import SolutionReporter from './SolutionReporter';
 import TypeFactory from './TypeFactory';
 
 export default class SolverFacade implements iSolverFacade {

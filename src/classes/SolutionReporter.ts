@@ -1,6 +1,6 @@
 import TypeFactory from './TypeFactory';
 
-export default class SolutionGroup implements iSolutionGroup {
+export default class SolutionReporter implements iSolutionReporter {
 	private compatibilityFinder: iCompatibilityFinder;
 	solutionsAll: iSolution[] = [];
 	solutionsUnique: iSolution[] = [];
