@@ -3,7 +3,6 @@ import fs, { WriteOptions } from 'fs-extra';
 export default class Exporter implements iExporter {
 	private pieceGroupFacade: iPieceGroupFacade;
 	private solverFacade: iSolverFacade;
-
 	private availablePieces: iPiece[];
 
 	constructor(availablePieces: iPiece[], pieceGroupFacade: iPieceGroupFacade, solverFacade: iSolverFacade) {
@@ -11,12 +10,14 @@ export default class Exporter implements iExporter {
 		this.solverFacade = solverFacade;
 		this.availablePieces = availablePieces;
 	}
-	exportSolutions(): void {
+	exportAllSolutions(): void {
 		// ? customise data export?
-		this.exportDataToFile(this.solverFacade.solutionsAll, 'src/exports/solutions.json');
+		this.exportDataToFile(this.solverFacade.solutionsAll, 'src/exports/solutions-all.json');
+	}
+	exportUniqueSolutions(): void {
+		this.exportDataToFile(this.solverFacade.solutionsUnique, 'src/exports/solutions-unique.json');
 	}
 	exportPieces(): void {
-		// ? customise data export?
 		this.exportDataToFile(this.availablePieces, 'src/exports/pieces.json');
 	}
 

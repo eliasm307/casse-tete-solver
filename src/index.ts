@@ -8,5 +8,6 @@ const solverFacade = new SolverFacade(pieceGroupFacade);
 
 const exporter = new Exporter(AVAILABLE_PIECES_ARRAY, pieceGroupFacade, solverFacade);
 
-exporter.exportSolutions();
+exporter.exportAllSolutions();
+exporter.exportUniqueSolutions();
 exporter.exportPieces();

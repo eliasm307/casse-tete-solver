@@ -2,12 +2,13 @@ import TypeFactory from './TypeFactory';
 
 export default class SolutionReporter implements iSolutionReporter {
 	private compatibilityFinder: iCompatibilityFinder;
-	solutionsAll: iSolution[] = [];
-	solutionsUnique: iSolution[] = [];
+	solutionsAll: iSolution[];
+	solutionsUnique: iSolution[];
 	solutionsMap: SolutionsArrayMap = TypeFactory.newSolutionsArrayMap();
 	constructor(compatibilityFinder: iCompatibilityFinder) {
 		this.compatibilityFinder = compatibilityFinder;
 		this.solutionsAll = this.getAllSolutions(this.compatibilityFinder);
+		this.solutionsUnique = this.getUniqueSolutions(this.solutionsAll);
 	}
 
 	/**  Puts all solutions into a flat array */
@@ -55,6 +56,6 @@ export default class SolutionReporter implements iSolutionReporter {
 			uniqueSolutionsByPatternMatricesCount: uniqueSolutionsByPatternMatrices.size,
 		});
 
-		return Array.from(uniqueSolutionsByPatternId.values());
+		return Array.from(uniqueSolutionsByPatternMatrices.values());
 	}
 }
