@@ -36,6 +36,8 @@ export default class PatternEvaluator implements iPatternEvaluator {
 			const matrix1Rotated = rotateMatrix(pattern1.matrix, i) as PatternMatrixTuple;
 			const isCompatible: boolean = this.matrixSumIsGood(matrix1Rotated, matrix2Mirrored);
 
+			// todo delete old comments
+
 			/*const m1 = matrix(matrix1);
 			const m2 = matrix(matrix2);
 			const mSum = m1.add( m2 );*/
@@ -63,7 +65,7 @@ export default class PatternEvaluator implements iPatternEvaluator {
 					patternComparison,
 				});
 				*/
-				solutions.push(new Solution(pattern1, i * 90, pattern2));
+				solutions.push(new Solution(pattern1, i * 90, pattern2, matrix1Rotated));
 			} else {
 				/*
 				console.warn(__filename, 'NOT matrixSumIsGood', {

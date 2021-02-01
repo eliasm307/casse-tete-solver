@@ -8,12 +8,12 @@ export default class CompatibilityFinder implements iCompatibilityFinder {
 
 	pieceGroupPatternEvaluations: PieceGroupPatternEvaluationMap = TypeFactory.newPieceGroupPatternEvaluationsMap();
 
-	pieceGroupSolutions: SolutionsArrayMap;
+	solutionsByPieceGroup: SolutionsArrayMap;
 	// patternEvaluationCount: number = 0;
 	constructor(pieceGroupFacade: PieceGroupFacade) {
 		this.pieceGroupUniques = pieceGroupFacade.allPieceGroupUniques;
 		// this.patternEvaluator = new PatternEvaluator();
-		this.pieceGroupSolutions = this.findSolutions();
+		this.solutionsByPieceGroup = this.findSolutions();
 	}
 
 	private findSolutions(): SolutionsArrayMap {

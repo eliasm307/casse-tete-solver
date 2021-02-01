@@ -67,9 +67,8 @@ declare interface iSolverFacade {
 	readonly patternComparisonCount: number;
 	readonly availablePieces: PieceMap;
 	readonly pieceGroupFacade: iPieceGroupFacade;
-	readonly pieceGroupPatternEvaluations: PieceGroupPatternEvaluationMap;
-	readonly solutionsAll: iSolution[];
-	readonly solutionsMap: SolutionsArrayMap;
+	readonly pieceGroupPatternEvaluations: PieceGroupPatternEvaluationMap; 
+	readonly solutionReporter: iSolutionReporter;
 	/*
 	readonly allPieceGroupUniques: PieceGroupUniqueMap;
 	readonly allPieceGroupPermutations: PieceGroupPermutationMap;
@@ -81,8 +80,8 @@ declare interface iSolverFacade {
 }
 
 declare interface iCompatibilityFinder {
-	pieceGroupSolutions: SolutionsArrayMap;
-	pieceGroupPatternEvaluations: PieceGroupPatternEvaluationMap; 
+	solutionsByPieceGroup: SolutionsArrayMap;
+	pieceGroupPatternEvaluations: PieceGroupPatternEvaluationMap;
 
 	// getPieceGroupPatternComparisons(pieceGroupId: string): string[];
 }
@@ -98,7 +97,7 @@ declare interface iSolution {
 	readonly pattern1: iPatternConfiguration;
 	readonly pattern1RotationDeg: number;
 	readonly pattern2: iPatternConfiguration;
-	// readonly pattern2RotationDeg: number;
+	readonly matrix1Rotated: PatternMatrixTuple;
 }
 
 declare interface iPieceGroupFacade {
@@ -118,7 +117,14 @@ declare interface iSolution {
 	readonly pattern2: iPatternConfiguration;
 }
 
-declare interface iExporter { 
-	exportSolutions(): void;
+declare interface iExporter {
+	exportAllSolutions(): void;
+	exportUniqueSolutions(): void;
 	exportPieces(): void;
+}
+declare interface iSolutionReporter {
+	solutionsAll: iSolution[];
+	solutionsUnique: iSolution[];
+	solutionsFromPieceGroups: iSolution[];
+	solutionsByPieceGroup: SolutionsArrayMap;
 }

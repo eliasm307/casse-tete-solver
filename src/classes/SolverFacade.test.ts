@@ -19,5 +19,5 @@ test(__filename, () => {
 	});
 
 	expect(solverFacade.patternComparisonCount).toBeLessThan(oldMaxPatternComparisons);
-	expect(solverFacade.solutionsAll.length).toBeGreaterThan(0);
+	expect(solverFacade.solutionReporter.solutionsAll.length).toBeGreaterThan(0);
 });
