@@ -95,7 +95,7 @@ export function findSolutionsBfs({
       }
 
       // no more pieces to add, we filled the board so we have a solution
-      const solution = createSolution({ board, context });
+      const solution = createSolution({ board: newBoard, context });
       if (solution) {
         solutions.push(solution);
         console.log("Found a solution", solutions.length);
@@ -318,6 +318,9 @@ function insertPieceIntoBoardMutation({
    */
   if (rotationDegrees === 0) {
     for (let i = 0; i < boardGrid.length; i++) {
+      if (!piece) {
+        debugger;
+      }
       boardGrid[slotIndex][i] += piece[i];
       if (boardGrid[slotIndex][i] > GRID_MAX) {
         throw new Error("Invalid piece placement");
