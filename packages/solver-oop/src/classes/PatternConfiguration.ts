@@ -3,10 +3,15 @@ import TypeFactory from "./TypeFactory";
 
 export default class PatternConfiguration implements iPatternConfiguration {
   id: string;
+
   matrix: PatternMatrixTuple;
+
   matrixMirrored: PatternMatrixTuple;
+
   pieceGroupId: string;
+
   pieceSides: PieceGroupSidesTuple;
+
   pieceRotations: PieceGroupSidesTuple;
   // private pieceGroup: iPieceGroup;
 
@@ -27,9 +32,6 @@ export default class PatternConfiguration implements iPatternConfiguration {
     }"//pieceSides:"${this.pieceSides.toString()}"//pieceRotations:"${this.pieceRotations.toString()}"]`;
   }
 
-  isCompatibleWith(patternConfiguration: iPatternConfiguration): boolean {
-    throw new Error("Method not implemented.");
-  }
   private getMatrixMirrored(): PatternMatrixTuple {
     return this.matrix.reduce((accumulator: PatternMatrixTuple, sidePattern, i) => {
       accumulator[this.matrix.length - i - 1] = sidePattern;

@@ -46,7 +46,6 @@
     "array-permutation": "^0.2.0",
     "combinations": "^1.0.0",
     "fs-extra": "^9.1.0",
-    "matrix-js": "^1.6.1",
     "rotate-matrix": "^0.0.3"
   },
   "jest": {

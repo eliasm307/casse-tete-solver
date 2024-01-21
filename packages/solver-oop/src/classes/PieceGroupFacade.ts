@@ -1,17 +1,23 @@
 import combinations from "combinations";
-
 import PieceGroupUnique from "./PieceGroupUnique";
 import TypeFactory from "./TypeFactory";
 
 export default class PieceGroupFacade implements iPieceGroupFacade {
   availablePieces: PieceMap;
+
   allPieceGroupUniques: PieceGroupUniqueMap = TypeFactory.newPieceGroupUniqueMap();
+
   allPieceGroupPermutations: PieceGroupPermutationMap = TypeFactory.newPieceGroupPermutationMap();
+
   uniquePieceGroupPermutations: PieceGroupPermutationMap =
     TypeFactory.newPieceGroupPermutationMap();
+
   allPatterns: PatternConfigurationMap = TypeFactory.newPatternConfigurationMap();
+
   uniquePatterns: PatternConfigurationMap = TypeFactory.newPatternConfigurationMap();
+
   uniquePieceIdGroups: PieceIdGroupMap;
+
   constructor(availablePieces: PieceMap) {
     this.availablePieces = availablePieces;
     this.uniquePieceIdGroups = this.getPossiblePieceIdGroups();
@@ -53,6 +59,7 @@ export default class PieceGroupFacade implements iPieceGroupFacade {
       });
     });
   }
+
   private getPossiblePieceIdGroups(): PieceIdGroupMap {
     // extract piece ids into a simple array
     const pieceIDs: number[] = [...this.availablePieces].map((_, id) => id);

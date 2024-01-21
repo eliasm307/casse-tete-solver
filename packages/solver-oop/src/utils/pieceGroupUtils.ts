@@ -1,5 +1,3 @@
-// todo delete this file
-
 export function getPatternMatrix(
   pieces: Piece3Tuple,
   sidesUsed: Number3Tuple,

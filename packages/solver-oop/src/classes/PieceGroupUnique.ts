@@ -4,11 +4,17 @@ import PieceGroupPermutation from "./PieceGroupPermutation";
 
 export default class PieceGroupUnique implements iPieceGroupUnique {
   id: string;
+
   pieceIdGroup: PieceIdGroupTuple;
+
   availablePieces: PieceMap;
+
   layout: Piece3Tuple;
+
   permutations: iPieceGroupPermutation[];
+
   oppositePieceIdGroup: PieceIdGroupTuple;
+
   patterns: iPatternConfiguration[];
 
   constructor(pieceIdGroup: PieceIdGroupTuple, availablePieces: PieceMap) {
@@ -22,9 +28,7 @@ export default class PieceGroupUnique implements iPieceGroupUnique {
   }
 
   getLayout(): Piece3Tuple {
-    return this.pieceIdGroup.map(
-      (pieceId) => this.availablePieces.get(pieceId)!,
-    ) as Piece3Tuple;
+    return this.pieceIdGroup.map((pieceId) => this.availablePieces.get(pieceId)!) as Piece3Tuple;
   }
 
   getOppositePieceIdGroup(): PieceIdGroupTuple {
@@ -44,7 +48,7 @@ export default class PieceGroupUnique implements iPieceGroupUnique {
   private getPermutations(): iPieceGroupPermutation[] {
     const pieceGroupPermutations: iPieceGroupPermutation[] = [];
 
-    // get id group permeatations
+    // get id group permeations
     let pieceIdGroupPermutation: PieceIdGroupTuple;
     for (pieceIdGroupPermutation of perm(this.pieceIdGroup) as PieceIdGroupTuple[]) {
       // create a pieceGroupPermutation object from each id permutation array

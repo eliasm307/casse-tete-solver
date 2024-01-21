@@ -1874,7 +1874,6 @@ __metadata:
     eslint-plugin-prettier: "npm:^5.1.3"
     fs-extra: "npm:^9.1.0"
     jest: "npm:^26.6.3"
-    matrix-js: "npm:^1.6.1"
     prettier: "npm:3.2.4"
     rotate-matrix: "npm:^0.0.3"
     ts-jest: "npm:^26.5.6"
@@ -5033,13 +5032,6 @@ __metadata:
   dependencies:
     object-visit: "npm:^1.0.0"
   checksum: fb3475e5311939a6147e339999113db607adc11c7c3cd3103e5e9dbf502898416ecba6b1c7c649c6d4d12941de00cee58b939756bdf20a9efe7d4fa5a5738b73
-  languageName: node
-  linkType: hard
-
-"matrix-js@npm:^1.6.1":
-  version: 1.6.1
-  resolution: "matrix-js@npm:1.6.1"
-  checksum: 670815254a23d104ee3e036b934b3800e6957a6eb20439d197e99e528759d4174896cd1805a04aad38282c792b4dacdfb625cad50e1a236f46edea7ed4fbcb9f
   languageName: node
   linkType: hard
 
