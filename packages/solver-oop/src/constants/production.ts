@@ -1,5 +1,6 @@
 import { AVAILABLE_PIECES_ARRAY } from "@casse-tete-solver/common/src/constants";
 import TypeFactory from "../classes/TypeFactory";
+import type { PieceMap } from "../tsc/types";
 
 export const AVAILABLE_PIECES_MAP: PieceMap = TypeFactory.newPiecesMap();
 

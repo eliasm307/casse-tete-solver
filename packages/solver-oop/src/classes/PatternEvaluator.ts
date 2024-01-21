@@ -1,6 +1,13 @@
 import rotateMatrix from "rotate-matrix";
 import Solution from "./Solution";
 import TypeFactory from "./TypeFactory";
+import type {
+  iPatternEvaluator,
+  iSolution,
+  iPatternComparison,
+  iPatternConfiguration,
+} from "../tsc/interfaces";
+import type { SolutionsArrayMap, PatternMatrixTuple } from "../tsc/types";
 
 export default class PatternEvaluator implements iPatternEvaluator {
   private comparisonHistory: SolutionsArrayMap = TypeFactory.newSolutionsArrayMap();

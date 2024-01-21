@@ -1,3 +1,6 @@
+import type { Number3Tuple } from "@casse-tete-solver/common/src/types";
+import type { iPatternConfiguration, iPieceGroupPermutation } from "../tsc/interfaces";
+import type { PatternMatrixTuple, PieceGroupSidesTuple } from "../tsc/types";
 import { getPatternMatrix } from "../utils/pieceGroupUtils";
 import TypeFactory from "./TypeFactory";
 

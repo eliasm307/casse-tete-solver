@@ -1,4 +1,6 @@
 import { AVAILABLE_PIECES_MAP } from "../constants/production";
+import type { iPieceGroupUnique } from "../tsc/interfaces";
+import type { PieceIdGroupTuple } from "../tsc/types";
 import PieceGroupUnique from "./PieceGroupUnique";
 
 const testName = "iPieceGroupUnique test 1";

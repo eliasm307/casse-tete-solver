@@ -1,9 +1,18 @@
+import type { iPiece } from "@casse-tete-solver/common/src/types";
 import type { WriteOptions } from "fs-extra";
 import fs from "fs-extra";
+import type {
+  iExporter,
+  iPieceGroupFacade,
+  iSolverFacade,
+  iSolutionReporter,
+} from "../tsc/interfaces";
 
 export default class Exporter implements iExporter {
   private pieceGroupFacade: iPieceGroupFacade;
+
   private solverFacade: iSolverFacade;
+
   private availablePieces: iPiece[];
 
   private solutionReporter: iSolutionReporter;
@@ -18,27 +27,32 @@ export default class Exporter implements iExporter {
     this.availablePieces = availablePieces;
     this.solutionReporter = solverFacade.solutionReporter;
   }
+
   exportAllSolutions(): void {
     this.exportDataToFile(this.solutionReporter.solutionsAll, "src/exports/solutions-all.json");
   }
+
   exportSolutionsByPieceGroup(): void {
     this.exportDataToFile(
       this.solutionReporter.solutionsByPieceGroup,
       "src/exports/solutions-by-piece-group.json",
     );
   }
+
   exportSolutionsFromUniquePieceGroups(): void {
     this.exportDataToFile(
       this.solutionReporter.solutionsFromPieceGroups,
       "src/exports/solutions-from-piece-groups.json",
     );
   }
+
   exportUniqueSolutions(): void {
     this.exportDataToFile(
       this.solutionReporter.solutionsUnique,
       "src/exports/solutions-unique.json",
     );
   }
+
   exportPieces(): void {
     this.exportDataToFile(this.availablePieces, "src/exports/pieces.json");
   }

@@ -1,4 +1,6 @@
 import { AVAILABLE_PIECES_MAP } from "../constants/production";
+import type { iPieceGroupPermutation } from "../tsc/interfaces";
+import type { PieceIdGroupTuple } from "../tsc/types";
 import PieceGroupPermutation from "./PieceGroupPermutation";
 
 let testName = "PieceGroupPermutation 1";

@@ -1,3 +1,6 @@
+import type { Number3Tuple } from "@casse-tete-solver/common/src/types";
+import type { Piece3Tuple, PatternMatrixTuple } from "../tsc/types";
+
 export function getPatternMatrix(
   pieces: Piece3Tuple,
   sidesUsed: Number3Tuple,

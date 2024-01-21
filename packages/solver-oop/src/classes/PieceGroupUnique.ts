@@ -1,6 +1,12 @@
 import perm from "array-permutation";
 
 import PieceGroupPermutation from "./PieceGroupPermutation";
+import type {
+  iPieceGroupUnique,
+  iPieceGroupPermutation,
+  iPatternConfiguration,
+} from "../tsc/interfaces";
+import type { PieceIdGroupTuple, PieceMap, Piece3Tuple } from "../tsc/types";
 
 export default class PieceGroupUnique implements iPieceGroupUnique {
   id: string;

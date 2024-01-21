@@ -1,3 +1,5 @@
+import type { iSolutionReporter, iCompatibilityFinder, iSolution } from "../tsc/interfaces";
+import type { SolutionsArrayMap, SolutionMap } from "../tsc/types";
 import TypeFactory from "./TypeFactory";
 
 export default class SolutionReporter implements iSolutionReporter {

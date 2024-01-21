@@ -1,3 +1,11 @@
+import type {
+  iSolverFacade,
+  iPieceGroupFacade,
+  iSolutionReporter,
+  iCompatibilityFinder,
+  iSolution,
+} from "../tsc/interfaces";
+import type { PieceMap, PieceGroupPatternEvaluationMap } from "../tsc/types";
 import CompatibilityFinder from "./CompatibilityFinder";
 import PieceGroupFacade from "./PieceGroupFacade";
 import SolutionReporter from "./SolutionReporter";

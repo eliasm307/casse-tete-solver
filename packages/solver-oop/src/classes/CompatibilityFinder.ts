@@ -1,3 +1,15 @@
+import type {
+  iCompatibilityFinder,
+  iPieceGroupUnique,
+  iSolution,
+  iPieceGroupPatternEvaluation,
+  iPatternConfiguration,
+} from "../tsc/interfaces";
+import type {
+  PieceGroupPatternEvaluationMap,
+  PieceGroupUniqueMap,
+  SolutionsArrayMap,
+} from "../tsc/types";
 import PatternEvaluator from "./PatternEvaluator";
 import type PieceGroupFacade from "./PieceGroupFacade";
 import TypeFactory from "./TypeFactory";
@@ -55,9 +67,7 @@ export default class CompatibilityFinder implements iCompatibilityFinder {
     }
 
     // get opposite piece group object
-    const pieceGroupOpposite: iPieceGroupUnique = this.pieceGroupUniques.get(
-      pieceGroupOppositeId,
-    )!;
+    const pieceGroupOpposite: iPieceGroupUnique = this.pieceGroupUniques.get(pieceGroupOppositeId)!;
 
     const validSolutions: iSolution[] = [];
 

@@ -9,7 +9,7 @@
     "test": "rm -rf dist && yarn build && jest --logHeapUsage",
     "test:increased-memory": "rm -rf dist && yarn build && node --max-old-space-size=4096 ./node_modules/jest-cli/bin/jest.js --logHeapUsage",
     "build": "tsc",
-    "type-check": "tsc --noEmit",
+    "t": "tsc --noEmit",
     "lint": "eslint --report-unused-disable-directives --ignore-path .gitignore --quiet --ext .jsx,.js,.ts,.tsx --cache --fix .",
     "format": "prettier --ignore-path .gitignore --write ."
   },

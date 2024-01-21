@@ -1,4 +1,5 @@
 import { AVAILABLE_PIECES_MAP } from "../constants/production";
+import type { iCompatibilityFinder } from "../tsc/interfaces";
 import CompatibilityFinder from "./CompatibilityFinder";
 import PieceGroupFacade from "./PieceGroupFacade";
 
@@ -11,9 +12,8 @@ test(__filename, () => {
     pieceGroupFacade,
   ) as iCompatibilityFinder;
 
-  const examplePieceGroupPatternEvaluation = compatibilityFinder.pieceGroupPatternEvaluations.get(
-    "0,1,2",
-  )!;
+  const examplePieceGroupPatternEvaluation =
+    compatibilityFinder.pieceGroupPatternEvaluations.get("0,1,2")!;
 
   const patternEvaluationsPerPieceGroup: number =
     examplePieceGroupPatternEvaluation.patternEvaluationCount;

@@ -1,3 +1,5 @@
+import type { iPieceGroupPermutation, iPatternConfiguration } from "../tsc/interfaces";
+import type { PieceIdGroupTuple, PieceMap, Piece3Tuple, PieceGroupSidesTuple } from "../tsc/types";
 import dec2bin from "../utils/dec2bin";
 import PatternConfiguration from "./PatternConfiguration";
 
@@ -13,9 +15,7 @@ export default class PieceGroupPermutation implements iPieceGroupPermutation {
     this.pieceIdGroup = pieceIdGroup;
     this.availablePieces = availablePieces;
     this.id = pieceIdGroup.toString();
-    this.layout = this.pieceIdGroup.map(
-      (pieceId) => availablePieces.get(pieceId)!,
-    ) as Piece3Tuple;
+    this.layout = this.pieceIdGroup.map((pieceId) => availablePieces.get(pieceId)!) as Piece3Tuple;
     this.patterns = this.getPatterns();
   }
 

@@ -1,8 +1,15 @@
+import type { iSolution, iPatternConfiguration } from "../tsc/interfaces";
+import type { PatternMatrixTuple } from "../tsc/types";
+
 export default class Solution implements iSolution {
   readonly id: string;
+
   readonly pattern1: iPatternConfiguration;
+
   readonly pattern1RotationDeg: number;
+
   readonly pattern2: iPatternConfiguration;
+
   readonly matrix1Rotated: PatternMatrixTuple;
 
   // todo add toString or print method

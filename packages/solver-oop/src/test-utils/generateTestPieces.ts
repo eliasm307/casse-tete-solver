@@ -1,5 +1,6 @@
 import TypeFactory from "../classes/TypeFactory";
 import { TEST_PIECE } from "../constants/testing";
+import type { PieceMap } from "../tsc/types";
 
 export function generateTestPieces(count: number): PieceMap {
   const map: PieceMap = TypeFactory.newPiecesMap();

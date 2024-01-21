@@ -1,6 +1,15 @@
 import combinations from "combinations";
 import PieceGroupUnique from "./PieceGroupUnique";
 import TypeFactory from "./TypeFactory";
+import type { iPieceGroupFacade } from "../tsc/interfaces";
+import type {
+  PieceMap,
+  PieceGroupUniqueMap,
+  PieceGroupPermutationMap,
+  PatternConfigurationMap,
+  PieceIdGroupMap,
+  PieceIdGroupTuple,
+} from "../tsc/types";
 
 export default class PieceGroupFacade implements iPieceGroupFacade {
   availablePieces: PieceMap;
