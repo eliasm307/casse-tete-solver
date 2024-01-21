@@ -1,4 +1,5 @@
-import fs, { WriteOptions } from "fs-extra";
+import type { WriteOptions } from "fs-extra";
+import fs from "fs-extra";
 
 export default class Exporter implements iExporter {
   private pieceGroupFacade: iPieceGroupFacade;

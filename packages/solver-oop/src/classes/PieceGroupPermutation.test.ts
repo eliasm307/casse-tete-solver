@@ -1,7 +1,7 @@
 import { AVAILABLE_PIECES_MAP } from "../constants/production";
 import PieceGroupPermutation from "./PieceGroupPermutation";
 
-let testName: string = "PieceGroupPermutation 1";
+let testName = "PieceGroupPermutation 1";
 test(testName, () => {
   const testPieceIdGroup: PieceIdGroupTuple = [0, 1, 2];
   const pieceGroup: iPieceGroupPermutation = new PieceGroupPermutation(

@@ -1,7 +1,7 @@
 import { AVAILABLE_PIECES_MAP } from "../constants/production";
 import PieceGroupUnique from "./PieceGroupUnique";
 
-let testName: string = "iPieceGroupUnique test 1";
+const testName = "iPieceGroupUnique test 1";
 test(testName, () => {
   const testPieceIdGroup: PieceIdGroupTuple = [0, 1, 2];
 

@@ -63,7 +63,7 @@ export default class PieceGroupFacade implements iPieceGroupFacade {
       .map((pieceIDGroup) => pieceIDGroup as PieceIdGroupTuple); // map id groups to tuple type
 
     // generate an id for each combination
-    const combinationsWithIds: Array<[string, PieceIdGroupTuple]> = combinationTuples.map(
+    const combinationsWithIds: [string, PieceIdGroupTuple][] = combinationTuples.map(
       (pieceIDGroup) => [pieceIDGroup.toString(), pieceIDGroup as PieceIdGroupTuple],
     );
 

@@ -23,7 +23,7 @@ export default class PieceGroupUnique implements iPieceGroupUnique {
 
   getLayout(): Piece3Tuple {
     return this.pieceIdGroup.map(
-      (pieceId) => this.availablePieces.get(pieceId) as iPiece,
+      (pieceId) => this.availablePieces.get(pieceId)!,
     ) as Piece3Tuple;
   }
 

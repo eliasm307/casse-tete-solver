@@ -3,7 +3,7 @@ import PatternConfiguration from "./PatternConfiguration";
 import PatternEvaluator from "./PatternEvaluator";
 import PieceGroupPermutation from "./PieceGroupPermutation";
 
-let testName: string = "PieceGroupPermutation 1";
+const testName = "PieceGroupPermutation 1";
 test(testName, () => {
   const testPieceIdGroup: PieceIdGroupTuple = [0, 1, 2];
   const pieceGroup: iPieceGroupPermutation = new PieceGroupPermutation(
@@ -15,7 +15,7 @@ test(testName, () => {
 
   // const pattern1 = new PatternConfiguration(pieceGroup, [0, 0, 0]);
 
-  const solutions = patternEvaluator.solutions;
+  const { solutions } = patternEvaluator;
 
   /*
 	console.log( CONSOLE_SEPARATOR );

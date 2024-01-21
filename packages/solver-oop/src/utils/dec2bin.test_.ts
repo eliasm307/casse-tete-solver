@@ -1,7 +1,7 @@
 import dec2bin from "./dec2bin";
 
 test("dec2bin covert 0 to binary", () => {
-  const decimal: number = 0;
+  const decimal = 0;
   const binaryResult: string = dec2bin(decimal);
 
   // console.log(CONSOLE_SEPARATOR);
@@ -13,7 +13,7 @@ test("dec2bin covert 0 to binary", () => {
 });
 
 test("dec2bin covert 3 to binary", () => {
-  const decimal: number = 3;
+  const decimal = 3;
   const binaryResult: string = dec2bin(decimal);
 
   // console.log(CONSOLE_SEPARATOR);

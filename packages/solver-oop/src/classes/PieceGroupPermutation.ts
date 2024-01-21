@@ -14,7 +14,7 @@ export default class PieceGroupPermutation implements iPieceGroupPermutation {
     this.availablePieces = availablePieces;
     this.id = pieceIdGroup.toString();
     this.layout = this.pieceIdGroup.map(
-      (pieceId) => availablePieces.get(pieceId) as iPiece,
+      (pieceId) => availablePieces.get(pieceId)!,
     ) as Piece3Tuple;
     this.patterns = this.getPatterns();
   }

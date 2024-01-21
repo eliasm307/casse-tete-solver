@@ -18,7 +18,7 @@ function getPossiblePieceGroups(pieces: PieceMap): PieceIdGroupMap {
   );
 
   // generate an id for each combination
-  const combinationsWithIds: Array<[string, PieceIdGroupTuple]> = combinationTuples.map(
+  const combinationsWithIds: [string, PieceIdGroupTuple][] = combinationTuples.map(
     (pieceIDGroup) => [pieceIDGroup.toString(), pieceIDGroup as PieceIdGroupTuple],
   );
 

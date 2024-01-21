@@ -13,15 +13,15 @@ test(__filename, () => {
 
   const examplePieceGroupPatternEvaluation = compatibilityFinder.pieceGroupPatternEvaluations.get(
     "0,1,2",
-  ) as iPieceGroupPatternEvaluation;
+  )!;
 
   const patternEvaluationsPerPieceGroup: number =
     examplePieceGroupPatternEvaluation.patternEvaluationCount;
   const patternComparisonsPerPieceGroup: number =
     examplePieceGroupPatternEvaluation.patternComparisonCount;
 
-  const originalPatternEvaluationsPerPieceGroup: number = 147456;
-  const originalPatternComparisonsPerPieceGroup: number = 589824;
+  const originalPatternEvaluationsPerPieceGroup = 147456;
+  const originalPatternComparisonsPerPieceGroup = 589824;
 
   console.log(__filename, {
     patternEvaluationsPerPieceGroupDiffValue: (

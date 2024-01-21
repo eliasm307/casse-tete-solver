@@ -19,7 +19,7 @@ function getPieceGroupPatterns(
   const patterns: PatternConfigurationsArrayMap = TypeFactory.newPatternConfigurationsArrayMap();
 
   pieceGroupPermutations.forEach((permutations, pieceGroupKey) => {
-    const possiblePatterns: iPatternConfiguration[] = permutations.reduce(
+    const possiblePatterns: iPatternConfiguration[] = permutations.reduce<iPatternConfiguration[]>(
       (
         accumulated: iPatternConfiguration[],
         currentPermutation: PieceIdGroupTuple,
@@ -38,7 +38,7 @@ function getPieceGroupPatterns(
               const sideToUse: number = parseInt(binaryConfig[piecePosition]);
 
               // get current piece in question
-              const piece: iPiece = AVAILABLE_PIECES.get(pieceId) as iPiece;
+              const piece: iPiece = AVAILABLE_PIECES.get(pieceId)!;
 
               // assign a copy of the piece side to the relavant position in the pattern
               //  matrix[piecePosition] = [...piece.sides[sideToUse]];
@@ -55,7 +55,7 @@ function getPieceGroupPatterns(
 
         return accumulated;
       },
-      [] as iPatternConfiguration[],
+      [],
     );
   });
 

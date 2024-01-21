@@ -1,5 +1,5 @@
 import PatternEvaluator from "./PatternEvaluator";
-import PieceGroupFacade from "./PieceGroupFacade";
+import type PieceGroupFacade from "./PieceGroupFacade";
 import TypeFactory from "./TypeFactory";
 
 export default class CompatibilityFinder implements iCompatibilityFinder {
@@ -23,7 +23,7 @@ export default class CompatibilityFinder implements iCompatibilityFinder {
 
     // compare each unique pieceGroup to its remainder piece group
     this.pieceGroupUniques.forEach((pieceGroup: iPieceGroupUnique) => {
-      /* 
+      /*
 			Only evaluate unique group pairs once ie dont evaluate solutions for [0,1,2] (where its internal opposite is [3,4,5])
 			AND evaluating also the unique group [3,4,5] (where its internal opposite is [0,1,2])
 			*/
@@ -57,7 +57,7 @@ export default class CompatibilityFinder implements iCompatibilityFinder {
     // get opposite piece group object
     const pieceGroupOpposite: iPieceGroupUnique = this.pieceGroupUniques.get(
       pieceGroupOppositeId,
-    ) as iPieceGroupUnique;
+    )!;
 
     const validSolutions: iSolution[] = [];
 

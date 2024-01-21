@@ -10,7 +10,7 @@ function getPieceGroupPermutations(pieceIdGroups: PieceIdGroupMap): PieceIdGroup
     const permutations: PieceIdGroupTuple[] = [];
 
     // print permutations
-    for (let permutation of perm(pieceIdGroup)) {
+    for (const permutation of perm(pieceIdGroup)) {
       // console.log( __filename, { pieceIdGroup, permutation } );
       permutations.push(permutation as PieceIdGroupTuple);
     }

@@ -6,7 +6,7 @@ import TypeFactory from "./TypeFactory";
 
 export default class PatternEvaluator implements iPatternEvaluator {
   private comparisonHistory: SolutionsArrayMap = TypeFactory.newSolutionsArrayMap();
-  evaluatedCount: number = 0;
+  evaluatedCount = 0;
   solutions: iSolution[];
   patternComparisons: iPatternComparison[] = [];
 
@@ -22,7 +22,7 @@ export default class PatternEvaluator implements iPatternEvaluator {
     if (this.comparisonHistory.has(patternCoupleId1)) {
       // console.log(__filename, `Cache hit for "${patternCoupleId1}`);
       return [];
-    } else if (this.comparisonHistory.has(patternCoupleId2)) {
+    } if (this.comparisonHistory.has(patternCoupleId2)) {
       // console.log(__filename, `Cache hit for "${patternCoupleId2}`);
       return [];
     }

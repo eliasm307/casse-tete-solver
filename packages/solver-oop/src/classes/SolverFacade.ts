@@ -8,7 +8,7 @@ export default class SolverFacade implements iSolverFacade {
   availablePieces: PieceMap;
   pieceGroupFacade: iPieceGroupFacade;
   pieceGroupPatternEvaluations: PieceGroupPatternEvaluationMap;
-  patternComparisonCount: number = 0;
+  patternComparisonCount = 0;
   solutionReporter: iSolutionReporter;
   private compatibilityFinder: iCompatibilityFinder;
   /*

@@ -47,8 +47,8 @@ export default class SolutionReporter implements iSolutionReporter {
     // group by solutions with the same base pattern matrices
     const uniqueSolutionsByPatternMatrices: SolutionMap = TypeFactory.newSolutionMap();
     solutions.forEach((solution) => {
-      const patternMatrixCombo1: string = `${solution.pattern1.matrix.toString()}-AND-${solution.pattern2.matrix.toString()}`;
-      const patternMatrixCombo2: string = `${solution.pattern2.matrix.toString()}-AND-${solution.pattern1.matrix.toString()}`;
+      const patternMatrixCombo1 = `${solution.pattern1.matrix.toString()}-AND-${solution.pattern2.matrix.toString()}`;
+      const patternMatrixCombo2 = `${solution.pattern2.matrix.toString()}-AND-${solution.pattern1.matrix.toString()}`;
 
       // check if any of the solution ids have already been added, if not add this as a unique one
       if (
@@ -63,8 +63,8 @@ export default class SolutionReporter implements iSolutionReporter {
 
     const uniqueSolutionsByRotatedPatternMatrices: SolutionMap = TypeFactory.newSolutionMap();
     uniqueSolutionsByPatternMatrices.forEach((solution) => {
-      const patternMatrixCombo1: string = `${solution.matrix1Rotated.toString()}-AND-${solution.pattern2.matrix.toString()}`;
-      const patternMatrixCombo2: string = `${solution.pattern2.matrix.toString()}-AND-${solution.matrix1Rotated.toString()}`;
+      const patternMatrixCombo1 = `${solution.matrix1Rotated.toString()}-AND-${solution.pattern2.matrix.toString()}`;
+      const patternMatrixCombo2 = `${solution.pattern2.matrix.toString()}-AND-${solution.matrix1Rotated.toString()}`;
 
       // check if any of the solution ids have already been added, if not add this as a unique one
       if (

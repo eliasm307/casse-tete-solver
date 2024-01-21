@@ -6,7 +6,7 @@ test(__filename, () => {
   const pieceGroupFacade = new PieceGroupFacade(AVAILABLE_PIECES_MAP);
   const solverFacade: SolverFacade = new SolverFacade(pieceGroupFacade);
 
-  const oldMaxPatternComparisons: number = 11796480; // pattern comparisons when looking at all combinations
+  const oldMaxPatternComparisons = 11796480; // pattern comparisons when looking at all combinations
   const newPatternComparisonCount: number = solverFacade.patternComparisonCount;
 
   console.log(__filename, {
