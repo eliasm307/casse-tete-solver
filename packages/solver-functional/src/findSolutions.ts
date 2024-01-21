@@ -19,19 +19,20 @@ export function findSolutionsBfs({
   const context: Context = {
     knownSolutionIds: new Set(),
     consideredBoardConfigurationsCount: 0,
+    allPieces: Object.fromEntries(availablePieces.map((piece) => [piece.id, piece])),
   };
 
   // add first piece in the available columns only (using both sides) and solve from there,
   // ie dont need to consider rows as we would get the same solutions but rotated
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  const pendingBoards = createInitialStates({ availablePieces, context });
+  const pendingBoards = createInitialStates({ context });
 
   const solutions: GeneralSolution[] = [];
 
   while (pendingBoards.length) {
     const { board, remainingPieces } = pendingBoards.pop()!;
     const [nextPiece, ...nextIterationPieces] = remainingPieces;
-    const availableSlotPlacements = getAvailablePlacements({ board, piece: nextPiece });
+    const availableSlotPlacements = getAvailablePlacements({ board, pieceId: nextPiece });
     for (const placement of availableSlotPlacements) {
       const newBoard = tryCreatingBoardWithPieceAdded({ board, placement, context });
       if (!newBoard) {
@@ -68,8 +69,9 @@ export function findSolutionsDfs({
   const context: Context = {
     knownSolutionIds: new Set(),
     consideredBoardConfigurationsCount: 0,
+    allPieces: Object.fromEntries(availablePieces.map((piece) => [piece.id, piece])),
   };
-  const solutions = createInitialStates({ availablePieces, context }).flatMap((state) =>
+  const solutions = createInitialStates({ context }).flatMap((state) =>
     findSolutionsDfsRecursive({ state, context }),
   );
 
@@ -95,7 +97,7 @@ function findSolutionsDfsRecursive({
   }
 
   const [nextPiece, ...nextIterationPieces] = remainingPieces;
-  const availableSlotPlacements = getAvailablePlacements({ board, piece: nextPiece });
+  const availableSlotPlacements = getAvailablePlacements({ board, pieceId: nextPiece });
   return availableSlotPlacements.flatMap((placement) => {
     const newBoard = tryCreatingBoardWithPieceAdded({ board, placement, context });
     if (!newBoard) {

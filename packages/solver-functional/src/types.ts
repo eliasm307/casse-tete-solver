@@ -11,8 +11,7 @@ export type Board = {
 };
 
 export type PiecePlacement = {
-  // todo instead of passing around the piece, just pass around piece ids
-  piece: iPiece;
+  pieceId: PieceId;
   sideIndex: 0 | 1;
   rotated: boolean;
   layerIndex: 0 | 1;
@@ -38,12 +37,15 @@ export type BoardLayer = {
   rotationDegrees: 0 | -90;
 };
 
+type PieceId = string;
+
 export type State = {
   board: Board;
-  remainingPieces: iPiece[];
+  remainingPieces: PieceId[];
 };
 
 export type Context = {
   knownSolutionIds: Set<string>;
   consideredBoardConfigurationsCount: number;
+  allPieces: Record<PieceId, iPiece>;
 };

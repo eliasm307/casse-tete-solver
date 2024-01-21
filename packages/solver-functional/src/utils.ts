@@ -1,5 +1,4 @@
 import type {
-  iPiece,
   SidePatternTuple,
   GeneralSolution,
   SolutionLayer,
@@ -9,14 +8,8 @@ import type {
 import { deepClone } from "@casse-tete-solver/common/src/utils";
 import type { State, PiecePlacement, BoardLayer, Board, Context } from "./types";
 
-export function createInitialStates({
-  availablePieces,
-  context,
-}: {
-  availablePieces: iPiece[];
-  context: Context;
-}): State[] {
-  const [firstPiece, ...initialRemainingPieces] = availablePieces;
+export function createInitialStates({ context }: { context: Context }): State[] {
+  const [firstPiece, ...initialRemainingPieces] = Object.keys(context.allPieces);
 
   // start with possible board configurations ie parallel or perpendicular
   return [
@@ -31,7 +24,7 @@ export function createInitialStates({
         tryCreatingBoardWithPieceAdded({
           board: initialBoard,
           placement: {
-            piece: firstPiece,
+            pieceId: firstPiece,
             layerIndex: 0,
             sideIndex: 0, // default side
             rotated: false, // no rotation for first piece
@@ -43,7 +36,7 @@ export function createInitialStates({
         tryCreatingBoardWithPieceAdded({
           board: initialBoard,
           placement: {
-            piece: firstPiece,
+            pieceId: firstPiece,
             layerIndex: 0,
             sideIndex: 1, // flipped piece
             rotated: false, // no rotation for first piece
@@ -213,7 +206,7 @@ function createInitialBoard({
  */
 export function tryCreatingBoardWithPieceAdded({
   board,
-  placement: { piece, rotated, sideIndex, slotIndex, layerIndex },
+  placement: { pieceId: piece, rotated, sideIndex, slotIndex, layerIndex },
   context,
 }: {
   board: Board;
@@ -233,7 +226,7 @@ export function tryCreatingBoardWithPieceAdded({
   // if horizontal, then add piece to row
   // const isHorizontal = newBoard.layers[layerIndex].orientation === "horizontal";
 
-  let slotValues = piece.sides[sideIndex];
+  let slotValues = context.allPieces[piece].sides[sideIndex];
   if (rotated) {
     slotValues = [...slotValues];
     slotValues.reverse(); // this is the same as rotating the piece 180 degrees
@@ -315,10 +308,10 @@ export function tryCreatingBoardWithPieceAdded({
  */
 export function getAvailablePlacements({
   board,
-  piece,
+  pieceId,
 }: {
   board: Board;
-  piece: iPiece;
+  pieceId: string;
 }): PiecePlacement[] {
   const possibleMoves: PiecePlacement[] = [];
 
@@ -337,7 +330,7 @@ export function getAvailablePlacements({
 
           // add piece to board
           possibleMoves.push({
-            piece,
+            pieceId,
             rotated,
             sideIndex: sideIndex satisfies number as PiecePlacement["sideIndex"],
             slotIndex: slotIndex satisfies number as PiecePlacement["slotIndex"],
