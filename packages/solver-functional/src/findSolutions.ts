@@ -46,9 +46,16 @@ type BoardLayer = {
   rotationDegrees: 0 | -90;
 };
 
-// todo convert to recursive solution, which should be better for memory as it wont need to store all the boards being considered in memory at the same time
-// just up to 6 boards (ie 6 pieces) at a time
-export function findSolutions({
+type State = {
+  board: Board;
+  remainingPieces: iPiece[];
+};
+
+type Context = {
+  knownSolutionIds: Set<string>;
+};
+
+export function findSolutionsBfs({
   availablePieces,
 }: {
   availablePieces: iPiece[];
@@ -60,10 +67,13 @@ export function findSolutions({
   // add first piece in the available columns only (using both sides) and solve from there,
   // ie dont need to consider rows as we would get the same solutions but rotated
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  const pendingBoards = createInitialBoards({ availablePieces });
+  const pendingBoards = createInitialStates({ availablePieces });
 
   const solutions: GeneralSolution[] = [];
-  const visitedBoardIds = new Set<string>();
+  const context: Context = {
+    knownSolutionIds: new Set(),
+  };
+
   while (pendingBoards.length) {
     const { board, remainingPieces } = pendingBoards.pop()!;
 
@@ -85,21 +95,73 @@ export function findSolutions({
       }
 
       // no more pieces to add, we filled the board so we have a solution
-      const solution = createSolutionRepresentation(newBoard);
-      if (visitedBoardIds.has(solution.id)) {
-        console.log("Duplicate solution found");
-        continue;
+      const solution = createSolution({ board, context });
+      if (solution) {
+        solutions.push(solution);
+        console.log("Found a solution", solutions.length);
       }
-
-      // register the solution
-      visitedBoardIds.add(solution.id);
-      visitedBoardIds.add(getMirrorSolutionId(newBoard)); // add mirror solution id also to avoid duplicates
-      solutions.push(solution);
-      console.log("Found a solution", solutions.length);
     }
   }
 
   return solutions;
+}
+
+function createSolution({ board, context }: { board: Board; context: Context }) {
+  const solution = createSolutionRepresentation(board);
+  if (context.knownSolutionIds.has(solution.id)) {
+    // console.log("Duplicate solution found");
+    return;
+  }
+
+  // register the solution
+  context.knownSolutionIds.add(solution.id);
+  context.knownSolutionIds.add(getMirrorSolutionId(board)); // add mirror solution id also to avoid duplicates
+  return solution;
+}
+
+export function findSolutionsDfs({
+  availablePieces,
+}: {
+  availablePieces: iPiece[];
+}): GeneralSolution[] {
+  const context: Context = {
+    knownSolutionIds: new Set(),
+  };
+  return createInitialStates({ availablePieces: formatPieces(availablePieces) }).flatMap((state) =>
+    findSolutionsDfsRecursive({ state, context }),
+  );
+}
+
+function findSolutionsDfsRecursive({
+  state: { board, remainingPieces },
+  context,
+}: {
+  state: State;
+  context: Context;
+}): GeneralSolution[] {
+  if (!remainingPieces.length) {
+    // no more pieces to add, we filled the board so we have a solution
+    const solution = createSolution({ board, context });
+    if (!solution) {
+      return []; // duplicate solution
+    }
+    console.log("Found a solution", context.knownSolutionIds.size / 2);
+    return [solution];
+  }
+
+  const [nextPiece, ...nextIterationPieces] = remainingPieces;
+  const availableSlotPlacements = getAvailablePlacements({ board, piece: nextPiece });
+  return availableSlotPlacements.flatMap((placement) => {
+    const newBoard = tryCreatingBoardWithPieceAdded({ board, placement });
+    if (!newBoard) {
+      return []; // invalid move
+    }
+
+    return findSolutionsDfsRecursive({
+      state: { board: newBoard, remainingPieces: nextIterationPieces },
+      context,
+    });
+  });
 }
 
 /**
@@ -128,7 +190,7 @@ function formatPieces(pieces: iPiece[]): iPiece[] {
   });
 }
 
-function createInitialBoards({ availablePieces }: { availablePieces: iPiece[] }) {
+function createInitialStates({ availablePieces }: { availablePieces: iPiece[] }): State[] {
   const [firstPiece, ...initialRemainingPieces] = availablePieces;
 
   // start with possible board configurations ie parallel or perpendicular
@@ -137,7 +199,7 @@ function createInitialBoards({ availablePieces }: { availablePieces: iPiece[] })
     createInitialBoard({ bottomLayerRotationDegrees: -90 }),
   ]
     .flatMap((initialBoard) => {
-      // add first piece in the available columns only (using rows would yield duplicate solutions)
+      // add first piece in the available columns only (using rows would yield duplicate solutions with rotation)
       // using both sides of the piece and solve from there,
       return initialBoard.layers[0].slots.flatMap((_, slotIndex) => [
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
