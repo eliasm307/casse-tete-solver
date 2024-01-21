@@ -50,5 +50,6 @@
       "node_modules",
       "coverage"
     ]
-  }
+  },
+  "packageManager": "yarn@4.0.2"
 }

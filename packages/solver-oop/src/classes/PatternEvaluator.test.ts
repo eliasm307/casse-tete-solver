@@ -1,20 +1,23 @@
-import { AVAILABLE_PIECES_MAP, CONSOLE_SEPARATOR } from '../constants/production';
-import PatternConfiguration from './PatternConfiguration';
-import PatternEvaluator from './PatternEvaluator';
-import PieceGroupPermutation from './PieceGroupPermutation';
+import { AVAILABLE_PIECES_MAP } from "../constants/production";
+import PatternConfiguration from "./PatternConfiguration";
+import PatternEvaluator from "./PatternEvaluator";
+import PieceGroupPermutation from "./PieceGroupPermutation";
 
-let testName: string = 'PieceGroupPermutation 1';
+let testName: string = "PieceGroupPermutation 1";
 test(testName, () => {
-	const testPieceIdGroup: PieceIdGroupTuple = [0, 1, 2];
-	const pieceGroup: iPieceGroupPermutation = new PieceGroupPermutation(testPieceIdGroup, AVAILABLE_PIECES_MAP);
+  const testPieceIdGroup: PieceIdGroupTuple = [0, 1, 2];
+  const pieceGroup: iPieceGroupPermutation = new PieceGroupPermutation(
+    testPieceIdGroup,
+    AVAILABLE_PIECES_MAP,
+  );
 
-	const patternEvaluator = new PatternEvaluator(pieceGroup.patterns[0], pieceGroup.patterns[1]);
+  const patternEvaluator = new PatternEvaluator(pieceGroup.patterns[0], pieceGroup.patterns[1]);
 
-	// const pattern1 = new PatternConfiguration(pieceGroup, [0, 0, 0]);
+  // const pattern1 = new PatternConfiguration(pieceGroup, [0, 0, 0]);
 
-	const solutions = patternEvaluator.solutions;
+  const solutions = patternEvaluator.solutions;
 
-	/*
+  /*
 	console.log( CONSOLE_SEPARATOR );
 	console.log(__filename, {
 		testName,
@@ -28,10 +31,10 @@ test(testName, () => {
 	console.log( CONSOLE_SEPARATOR );
 	*/
 
-	// testPieceGroupPermutations.forEach((value, key) => console.log(__filename, { key, value }));
-	expect(solutions.length).toEqual(0);
-	expect( patternEvaluator.patternComparisons.length ).toEqual( 4 );
-	// expect( pieceGroup.patterns.length ).toEqual( 8 );
+  // testPieceGroupPermutations.forEach((value, key) => console.log(__filename, { key, value }));
+  expect(solutions.length).toEqual(0);
+  expect(patternEvaluator.patternComparisons.length).toEqual(4);
+  // expect( pieceGroup.patterns.length ).toEqual( 8 );
 
-	// expect(pieceGroup.getPatterns())
+  // expect(pieceGroup.getPatterns())
 });

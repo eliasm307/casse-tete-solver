@@ -1,17 +1,20 @@
-import { AVAILABLE_PIECES_MAP, CONSOLE_SEPARATOR } from '../constants/production';
-import PatternConfiguration from './PatternConfiguration';
-import PatternEvaluator from './PatternEvaluator';
-import PieceGroupPermutation from './PieceGroupPermutation';
+import { AVAILABLE_PIECES_MAP } from "../constants/production";
+import PatternConfiguration from "./PatternConfiguration";
+import PatternEvaluator from "./PatternEvaluator";
+import PieceGroupPermutation from "./PieceGroupPermutation";
 
-let testName: string = 'PieceGroupPermutation 1';
+let testName: string = "PieceGroupPermutation 1";
 test(testName, () => {
-	const testPieceIdGroup: PieceIdGroupTuple = [0, 1, 2];
+  const testPieceIdGroup: PieceIdGroupTuple = [0, 1, 2];
 
-	const pieceGroup: iPieceGroupPermutation = new PieceGroupPermutation(testPieceIdGroup, AVAILABLE_PIECES_MAP);
+  const pieceGroup: iPieceGroupPermutation = new PieceGroupPermutation(
+    testPieceIdGroup,
+    AVAILABLE_PIECES_MAP,
+  );
 
-	const pattern = new PatternConfiguration(pieceGroup, [0, 0, 0], [0, 0, 0]);
+  const pattern = new PatternConfiguration(pieceGroup, [0, 0, 0], [0, 0, 0]);
 
-	/*
+  /*
 	console.log( CONSOLE_SEPARATOR );
 	console.log(__filename, {
 		testName,
@@ -25,9 +28,9 @@ test(testName, () => {
 	console.log( CONSOLE_SEPARATOR );
 	*/
 
-	// testPieceGroupPermutations.forEach((value, key) => console.log(__filename, { key, value }));
-	expect(pattern.matrix.length).toEqual(3);
-	expect(pattern.matrixMirrored.length).toEqual(3);
+  // testPieceGroupPermutations.forEach((value, key) => console.log(__filename, { key, value }));
+  expect(pattern.matrix.length).toEqual(3);
+  expect(pattern.matrixMirrored.length).toEqual(3);
 
-	// expect(pieceGroup.getPatterns())
+  // expect(pieceGroup.getPatterns())
 });

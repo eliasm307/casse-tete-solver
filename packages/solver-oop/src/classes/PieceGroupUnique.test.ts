@@ -1,13 +1,15 @@
-import { AVAILABLE_PIECES_MAP, CONSOLE_SEPARATOR } from '../constants/production';
-import PieceGroupPermutation from './PieceGroupPermutation';
-import PieceGroupUnique from './PieceGroupUnique';
+import { AVAILABLE_PIECES_MAP } from "../constants/production";
+import PieceGroupUnique from "./PieceGroupUnique";
 
-let testName: string = 'iPieceGroupUnique test 1';
+let testName: string = "iPieceGroupUnique test 1";
 test(testName, () => {
-	const testPieceIdGroup: PieceIdGroupTuple = [0, 1, 2];
+  const testPieceIdGroup: PieceIdGroupTuple = [0, 1, 2];
 
-	const pieceGroup: iPieceGroupUnique = new PieceGroupUnique(testPieceIdGroup, AVAILABLE_PIECES_MAP);
-	/* 
+  const pieceGroup: iPieceGroupUnique = new PieceGroupUnique(
+    testPieceIdGroup,
+    AVAILABLE_PIECES_MAP,
+  );
+  /*
 console.log(CONSOLE_SEPARATOR);
 	console.log(__filename, {
 		testName,
@@ -21,15 +23,15 @@ console.log(CONSOLE_SEPARATOR);
 	console.log(CONSOLE_SEPARATOR);
 	*/
 
-	// testPieceGroupPermutations.forEach((value, key) => console.log(__filename, { key, value }));
-	expect(pieceGroup.layout).toEqual([
-		AVAILABLE_PIECES_MAP.get(0),
-		AVAILABLE_PIECES_MAP.get(1),
-		AVAILABLE_PIECES_MAP.get(2),
-	]);
+  // testPieceGroupPermutations.forEach((value, key) => console.log(__filename, { key, value }));
+  expect(pieceGroup.layout).toEqual([
+    AVAILABLE_PIECES_MAP.get(0),
+    AVAILABLE_PIECES_MAP.get(1),
+    AVAILABLE_PIECES_MAP.get(2),
+  ]);
 
-	expect(pieceGroup.permutations.length).toEqual(6);
-	expect(pieceGroup.patterns.length).toEqual(384);
+  expect(pieceGroup.permutations.length).toEqual(6);
+  expect(pieceGroup.patterns.length).toEqual(384);
 
-	expect(pieceGroup.oppositePieceIdGroup).toEqual([3, 4, 5]);
+  expect(pieceGroup.oppositePieceIdGroup).toEqual([3, 4, 5]);
 });
