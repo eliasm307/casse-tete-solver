@@ -1,50 +1,58 @@
 {
-	"name": "casse-tete-solver",
-	"version": "0.0.0",
-	"description": "",
-	"main": "dist/index.js",
-	"types": "dist/index.d.ts",
-	"scripts": {
-		"start": "tsc && node dist/index.js",
-		"test": "rm -rf dist && tsc && jest --logHeapUsage",
-		"test:increased-memory": "rm -rf dist && tsc && node --max-old-space-size=4096 ./node_modules/jest-cli/bin/jest.js --logHeapUsage",
-		"build": "tsc",
-		"prepublish": "tsc"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/eliasm307/casse-tete-solver.git"
-	},
-	"author": "Elias Mangoro",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/eliasm307/casse-tete-solver/issues"
-	},
-	"homepage": "https://github.com/eliasm307/casse-tete-solver#readme",
-	"devDependencies": {
-		"@types/combinations": "^1.0.0",
-		"@types/fs-extra": "^9.0.6",
-		"@types/jest": "^26.0.20",
-		"jest": "^26.6.3",
-		"ts-jest": "^26.4.4",
-		"typescript": "^4.1.3"
-	},
-	"dependencies": {
-		"@types/node": "^14.14.22",
-		"array-permutation": "^0.2.0",
-		"combinations": "^1.0.0",
-		"fs-extra": "^9.1.0",
-		"matrix-js": "^1.5.1",
-		"rotate-matrix": "^0.0.3"
-	},
-	"jest": {
-		"preset": "ts-jest",
-		"testEnvironment": "node",
-		"verbose": false,
-		"modulePathIgnorePatterns": [
-			"dist/.*\\.test\\.",
-			"node_modules",
-			"coverage"
-		]
-	}
+  "name": "casse-tete-solver",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test:increased-memory": "rm -rf dist && yarn build && node --max-old-space-size=4096 ./node_modules/jest-cli/bin/jest.js --logHeapUsage",
+    "t": "tsc --noEmit",
+    "lint": "eslint --report-unused-disable-directives --ignore-path .gitignore --quiet --ext .jsx,.js,.ts,.tsx --cache --fix .",
+    "format": "prettier --ignore-path .gitignore --write .",
+    "solve:all": "yarn workspaces foreach --all --parallel run solve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eliasm307/casse-tete-solver.git"
+  },
+  "author": "Elias Mangoro",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/eliasm307/casse-tete-solver/issues"
+  },
+  "homepage": "https://github.com/eliasm307/casse-tete-solver#readme",
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@eliasm307/config": "^0.44.4",
+    "@types/combinations": "^1.0.2",
+    "@types/jest": "^26.0.24",
+    "@typescript-eslint/eslint-plugin": "^6.19.0",
+    "@typescript-eslint/parser": "^6.19.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "jest": "^26.6.3",
+    "prettier": "3.2.4",
+    "ts-jest": "^26.5.6",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@types/node": "^18.19.8",
+    "array-permutation": "^0.2.0",
+    "combinations": "^1.0.0",
+    "rotate-matrix": "^0.0.3"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "verbose": false,
+    "modulePathIgnorePatterns": [
+      "dist/.*\\.test\\.",
+      "node_modules",
+      "coverage"
+    ]
+  },
+  "packageManager": "yarn@4.0.2"
 }

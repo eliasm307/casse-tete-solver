@@ -1,0 +1,11 @@
+{
+  "name": "@casse-tete-solver/solver-oop",
+  "version": "1.0.0",
+  "dependencies": {
+    "@casse-tete-solver/common": "workspace:*"
+  },
+  "scripts": {
+    "solve": "npx ts-node src/index.ts",
+    "test": "rm -rf dist && yarn build && jest --logHeapUsage"
+  }
+}
