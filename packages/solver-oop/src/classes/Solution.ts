@@ -1,5 +1,5 @@
+import type { PatternMatrixTuple } from "@casse-tete-solver/common/src/types";
 import type { iSolution, iPatternConfiguration } from "../tsc/interfaces";
-import type { PatternMatrixTuple } from "../tsc/types";
 
 export default class Solution implements iSolution {
   readonly id: string;

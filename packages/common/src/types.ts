@@ -10,3 +10,6 @@ export type iPiece = {
 export type SidePatternTuple = Number3Tuple;
 
 export type Number3Tuple = [number, number, number];
+
+/** Tuple representing 3x3 pattern produced by putting 3 pieces together */
+export type PatternMatrixTuple = [SidePatternTuple, SidePatternTuple, SidePatternTuple];

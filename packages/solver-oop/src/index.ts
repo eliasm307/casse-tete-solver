@@ -1,3 +1,4 @@
+import "./tsc/modules";
 import { AVAILABLE_PIECES_ARRAY } from "@casse-tete-solver/common/src/constants";
 import Exporter from "./classes/Exporter";
 import PieceGroupFacade from "./classes/PieceGroupFacade";

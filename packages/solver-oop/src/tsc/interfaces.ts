@@ -1,5 +1,5 @@
+import type { PatternMatrixTuple } from "@casse-tete-solver/common/src/types";
 import type {
-  PatternMatrixTuple,
   PieceGroupSidesTuple,
   PieceIdGroupTuple,
   Piece3Tuple,

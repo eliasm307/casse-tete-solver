@@ -1,4 +1,4 @@
-import type { iPiece } from "@casse-tete-solver/common/src/types";
+import type { PatternMatrixTuple, iPiece } from "@casse-tete-solver/common/src/types";
 import type {
   iPatternConfiguration,
   iPieceGroupUnique,
@@ -13,7 +13,6 @@ import type {
   PatternConfigurationMap,
   PieceIdGroupMap,
   PieceIdGroupTuple,
-  PatternMatrixTuple,
   PieceGroupUniqueMap,
   SolutionsArrayMap,
   SolutionMap,

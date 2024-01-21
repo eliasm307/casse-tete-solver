@@ -1,4 +1,5 @@
 import rotateMatrix from "rotate-matrix";
+import type { PatternMatrixTuple } from "@casse-tete-solver/common/src/types";
 import Solution from "./Solution";
 import TypeFactory from "./TypeFactory";
 import type {
@@ -7,7 +8,7 @@ import type {
   iPatternComparison,
   iPatternConfiguration,
 } from "../tsc/interfaces";
-import type { SolutionsArrayMap, PatternMatrixTuple } from "../tsc/types";
+import type { SolutionsArrayMap } from "../tsc/types";
 
 export default class PatternEvaluator implements iPatternEvaluator {
   private comparisonHistory: SolutionsArrayMap = TypeFactory.newSolutionsArrayMap();

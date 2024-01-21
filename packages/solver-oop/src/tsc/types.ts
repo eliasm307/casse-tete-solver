@@ -12,9 +12,6 @@ import type {
 /* eslint-disable @typescript-eslint/no-unused-vars */
 export type Piece3Tuple = [iPiece, iPiece, iPiece];
 
-/** Tuple representing 3x3 pattern produced by putting 3 pieces together */
-export type PatternMatrixTuple = [SidePatternTuple, SidePatternTuple, SidePatternTuple];
-
 export type PieceGroupSidesTuple = Number3Tuple;
 
 /** Tuple of 3 numbers representing 3 ids of pieces in a group */
