@@ -77,6 +77,7 @@ export function findSolutions({
 
   const solutions: GeneralSolution[] = [];
   const iteration = 0;
+  const visitedBoardIds = new Set<string>();
   while (pendingBoards.length) {
     // console.log("iteration", iteration++);
     debugger;
@@ -108,12 +109,15 @@ export function findSolutions({
       }
 
       // no more pieces to add, we filled the board so we have a solution
-      solutions.push(createSolutionRepresentation(newBoard));
-      console.log("Found a solution", solutions.length);
-      if (solutions.length > 5) {
-        console.log("Found a few solutions, stopping for debugging");
-        return solutions;
+      const solution = createSolutionRepresentation(newBoard);
+      if (visitedBoardIds.has(solution.id)) {
+        console.log("Duplicate solution found");
+        continue;
       }
+      visitedBoardIds.add(solution.id);
+      visitedBoardIds.add(getMirrorSolutionId(newBoard)); // add mirror solution id also to avoid duplicates
+      solutions.push(solution);
+      console.log("Found a solution", solutions.length);
     }
 
     // if (++iteration % 100 === 0) {
@@ -180,11 +184,18 @@ function boardIsSolved(board: Board): boolean {
   return gridIsValid;
 }
 
+function createLayerId(layer: BoardLayer): string {
+  return `${layer.slots.map(String).join("-")}-@${layer.rotationDegrees}deg`;
+}
+
+function createBoardId(layerIds: string[]): string {
+  return layerIds.join("-");
+}
+
 function createSolutionRepresentation(board: Board): GeneralSolution {
-  debugger;
   const layers: SolutionLayer[] = board.layers.map((layer, i) => {
     return {
-      id: `${layer.slots.map(String).join("-")}-@${layer.rotationDegrees}deg`,
+      id: createLayerId(layer),
       rotationDegrees: layer.rotationDegrees,
       pieces: layer.slots as Number3Tuple[],
       preview: createBoardLayerRepresentation(layer, i),
@@ -193,9 +204,27 @@ function createSolutionRepresentation(board: Board): GeneralSolution {
   });
 
   return {
-    id: layers.map((layer) => layer.id).join("-"),
+    id: createBoardId(layers.map((layer) => layer.id)),
     layers,
   };
+}
+
+function getMirrorSolutionId(board: Board): string {
+  const mirroredLayers = board.layers.map((layer): BoardLayer => {
+    if (layer.rotationDegrees === 0) {
+      return {
+        rotationDegrees: layer.rotationDegrees,
+        slots: layer.slots.toReversed() as BoardLayer["slots"],
+      };
+    }
+
+    return {
+      rotationDegrees: layer.rotationDegrees,
+      slots: layer.slots.map((slot) => slot!.toReversed()) as BoardLayer["slots"],
+    };
+  });
+
+  return createBoardId(mirroredLayers.map(createLayerId));
 }
 
 function createBoardLayerRepresentation(layer: BoardLayer, index: number): PatternMatrixTuple {
