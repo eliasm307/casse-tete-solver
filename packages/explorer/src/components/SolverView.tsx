@@ -5,7 +5,7 @@ import React from "react";
 import SolutionPage from "./SolutionPage";
 import type { GeneralSolution } from "@casse-tete-solver/common/src/types";
 
-const AppRoot = styled.header`
+const MainContainer = styled.header`
   text-align: center;
   background-color: #282c34;
   min-height: 100vh;
@@ -44,7 +44,7 @@ function App({ title, solutions }: Props) {
   const solutionGroups = groupSolutions(solutions);
 
   return (
-    <AppRoot>
+    <MainContainer>
       <h2>{title}</h2>
       {solutionGroups.map((solutionGroup, i) => {
         const id = solutionGroup.map((s) => s.id).join("");
@@ -58,7 +58,7 @@ function App({ title, solutions }: Props) {
           </Page>
         );
       })}
-    </AppRoot>
+    </MainContainer>
   );
 }
 
