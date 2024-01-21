@@ -4,10 +4,15 @@ import TypeFactory from "./TypeFactory";
 
 export default class SolutionReporter implements iSolutionReporter {
   private compatibilityFinder: iCompatibilityFinder;
+
   solutionsAll: iSolution[];
+
   solutionsUnique: iSolution[];
+
   solutionsByPieceGroup: SolutionsArrayMap;
+
   solutionsFromPieceGroups: iSolution[];
+
   constructor(compatibilityFinder: iCompatibilityFinder) {
     this.compatibilityFinder = compatibilityFinder;
     this.solutionsAll = this.getAllSolutions(this.compatibilityFinder);
@@ -30,7 +35,7 @@ export default class SolutionReporter implements iSolutionReporter {
   private getUniqueSolutions(solutions: iSolution[]): iSolution[] {
     // group by solutions with the same id
     // todo is this required? as there is no change in the number of patterns
-    /*const uniqueSolutionsByPatternId: SolutionMap = this.solutionsAll.reduce(
+    /* const uniqueSolutionsByPatternId: SolutionMap = this.solutionsAll.reduce(
 			(solutionMap: SolutionMap, solution: iSolution) => {
 				// create possible combinations of pattern ids to get solution ids
 				const solutionId1: string = `${solution.pattern1.id}-AND-${solution.pattern2.id}`;

@@ -1,7 +1,6 @@
 import { AVAILABLE_PIECES_MAP } from "../constants/production";
 import type { iPieceGroupPermutation } from "../tsc/interfaces";
 import type { PieceIdGroupTuple } from "../tsc/types";
-import PatternConfiguration from "./PatternConfiguration";
 import PatternEvaluator from "./PatternEvaluator";
 import PieceGroupPermutation from "./PieceGroupPermutation";
 
