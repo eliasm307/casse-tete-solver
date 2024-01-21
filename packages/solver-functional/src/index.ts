@@ -10,7 +10,7 @@ import { findSolutions } from "./findSolutions";
 async function main() {
   const solutions = findSolutions({ availablePieces: AVAILABLE_PIECES_ARRAY });
 
-  console.log("solutions:", solutions);
+  console.log("solutions:", JSON.stringify(solutions, null, 2));
 
   const outputDir = path.resolve(__dirname, "../output");
 

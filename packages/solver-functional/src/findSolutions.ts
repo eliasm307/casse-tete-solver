@@ -21,6 +21,7 @@ import type {
   GeneralSolution,
   Number3Tuple,
   PatternMatrixTuple,
+  SidePatternTuple,
   SolutionLayer,
   iPiece,
 } from "@casse-tete-solver/common/src/types";
@@ -28,19 +29,20 @@ import { deepClone, isTruthy } from "@casse-tete-solver/common/src/utils";
 
 type Board = {
   /** The current overall pattern on the board */
-  pattern: PatternMatrixTuple;
+  grid: PatternMatrixTuple;
   layers: [BoardLayer, BoardLayer];
 };
 
 type PiecePlacement = {
+  // todo instead of passing around the piece, just pass around piece ids
   piece: iPiece;
   sideIndex: 0 | 1;
   rotated: boolean;
-  /**
-   * If the rotation is 0 or 180 degrees, then the slot is the column index
-   * If the rotation is 90 or 270 degrees, then the slot is the row index
-   */
   layerIndex: 0 | 1;
+  /**
+   * If the rotation is true, then the slot is the column index
+   * If the rotation is false, then the slot is the row index
+   */
   slotIndex: 0 | 1 | 2;
 };
 
@@ -49,11 +51,18 @@ type BoardLayer = {
    * Flags to indicate which positions are available on the board,
    * ie which positions are not occupied by a piece
    */
-  availablePositions: [boolean, boolean, boolean];
-  orientation: "horizontal" | "vertical";
-  piecePlacements: PiecePlacement[];
+  slots: [SidePatternTuple | null, SidePatternTuple | null, SidePatternTuple | null];
+  /**
+   * 0 degrees is horizontal, ie the slots are rows and the first slot is the top row and piece cells go left to right
+   *
+   * 90 degrees is vertical  (rotated anti-clockwise), ie the slots are columns and the first slot is the left column
+   * and piece cells go bottom to top
+   */
+  rotationDegrees: 0 | -90;
 };
 
+// todo convert to recursive solution, which should be better for memory as it wont need to store all the boards being considered in memory at the same time
+// just up to 6 boards (ie 6 pieces) at a time
 export function findSolutions({
   availablePieces,
 }: {
@@ -61,101 +70,124 @@ export function findSolutions({
 }): GeneralSolution[] {
   console.log("Find solutions start");
 
-  const [firstPiece, ...initialRemainingPieces] = availablePieces;
-
   // add first piece in the available columns only (using both sides) and solve from there,
   // ie dont need to consider rows as we would get the same solutions but rotated
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  const pendingBoards = [
-    createInitialBoard({ bottomLayerOrientation: "horizontal" }),
-    createInitialBoard({ bottomLayerOrientation: "vertical" }),
+  const pendingBoards = createInitialBoards({ availablePieces });
+
+  const solutions: GeneralSolution[] = [];
+  const iteration = 0;
+  while (pendingBoards.length) {
+    // console.log("iteration", iteration++);
+    debugger;
+
+    const { board, remainingPieces } = pendingBoards.pop()!;
+
+    const [nextPiece, ...nextIterationPieces] = remainingPieces;
+
+    const availableSlotPlacements = getAvailablePlacements({ board, piece: nextPiece });
+    for (const placement of availableSlotPlacements) {
+      const newBoard = tryCreatingBoardWithPieceAdded({ board, placement });
+      if (!newBoard) {
+        // throw new Error("Expected to be able to add piece to board");
+        continue; // this can fail if it doesn't fit on the board
+      }
+
+      if (nextIterationPieces.length) {
+        // we still have more pieces to add, so add this board to the list of boards to consider
+        pendingBoards.push({
+          board: newBoard,
+          remainingPieces: nextIterationPieces,
+        });
+        continue;
+      }
+
+      if (!boardIsSolved(newBoard)) {
+        // throw new Error("Board is not complete but we have no more pieces to add");
+        continue;
+      }
+
+      // no more pieces to add, we filled the board so we have a solution
+      solutions.push(createSolutionRepresentation(newBoard));
+      console.log("Found a solution", solutions.length);
+      if (solutions.length > 5) {
+        console.log("Found a few solutions, stopping for debugging");
+        return solutions;
+      }
+    }
+
+    // if (++iteration % 100 === 0) {
+    //   // console.log("pendingBoards", pendingBoards.length);
+    //   // console.log("last board layers", JSON.stringify(pendingBoards.at(-1)?.board.layers, null, 2));
+    // }
+  }
+
+  return solutions;
+}
+
+function createInitialBoards({ availablePieces }: { availablePieces: iPiece[] }) {
+  const [firstPiece, ...initialRemainingPieces] = availablePieces;
+
+  return [
+    createInitialBoard({ bottomLayerRotationDegrees: 0 }),
+    createInitialBoard({ bottomLayerRotationDegrees: -90 }),
   ]
-    .flatMap((initialBoard, colIndex) => {
-      return initialBoard.layers[0].availablePositions.flatMap(() => [
-        addPieceToBoard({
+    .flatMap((initialBoard) => {
+      return initialBoard.layers[0].slots.flatMap((_, slotIndex) => [
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        tryCreatingBoardWithPieceAdded({
           board: initialBoard,
           placement: {
             piece: firstPiece,
             layerIndex: 0,
             sideIndex: 0, // default side
             rotated: false, // no rotation for first piece
-            slotIndex: colIndex satisfies number as PiecePlacement["slotIndex"],
+            slotIndex: slotIndex satisfies number as PiecePlacement["slotIndex"],
           },
-        }),
-        addPieceToBoard({
+        })!,
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        tryCreatingBoardWithPieceAdded({
           board: initialBoard,
           placement: {
             piece: firstPiece,
             layerIndex: 0,
             sideIndex: 1, // flipped piece
             rotated: false, // no rotation for first piece
-            slotIndex: colIndex satisfies number as PiecePlacement["slotIndex"],
+            slotIndex: slotIndex satisfies number as PiecePlacement["slotIndex"],
           },
-        }),
+        })!,
       ]);
     })
-    .filter(isTruthy)
     .map((board) => ({ board, remainingPieces: initialRemainingPieces }));
   // .flatMap((board) => solveRecursively({ board, remainingPieces }));
+}
 
-  const solutions: GeneralSolution[] = [];
-  let iteration = 0;
-  while (pendingBoards.length) {
-    const { board, remainingPieces } = pendingBoards.pop()!;
+function boardIsSolved(board: Board): boolean {
+  const everySlotAssigned = board.layers.every((layer) => {
+    return layer.slots.every((slotValues) => {
+      return slotValues?.every((value) => typeof value === "number");
+    });
+  });
 
-    if (!remainingPieces.length) {
-      // no more pieces to add, we filled the board so we have a solution
-      solutions.push(createSolutionRepresentation(board));
-      if (solutions.length > 5) {
-        console.log("Found a few solutions, stopping for debugging");
-        break;
-      }
-      continue;
-    }
-
-    const [nextPiece, ...nextIterationPieces] = remainingPieces;
-
-    const placements = getPossibleNextPlacementWithPiece({ board, piece: nextPiece });
-    if (!placements.length) {
-      continue;
-    }
-
-    for (const placement of placements) {
-      const newBoard = addPieceToBoard({ board, placement });
-      if (!newBoard) {
-        continue; // invalid move
-      }
-
-      pendingBoards.push({
-        board: newBoard,
-        remainingPieces: nextIterationPieces,
-      });
-    }
-
-    if (++iteration % 100 === 0) {
-      // console.log("pendingBoards", pendingBoards.length);
-      // console.log("last board layers", JSON.stringify(pendingBoards.at(-1)?.board.layers, null, 2));
-    }
+  if (!everySlotAssigned) {
+    return false;
   }
 
-  return solutions;
+  const gridIsValid = board.grid.every((row) => {
+    return row.every((value) => value < 1);
+  });
+
+  return gridIsValid;
 }
 
 function createSolutionRepresentation(board: Board): GeneralSolution {
-  const layers: SolutionLayer[] = board.layers.map((layer) => {
-    const rotationDegrees = layer.orientation === "horizontal" ? 90 : 0;
-    const id = `${layer.piecePlacements.map((placement) => placement.piece.id).join("-")}-@${rotationDegrees}deg`;
+  debugger;
+  const layers: SolutionLayer[] = board.layers.map((layer, i) => {
     return {
-      id,
-      rotationDegrees,
-      pieces: layer.piecePlacements.map((placement) => {
-        const slotValues = [...placement.piece.sides[placement.sideIndex]];
-        if (placement.rotated) {
-          slotValues.reverse();
-        }
-        return slotValues as Number3Tuple;
-      }),
-      matrix: createBoardLayerRepresentation(layer),
+      id: `${layer.slots.map(String).join("-")}-@${layer.rotationDegrees}deg`,
+      rotationDegrees: layer.rotationDegrees,
+      pieces: layer.slots as Number3Tuple[],
+      matrix: createBoardLayerRepresentation(layer, i),
     };
   });
 
@@ -165,56 +197,95 @@ function createSolutionRepresentation(board: Board): GeneralSolution {
   };
 }
 
-function createBoardLayerRepresentation(board: BoardLayer): PatternMatrixTuple {
-  const matrix: PatternMatrixTuple = [
+function createBoardLayerRepresentation(layer: BoardLayer, index: number): PatternMatrixTuple {
+  const boardGrid: PatternMatrixTuple = [
     [0, 0, 0],
     [0, 0, 0],
     [0, 0, 0],
   ];
 
-  for (const piecePlacement of board.piecePlacements) {
-    const slotValues = [...piecePlacement.piece.sides[piecePlacement.sideIndex]];
-    if (piecePlacement.rotated) {
-      slotValues.reverse();
+  layer.slots.forEach((slotValues, slotIndex) => {
+    insertPieceIntoBoardMutation({
+      boardGrid,
+      piece: slotValues!,
+      rotationDegrees: layer.rotationDegrees,
+      slotIndex,
+    });
+  });
+
+  if (index === 1) {
+    // mirror the bottom layer
+    boardGrid.forEach((row) => row.reverse());
+  }
+
+  return boardGrid;
+}
+
+// NOTE: limit is 1 here as we can have a nub if no piece is added on top,
+// this just checks there are no cases of 2 nubs in the same slot which is invalid
+const GRID_MAX = 1;
+
+function insertPieceIntoBoardMutation({
+  rotationDegrees,
+  boardGrid,
+  slotIndex,
+  piece,
+}: {
+  rotationDegrees: BoardLayer["rotationDegrees"];
+  boardGrid: PatternMatrixTuple;
+  slotIndex: number;
+  piece: SidePatternTuple;
+}) {
+  /**
+   * 0 degrees is horizontal, ie the slots are rows and the first slot is the top row and piece cells go left to right
+   *
+   * ie slots are rows, iterate through columns
+   */
+  if (rotationDegrees === 0) {
+    for (let i = 0; i < boardGrid.length; i++) {
+      boardGrid[slotIndex][i] += piece[i];
+      if (boardGrid[slotIndex][i] > GRID_MAX) {
+        throw new Error("Invalid piece placement");
+      }
     }
 
-    if (board.orientation === "horizontal") {
-      for (let i = 0; i < matrix.length; i++) {
-        // ie fixed row, iterate through columns
-        matrix[piecePlacement.slotIndex][i] += slotValues[i];
-      }
-    } else {
-      for (let i = 0; i < matrix.length; i++) {
-        // ie fixed column, iterate through rows
-        matrix[i][piecePlacement.slotIndex] += slotValues[i];
+    /**
+     * 90 degrees is vertical  (rotated anti-clockwise), ie the slots are columns and the first slot is the left column
+     * and piece cells go bottom to top
+     *
+     * ie slots are columns, iterate through rows
+     */
+  } else {
+    for (let i = 0; i < boardGrid.length; i++) {
+      boardGrid[i][slotIndex] += piece[boardGrid.length - 1 - i];
+      if (boardGrid[i][slotIndex] > GRID_MAX) {
+        throw new Error("Invalid piece placement");
       }
     }
   }
-
-  return matrix;
 }
 
 function createInitialBoard({
-  bottomLayerOrientation,
+  bottomLayerRotationDegrees: bottomLayerOrientation,
 }: {
-  bottomLayerOrientation: BoardLayer["orientation"];
+  bottomLayerRotationDegrees: BoardLayer["rotationDegrees"];
 }): Board {
   return {
-    pattern: [
+    grid: [
       [0, 0, 0],
       [0, 0, 0],
       [0, 0, 0],
     ],
     layers: [
       {
-        orientation: "vertical",
-        availablePositions: [true, true, true],
-        piecePlacements: [],
+        // fixed orientation for top layer to avoid duplicate solutions
+        // (ie if we considered vertical top layers also would get the same solutions but rotated)
+        rotationDegrees: 0,
+        slots: [null, null, null],
       },
       {
-        orientation: bottomLayerOrientation,
-        availablePositions: [true, true, true],
-        piecePlacements: [],
+        rotationDegrees: bottomLayerOrientation,
+        slots: [null, null, null],
       },
     ],
   };
@@ -225,7 +296,7 @@ function createInitialBoard({
  *
  * @returns The new board if the piece can be added, otherwise undefined
  */
-function addPieceToBoard({
+function tryCreatingBoardWithPieceAdded({
   board,
   placement: { piece, rotated, sideIndex, slotIndex, layerIndex },
 }: {
@@ -233,7 +304,7 @@ function addPieceToBoard({
   placement: PiecePlacement;
 }): Board | undefined {
   // check if the slot is available
-  if (!board.layers[layerIndex].availablePositions[slotIndex]) {
+  if (board.layers[layerIndex].slots[slotIndex]) {
     return; // invalid placement, slot is already occupied
   }
 
@@ -241,45 +312,56 @@ function addPieceToBoard({
   const newBoard = deepClone(board);
 
   // if horizontal, then add piece to row
-  const isHorizontal = newBoard.layers[layerIndex].orientation === "horizontal";
+  // const isHorizontal = newBoard.layers[layerIndex].orientation === "horizontal";
 
   let slotValues = piece.sides[sideIndex];
   if (rotated) {
     slotValues = [...slotValues];
-    slotValues.reverse();
+    slotValues.reverse(); // this is the same as rotating the piece 180 degrees
   }
 
-  if (isHorizontal) {
-    for (let i = 0; i < newBoard.pattern.length; i++) {
-      // ie fixed row, iterate through columns
-      newBoard.pattern[slotIndex][i] += slotValues[i];
-      if (newBoard.pattern[i][slotIndex] > 1) {
-        return; // invalid placement, piece does not fit
-      }
-    }
-
-    // else if vertical, then add piece to column
-  } else {
-    for (let i = 0; i < newBoard.pattern.length; i++) {
-      // ie fixed column, iterate through rows
-      newBoard.pattern[i][slotIndex] += slotValues[i];
-      if (newBoard.pattern[i][slotIndex] > 1) {
-        return; // invalid placement
-      }
-    }
+  try {
+    insertPieceIntoBoardMutation({
+      boardGrid: newBoard.grid,
+      piece: slotValues,
+      rotationDegrees: newBoard.layers[layerIndex].rotationDegrees,
+      slotIndex,
+    });
+  } catch (error) {
+    return; // invalid placement, piece does not fit
   }
 
-  // mark slot as unavailable
-  newBoard.layers[layerIndex].availablePositions[slotIndex] = false;
+  // if (isHorizontal) {
+  //   for (let i = 0; i < newBoard.grid.length; i++) {
+  //     // ie fixed row, iterate through columns
+  //     newBoard.grid[slotIndex][i] += slotValues[i];
+  //     if (newBoard.grid[i][slotIndex] > 1) {
+  //       return; // invalid placement, piece does not fit
+  //     }
+  //   }
+
+  //   // else if vertical, then add piece to column
+  // } else {
+  //   for (let i = 0; i < newBoard.grid.length; i++) {
+  //     // ie fixed column, iterate through rows
+  //     newBoard.grid[i][slotIndex] += slotValues[i];
+  //     if (newBoard.grid[i][slotIndex] > 1) {
+  //       return; // invalid placement
+  //     }
+  //   }
+  // }
+
+  // mark slot as occupied
+  newBoard.layers[layerIndex].slots[slotIndex] = slotValues;
 
   // add piece to list of placements
-  newBoard.layers[layerIndex].piecePlacements.push({
-    piece,
-    rotated,
-    sideIndex,
-    slotIndex,
-    layerIndex,
-  });
+  // newBoard.layers[layerIndex].piecePlacements.push({
+  //   piece,
+  //   rotated,
+  //   sideIndex,
+  //   slotIndex,
+  //   layerIndex,
+  // });
 
   return newBoard;
 }
@@ -308,7 +390,11 @@ function addPieceToBoard({
 //   });
 // }
 
-function getPossibleNextPlacementWithPiece({
+/**
+ * Gets a list of all the available placement configurations for the piece on the board,
+ * However this does not check if the piece can actually be added to the board in that configuration
+ */
+function getAvailablePlacements({
   board,
   piece,
 }: {
@@ -326,8 +412,8 @@ function getPossibleNextPlacementWithPiece({
         // for each slot on the board
         for (let slotIndex = 0; slotIndex < 3; slotIndex++) {
           // check if the slot is available
-          if (!board.layers[layerIndex].availablePositions[slotIndex]) {
-            continue; // invalid placement
+          if (board.layers[layerIndex].slots[slotIndex]) {
+            continue; // slot already occupied
           }
 
           // add piece to board

@@ -2,7 +2,7 @@ import SolverView from "../components/SolverView";
 import { SolverKey } from "@casse-tete-solver/common/src/constants";
 
 export default async function Home() {
-  const solvers = await getAllSolversData([SolverKey.OOP, SolverKey.Functional]);
+  const solvers = await getAllSolversData([SolverKey.Functional, SolverKey.OOP]);
 
   return (
     <main>
