@@ -45,4 +45,5 @@ export type State = {
 
 export type Context = {
   knownSolutionIds: Set<string>;
+  consideredBoardConfigurationsCount: number;
 };

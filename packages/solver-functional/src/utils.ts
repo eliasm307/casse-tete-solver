@@ -9,7 +9,13 @@ import type {
 import { deepClone } from "@casse-tete-solver/common/src/utils";
 import type { State, PiecePlacement, BoardLayer, Board, Context } from "./types";
 
-export function createInitialStates({ availablePieces }: { availablePieces: iPiece[] }): State[] {
+export function createInitialStates({
+  availablePieces,
+  context,
+}: {
+  availablePieces: iPiece[];
+  context: Context;
+}): State[] {
   const [firstPiece, ...initialRemainingPieces] = availablePieces;
 
   // start with possible board configurations ie parallel or perpendicular
@@ -31,6 +37,7 @@ export function createInitialStates({ availablePieces }: { availablePieces: iPie
             rotated: false, // no rotation for first piece
             slotIndex: slotIndex satisfies number as PiecePlacement["slotIndex"],
           },
+          context,
         })!,
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         tryCreatingBoardWithPieceAdded({
@@ -42,6 +49,7 @@ export function createInitialStates({ availablePieces }: { availablePieces: iPie
             rotated: false, // no rotation for first piece
             slotIndex: slotIndex satisfies number as PiecePlacement["slotIndex"],
           },
+          context,
         })!,
       ]);
     })
@@ -73,7 +81,7 @@ function createSolutionRepresentation(board: Board): GeneralSolution {
   };
 }
 
-export function createSolution({ board, context }: { board: Board; context: Context }) {
+export function createSolutionIfUnique({ board, context }: { board: Board; context: Context }) {
   const solution = createSolutionRepresentation(board);
   if (context.knownSolutionIds.has(solution.id)) {
     // console.log("Duplicate solution found");
@@ -206,10 +214,14 @@ function createInitialBoard({
 export function tryCreatingBoardWithPieceAdded({
   board,
   placement: { piece, rotated, sideIndex, slotIndex, layerIndex },
+  context,
 }: {
   board: Board;
   placement: PiecePlacement;
+  context: Context;
 }): Board | undefined {
+  context.consideredBoardConfigurationsCount++;
+
   // check if the slot is available
   if (board.layers[layerIndex].slots[slotIndex]) {
     return; // invalid placement, slot is already occupied

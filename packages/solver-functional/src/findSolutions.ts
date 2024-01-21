@@ -4,7 +4,7 @@ import type { GeneralSolution, iPiece } from "@casse-tete-solver/common/src/type
 import type { Context, State } from "./types";
 import {
   createInitialStates,
-  createSolution,
+  createSolutionIfUnique,
   getAvailablePlacements,
   tryCreatingBoardWithPieceAdded,
 } from "./utils";
@@ -16,22 +16,24 @@ export function findSolutionsBfs({
 }): GeneralSolution[] {
   console.log("Find solutions start");
 
+  const context: Context = {
+    knownSolutionIds: new Set(),
+    consideredBoardConfigurationsCount: 0,
+  };
+
   // add first piece in the available columns only (using both sides) and solve from there,
   // ie dont need to consider rows as we would get the same solutions but rotated
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-  const pendingBoards = createInitialStates({ availablePieces });
+  const pendingBoards = createInitialStates({ availablePieces, context });
 
   const solutions: GeneralSolution[] = [];
-  const context: Context = {
-    knownSolutionIds: new Set(),
-  };
 
   while (pendingBoards.length) {
     const { board, remainingPieces } = pendingBoards.pop()!;
     const [nextPiece, ...nextIterationPieces] = remainingPieces;
     const availableSlotPlacements = getAvailablePlacements({ board, piece: nextPiece });
     for (const placement of availableSlotPlacements) {
-      const newBoard = tryCreatingBoardWithPieceAdded({ board, placement });
+      const newBoard = tryCreatingBoardWithPieceAdded({ board, placement, context });
       if (!newBoard) {
         continue; // this can fail if it doesn't fit on the board
       }
@@ -46,7 +48,7 @@ export function findSolutionsBfs({
       }
 
       // no more pieces to add, we filled the board so we have a solution
-      const solution = createSolution({ board: newBoard, context });
+      const solution = createSolutionIfUnique({ board: newBoard, context });
       if (solution) {
         solutions.push(solution);
         console.log("Found a solution", solutions.length);
@@ -54,6 +56,7 @@ export function findSolutionsBfs({
     }
   }
 
+  console.log("BFS considered board configurations", context.consideredBoardConfigurationsCount);
   return solutions;
 }
 
@@ -64,10 +67,14 @@ export function findSolutionsDfs({
 }): GeneralSolution[] {
   const context: Context = {
     knownSolutionIds: new Set(),
+    consideredBoardConfigurationsCount: 0,
   };
-  return createInitialStates({ availablePieces }).flatMap((state) =>
+  const solutions = createInitialStates({ availablePieces, context }).flatMap((state) =>
     findSolutionsDfsRecursive({ state, context }),
   );
+
+  console.log("DFS considered board configurations", context.consideredBoardConfigurationsCount);
+  return solutions;
 }
 
 function findSolutionsDfsRecursive({
@@ -79,7 +86,7 @@ function findSolutionsDfsRecursive({
 }): GeneralSolution[] {
   if (!remainingPieces.length) {
     // no more pieces to add, we filled the board so we have a solution
-    const solution = createSolution({ board, context });
+    const solution = createSolutionIfUnique({ board, context });
     if (!solution) {
       return []; // duplicate solution
     }
@@ -90,7 +97,7 @@ function findSolutionsDfsRecursive({
   const [nextPiece, ...nextIterationPieces] = remainingPieces;
   const availableSlotPlacements = getAvailablePlacements({ board, piece: nextPiece });
   return availableSlotPlacements.flatMap((placement) => {
-    const newBoard = tryCreatingBoardWithPieceAdded({ board, placement });
+    const newBoard = tryCreatingBoardWithPieceAdded({ board, placement, context });
     if (!newBoard) {
       return []; // invalid move
     }
