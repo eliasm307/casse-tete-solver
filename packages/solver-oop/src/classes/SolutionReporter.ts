@@ -1,3 +1,4 @@
+import type { GeneralSolution } from "@casse-tete-solver/common/src/types";
 import type { iSolutionReporter, iCompatibilityFinder, iSolution } from "../tsc/interfaces";
 import type { SolutionsArrayMap, SolutionMap } from "../tsc/types";
 import TypeFactory from "./TypeFactory";
@@ -13,10 +14,27 @@ export default class SolutionReporter implements iSolutionReporter {
 
   solutionsFromPieceGroups: iSolution[];
 
+  solutionsGeneral: GeneralSolution[];
+
   constructor(compatibilityFinder: iCompatibilityFinder) {
     this.compatibilityFinder = compatibilityFinder;
     this.solutionsAll = this.getAllSolutions(this.compatibilityFinder);
     this.solutionsUnique = this.getUniqueSolutions(this.solutionsAll);
+    this.solutionsGeneral = this.solutionsUnique.map((solution) => ({
+      id: solution.id,
+      layers: [
+        {
+          id: solution.pattern1.id,
+          rotationDegrees: solution.pattern1RotationDeg,
+          pieces: solution.pattern1.matrix,
+        },
+        {
+          id: solution.pattern2.id,
+          rotationDegrees: 0,
+          pieces: solution.pattern2.matrix,
+        },
+      ],
+    }));
     this.solutionsByPieceGroup = this.compatibilityFinder.solutionsByPieceGroup;
     this.solutionsFromPieceGroups = Array.from(
       this.compatibilityFinder.solutionsByPieceGroup.values(),

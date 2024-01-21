@@ -16,6 +16,7 @@ async function main() {
     exporter.exportUniqueSolutions(),
     exporter.exportPieces(),
     exporter.exportSolutionsFromUniquePieceGroups(),
+    exporter.exportGeneralSolutions(),
   ]);
 }
 

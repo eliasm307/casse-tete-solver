@@ -55,6 +55,13 @@ export default class Exporter implements iExporter {
     );
   }
 
+  async exportGeneralSolutions() {
+    await this.exportDataToFile(
+      this.solutionReporter.solutionsGeneral,
+      "src/exports/solutions-general.json",
+    );
+  }
+
   async exportPieces() {
     await this.exportDataToFile(this.availablePieces, "src/exports/pieces.json");
   }

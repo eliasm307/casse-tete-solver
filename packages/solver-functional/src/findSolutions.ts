@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/prefer-for-of */
 /*
@@ -16,7 +17,13 @@ back track to other configurations
 
 */
 
-import type { Number3Tuple, PatternMatrixTuple, iPiece } from "@casse-tete-solver/common/src/types";
+import type {
+  GeneralSolution,
+  Number3Tuple,
+  PatternMatrixTuple,
+  SolutionLayer,
+  iPiece,
+} from "@casse-tete-solver/common/src/types";
 import { deepClone, isTruthy } from "@casse-tete-solver/common/src/utils";
 
 type Board = {
@@ -37,17 +44,6 @@ type PiecePlacement = {
   slotIndex: 0 | 1 | 2;
 };
 
-/**
- * The solution is the piece placements for each layer
- */
-type Solution = {
-  layers: {
-    orientation: BoardLayer["orientation"];
-    pieces: Number3Tuple[];
-    matrix: PatternMatrixTuple;
-  }[];
-};
-
 type BoardLayer = {
   /**
    * Flags to indicate which positions are available on the board,
@@ -58,7 +54,11 @@ type BoardLayer = {
   piecePlacements: PiecePlacement[];
 };
 
-export function findSolutions({ availablePieces }: { availablePieces: iPiece[] }): Solution[] {
+export function findSolutions({
+  availablePieces,
+}: {
+  availablePieces: iPiece[];
+}): GeneralSolution[] {
   console.log("Find solutions start");
 
   const [firstPiece, ...initialRemainingPieces] = availablePieces;
@@ -98,7 +98,7 @@ export function findSolutions({ availablePieces }: { availablePieces: iPiece[] }
     .map((board) => ({ board, remainingPieces: initialRemainingPieces }));
   // .flatMap((board) => solveRecursively({ board, remainingPieces }));
 
-  const solutions: Solution[] = [];
+  const solutions: GeneralSolution[] = [];
   let iteration = 0;
   while (pendingBoards.length) {
     const { board, remainingPieces } = pendingBoards.pop()!;
@@ -141,10 +141,13 @@ export function findSolutions({ availablePieces }: { availablePieces: iPiece[] }
   return solutions;
 }
 
-function createSolutionRepresentation(board: Board): Solution {
-  return {
-    layers: board.layers.map((layer) => ({
-      orientation: layer.orientation,
+function createSolutionRepresentation(board: Board): GeneralSolution {
+  const layers: SolutionLayer[] = board.layers.map((layer) => {
+    const rotationDegrees = layer.orientation === "horizontal" ? 90 : 0;
+    const id = `${layer.piecePlacements.map((placement) => placement.piece.id).join("-")}-@${rotationDegrees}deg`;
+    return {
+      id,
+      rotationDegrees,
       pieces: layer.piecePlacements.map((placement) => {
         const slotValues = [...placement.piece.sides[placement.sideIndex]];
         if (placement.rotated) {
@@ -153,7 +156,12 @@ function createSolutionRepresentation(board: Board): Solution {
         return slotValues as Number3Tuple;
       }),
       matrix: createBoardLayerRepresentation(layer),
-    })),
+    };
+  });
+
+  return {
+    id: layers.map((layer) => layer.id).join("-"),
+    layers,
   };
 }
 

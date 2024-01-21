@@ -1,4 +1,4 @@
-import type { PatternMatrixTuple } from "@casse-tete-solver/common/src/types";
+import type { GeneralSolution, PatternMatrixTuple } from "@casse-tete-solver/common/src/types";
 import type {
   PieceGroupSidesTuple,
   PieceIdGroupTuple,
@@ -128,6 +128,7 @@ export type iExporter = {
 export type iSolutionReporter = {
   solutionsAll: iSolution[];
   solutionsUnique: iSolution[];
+  solutionsGeneral: GeneralSolution[];
   solutionsFromPieceGroups: iSolution[];
   solutionsByPieceGroup: SolutionsArrayMap;
 };
