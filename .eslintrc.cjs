@@ -1,5 +1,4 @@
 const baseConfig = require("@eliasm307/config/eslint")({ withReact: true, withPrettier: true });
-const path = require("node:path");
 
 module.exports = {
   ...baseConfig,
@@ -13,17 +12,7 @@ module.exports = {
   ],
   rules: {
     ...baseConfig.rules,
-    // "import/extensions": ["error", "ignorePackages"],
-    "import/no-extraneous-dependencies": [
-      "warn",
-      {
-        packageDir: [__dirname, path.join(__dirname, "packages/common")],
-        devDependencies: false,
-        optionalDependencies: false,
-        peerDependencies: false,
-      },
-    ],
-    "nonblock-statement-body-position": "off",
+    "no-console": "off",
   },
   overrides: [
     ...baseConfig.overrides,
