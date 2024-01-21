@@ -1,4 +1,7 @@
 {
   "name": "@casse-tete-solver/solver-functional",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "scripts": {
+    "solve": "npx ts-node src/index.ts"
+  }
 }
