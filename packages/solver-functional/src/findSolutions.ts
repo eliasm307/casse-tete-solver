@@ -55,29 +55,7 @@ export function findSolutions({
 }): GeneralSolution[] {
   console.log("Find solutions start");
 
-  availablePieces = availablePieces.map((p) => {
-    return {
-      id: p.id,
-      sides: p.sides.map((side) =>
-        /*
-      We will be adding pieces on top of each other and in order to determine invalid configurations each value needs to have some effect
-      e.g. if we have a nub on a flat part then thats invalid, but the default values consider a flat as 0 so this would be valid, we fix this here
-      */
-        side.map((v) => {
-          switch (v) {
-            case -1:
-              return -1;
-            case 0:
-              return 1;
-            case 1:
-              return 2;
-            default:
-              throw new Error("Invalid piece value");
-          }
-        }),
-      ) as [SidePatternTuple, SidePatternTuple],
-    };
-  });
+  availablePieces = formatPieces(availablePieces);
 
   // add first piece in the available columns only (using both sides) and solve from there,
   // ie dont need to consider rows as we would get the same solutions but rotated
@@ -122,6 +100,32 @@ export function findSolutions({
   }
 
   return solutions;
+}
+
+/**
+ * We will be adding pieces on top of each other and in order to determine invalid configurations each value needs to have some effect
+ * e.g. if we have a nub on a flat part then thats invalid, but the default values consider a flat as 0 so this would be valid, we fix this here
+ */
+function formatPieces(pieces: iPiece[]): iPiece[] {
+  return pieces.map((p) => {
+    return {
+      id: p.id,
+      sides: p.sides.map((side) =>
+        side.map((v) => {
+          switch (v) {
+            case -1:
+              return -1;
+            case 0:
+              return 1;
+            case 1:
+              return 2;
+            default:
+              throw new Error("Invalid piece value");
+          }
+        }),
+      ) as [SidePatternTuple, SidePatternTuple],
+    };
+  });
 }
 
 function createInitialBoards({ availablePieces }: { availablePieces: iPiece[] }) {
