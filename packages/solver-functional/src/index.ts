@@ -7,7 +7,8 @@ import {
 import path from "path";
 import { saveJsonToFile } from "@casse-tete-solver/common/src/utils";
 import type { GeneralSolution } from "@casse-tete-solver/common/src/types";
-import { findSolutionsBfs, findSolutionsDfs } from "./findSolutions";
+import { findSolutionsDfs } from "./dfs";
+import { findSolutionsBfs } from "./bfs";
 
 async function main() {
   let solutions: GeneralSolution[] = [];
