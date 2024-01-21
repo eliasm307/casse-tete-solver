@@ -1,16 +1,21 @@
 # casse-tete-solver
 
-A solver for a puzzle.
+## What is a casse tete?
 
-casse tete using backtracking
+todo
 
-start with
+## The puzzle
 
-- an empty board (representation tbc but needs to represent the current free slots)
-- list of available pieces
+The puzzle involves fitting together 6 blocks each with 2 sides and 3 slots on each side which can have a hole, a bump, or nothing.
 
-get a piece and add it to the current board in all possible valid configurations (ie oriented vertically/horizontally, and also flipped)
+The blocks are as follows, the images showing both sides of the blocks:
 
-after adding in the piece to the board, recursively do the same to add the next available piece
-if the current piece cannot be added into the current board in a valid configuration then return failure, ie we dont need to consider more
-back track to other configurations
+![Puzzle pieces side A](images/pieces-side-a.jpg)
+
+![Puzzle pieces side B](images/pieces-side-b.jpg)
+
+The aim is to find a configuration of the blocks such that we can stack 3 of them on top of the other 3 and the inner surface mates properly. Below is an example of a valid solution:
+
+![Valid solution example](images/valid.png)
+
+Note that the stacked pieces can be horizontally rotated relative to each other to fit.
