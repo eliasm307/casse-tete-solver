@@ -2,7 +2,6 @@
 
 import styled from "@emotion/styled";
 import React from "react";
-import solutionsJson from "../assets/json/solutions.json";
 import SolutionPage from "./SolutionPage";
 import type { GeneralSolution } from "@casse-tete-solver/common/src/types";
 
@@ -36,28 +35,17 @@ const Page = styled.div`
   }
 `;
 
-function App() {
-  // @ts-expect-error temp, will be fixed when re-generated
-  const solutions = solutionsJson as GeneralSolution[];
+type Props = {
+  solutions: GeneralSolution[];
+  title: string;
+};
 
-  const solutionGroups: GeneralSolution[][] = solutions.reduce(
-    (acc, solution) => {
-      const lastGroupAdded = acc[acc.length - 1];
-
-      if (lastGroupAdded.length < 4) {
-        // add current solution to last group if it hasnt reached the limit
-        acc[acc.length - 1].push(solution);
-      } else {
-        // create a new solution group if the last one reached the limit
-        acc.push([solution]);
-      }
-      return acc;
-    },
-    [[]] as GeneralSolution[][],
-  );
+function App({ title, solutions }: Props) {
+  const solutionGroups = groupSolutions(solutions);
 
   return (
     <AppRoot>
+      <h2>{title}</h2>
       {solutionGroups.map((solutionGroup, i) => {
         const id = solutionGroup.map((s) => s.id).join("");
         return (
@@ -71,6 +59,24 @@ function App() {
         );
       })}
     </AppRoot>
+  );
+}
+
+function groupSolutions(solutions: GeneralSolution[]): GeneralSolution[][] {
+  return solutions.reduce(
+    (acc, solution) => {
+      const lastGroupAdded = acc[acc.length - 1];
+
+      if (lastGroupAdded.length < 4) {
+        // add current solution to last group if it hasn't reached the limit
+        acc[acc.length - 1].push(solution);
+      } else {
+        // create a new solution group if the last one reached the limit
+        acc.push([solution]);
+      }
+      return acc;
+    },
+    [[]] as GeneralSolution[][],
   );
 }
 

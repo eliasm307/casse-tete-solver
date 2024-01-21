@@ -1,5 +1,7 @@
 import type { iPiece } from "@casse-tete-solver/common/src/types";
 import { saveJsonToFile } from "@casse-tete-solver/common/src/utils";
+import path from "path";
+import { CLIENT_GENERAL_SOLUTIONS_DIR, SolverKey } from "@casse-tete-solver/common/src/constants";
 import type {
   iExporter,
   iPieceGroupFacade,
@@ -59,6 +61,10 @@ export default class Exporter implements iExporter {
     await this.exportDataToFile(
       this.solutionReporter.solutionsGeneral,
       "src/exports/solutions-general.json",
+    );
+    await saveJsonToFile(
+      this.solutionReporter.solutionsGeneral,
+      path.join(CLIENT_GENERAL_SOLUTIONS_DIR, `${SolverKey.OOP}.json`),
     );
   }
 

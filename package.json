@@ -8,7 +8,8 @@
     "test:increased-memory": "rm -rf dist && yarn build && node --max-old-space-size=4096 ./node_modules/jest-cli/bin/jest.js --logHeapUsage",
     "t": "tsc --noEmit",
     "lint": "eslint --report-unused-disable-directives --ignore-path .gitignore --quiet --ext .jsx,.js,.ts,.tsx --cache --fix .",
-    "format": "prettier --ignore-path .gitignore --write ."
+    "format": "prettier --ignore-path .gitignore --write .",
+    "solve:all": "yarn workspaces foreach --all --parallel run solve"
   },
   "repository": {
     "type": "git",

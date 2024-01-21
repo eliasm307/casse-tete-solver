@@ -1,3 +1,4 @@
+import path from "path";
 import type { iPiece } from "./types";
 
 /** This defines 6 pieces with 2 sides and 3 slots on each side.
@@ -50,3 +51,10 @@ export const AVAILABLE_PIECES_ARRAY: iPiece[] = [
 ];
 
 export const CONSOLE_SEPARATOR = "----------------------------------------";
+
+export const CLIENT_GENERAL_SOLUTIONS_DIR = path.join(__dirname, "../../explorer/public/solutions");
+
+export enum SolverKey {
+  OOP = "oop",
+  Functional = "functional",
+}
