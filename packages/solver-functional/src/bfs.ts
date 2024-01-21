@@ -8,13 +8,17 @@ import {
   tryCreatingBoardWithPieceAdded,
   createSolutionIfUnique,
   logResults,
+  logContext,
 } from "./utils";
+
+const SOLUTION_TIMER_KEY = "⌛ findSolutions-BFS-found";
 
 export function findSolutionsBfs({
   availablePieces,
 }: {
   availablePieces: iPiece[];
 }): GeneralSolution[] {
+  console.time(SOLUTION_TIMER_KEY);
   const context: Context = createContext(availablePieces);
 
   // add first piece in the available columns only (using both sides) and solve from there,
@@ -47,7 +51,9 @@ export function findSolutionsBfs({
       const solution = createSolutionIfUnique({ board: newBoard, context });
       if (solution) {
         solutions.push(solution);
-        console.log("Found a solution", solutions.length);
+        console.timeLog(SOLUTION_TIMER_KEY);
+        console.log("✅ Found a solution", solutions.length);
+        logContext(context);
       }
     }
   }

@@ -7,15 +7,19 @@ import {
   createInitialStates,
   createSolutionIfUnique,
   getAvailablePlacements,
+  logContext,
   logResults,
   tryCreatingBoardWithPieceAdded,
 } from "./utils";
+
+const SOLUTION_TIMER_KEY = "⌛ findSolutions-DFS-found";
 
 export function findSolutionsDfs({
   availablePieces,
 }: {
   availablePieces: iPiece[];
 }): GeneralSolution[] {
+  console.time(SOLUTION_TIMER_KEY);
   const context: Context = createContext(availablePieces);
   const solutions = createInitialStates({ context }).flatMap((state) =>
     findSolutionsDfsRecursive({ state, context }),
@@ -38,7 +42,9 @@ function findSolutionsDfsRecursive({
     if (!solution) {
       return []; // duplicate solution
     }
-    console.log("Found a solution", context.knownSolutionIds.size / 2);
+    console.timeLog(SOLUTION_TIMER_KEY);
+    console.log("✅ Found a solution", context.knownSolutionIds.size / 2);
+    logContext(context);
     return [solution];
   }
 

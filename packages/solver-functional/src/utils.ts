@@ -269,13 +269,13 @@ export function logResults({
   solutions: GeneralSolution[];
   context: Context;
 }) {
-  console.log(
-    methodName,
-    "considered board configurations",
-    context.consideredBoardConfigurationsCount,
-  );
-  console.log(methodName, "skipped board configurations", context.skippedBoardConfigurationsCount);
+  logContext(context);
   console.log(methodName, "solutions found", solutions.length);
+}
+
+export function logContext(context: Context) {
+  console.log("considered board configurations", context.consideredBoardConfigurationsCount);
+  console.log("skipped board configurations", context.skippedBoardConfigurationsCount);
 }
 
 export function createContext(availablePieces: iPiece[]): Context {

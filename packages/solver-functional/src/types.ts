@@ -13,25 +13,31 @@ export type Board = {
 export type PiecePlacement = {
   pieceId: PieceId;
   sideIndex: 0 | 1;
+  /**
+   * Whether the piece should be rotated 180 degrees
+   */
   rotated: boolean;
+  /**
+   * Which layer to place the piece on
+   */
   layerIndex: 0 | 1;
   /**
-   * If the rotation is true, then the slot is the column index
-   * If the rotation is false, then the slot is the row index
+   * Which slot to place the piece in on the layer
    */
   slotIndex: 0 | 1 | 2;
 };
 
 export type BoardLayer = {
   /**
-   * Flags to indicate which positions are available on the board,
+   * Indicates which positions are available on the board,
    * ie which positions are not occupied by a piece
+   * at most 3 pieces can be placed on a board layer and then it is rotated
    */
   slots: [SidePatternTuple | null, SidePatternTuple | null, SidePatternTuple | null];
   /**
    * 0 degrees is horizontal, ie the slots are rows and the first slot is the top row and piece cells go left to right
    *
-   * 90 degrees is vertical  (rotated anti-clockwise), ie the slots are columns and the first slot is the left column
+   * -90 degrees is vertical  (rotated anti-clockwise), ie the slots are columns and the first slot is the left column
    * and piece cells go bottom to top
    */
   rotationDegrees: 0 | -90;
