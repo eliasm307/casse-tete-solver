@@ -29,7 +29,13 @@ const PatternContainer = styled("div")`
 
 export default function Pattern({ layer }: iProps) {
   return (
-    <div style={{ position: "relative", padding: "auto" }}>
+    <div
+      style={{
+        position: "relative",
+        padding: "auto",
+        transform: layer.mirrored ? "scaleX(-1)" : "",
+      }}
+    >
       <PatternContainer angle={layer.rotationDegrees}>
         {layer.pieces.map((pieceSurface) => (
           <PieceSurface key={pieceSurface.join("")} pieceSurface={pieceSurface} />

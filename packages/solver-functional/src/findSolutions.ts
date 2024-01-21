@@ -187,7 +187,8 @@ function createSolutionRepresentation(board: Board): GeneralSolution {
       id: `${layer.slots.map(String).join("-")}-@${layer.rotationDegrees}deg`,
       rotationDegrees: layer.rotationDegrees,
       pieces: layer.slots as Number3Tuple[],
-      matrix: createBoardLayerRepresentation(layer, i),
+      preview: createBoardLayerRepresentation(layer, i),
+      mirrored: i === 1,
     };
   });
 

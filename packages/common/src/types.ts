@@ -25,6 +25,7 @@ export type SolutionLayer = {
    * The rotation of the pieces in this layer in degrees
    */
   rotationDegrees: number;
+  mirrored?: boolean;
 };
 
 /**
