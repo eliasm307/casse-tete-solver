@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 declare type iPiece = {
   readonly id: number;
   readonly sides: [SidePatternTuple, SidePatternTuple];
@@ -57,7 +58,7 @@ declare type iPieceGroupUnique = {
   patterns: iPatternConfiguration[];
 } & iPieceGroup;
 
-declare type iPieceGroupPermutation = {} & iPieceGroup;
+declare type iPieceGroupPermutation = iPieceGroup;
 
 declare type iPieceGroupComparer = {
   findCompatiblePatterns(uniquePieceGroups: iPieceGroupUnique[]): iPatternConfiguration[];
@@ -94,6 +95,7 @@ declare type iPieceGroupPatternEvaluation = {
 };
 
 declare type iSolution = {
+  readonly id: string;
   readonly pattern1: iPatternConfiguration;
   readonly pattern1RotationDeg: number;
   readonly pattern2: iPatternConfiguration;
@@ -108,13 +110,6 @@ declare type iPieceGroupFacade = {
   readonly allPatterns: PatternConfigurationMap;
   readonly uniquePatterns: PatternConfigurationMap;
   readonly uniquePieceIdGroups: PieceIdGroupMap;
-};
-
-declare type iSolution = {
-  readonly id: string;
-  readonly pattern1: iPatternConfiguration;
-  readonly pattern1RotationDeg: number;
-  readonly pattern2: iPatternConfiguration;
 };
 
 declare type iExporter = {

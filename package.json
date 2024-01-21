@@ -5,11 +5,10 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "start": "tsc && node dist/index.js",
-    "test": "rm -rf dist && tsc && jest --logHeapUsage",
-    "test:increased-memory": "rm -rf dist && tsc && node --max-old-space-size=4096 ./node_modules/jest-cli/bin/jest.js --logHeapUsage",
+    "start": "yarn build && node dist/index.js",
+    "test": "rm -rf dist && yarn build && jest --logHeapUsage",
+    "test:increased-memory": "rm -rf dist && yarn build && node --max-old-space-size=4096 ./node_modules/jest-cli/bin/jest.js --logHeapUsage",
     "build": "tsc",
-    "prepublish": "tsc",
     "type-check": "tsc --noEmit",
     "lint": "eslint --report-unused-disable-directives --ignore-path .gitignore --quiet --ext .jsx,.js,.ts,.tsx --cache --fix .",
     "format": "prettier --ignore-path .gitignore --write ."

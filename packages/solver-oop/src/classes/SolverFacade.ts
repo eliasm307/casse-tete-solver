@@ -1,15 +1,18 @@
 import CompatibilityFinder from "./CompatibilityFinder";
 import PieceGroupFacade from "./PieceGroupFacade";
-import PieceGroupUnique from "./PieceGroupUnique";
 import SolutionReporter from "./SolutionReporter";
-import TypeFactory from "./TypeFactory";
 
 export default class SolverFacade implements iSolverFacade {
   availablePieces: PieceMap;
+
   pieceGroupFacade: iPieceGroupFacade;
+
   pieceGroupPatternEvaluations: PieceGroupPatternEvaluationMap;
+
   patternComparisonCount = 0;
+
   solutionReporter: iSolutionReporter;
+
   private compatibilityFinder: iCompatibilityFinder;
   /*
 	allPieceGroupUniques: PieceGroupUniqueMap = TypeFactory.newPieceGroupUniqueMap();

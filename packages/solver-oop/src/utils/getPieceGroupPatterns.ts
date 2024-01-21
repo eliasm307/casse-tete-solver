@@ -14,7 +14,7 @@ function getPieceGroupPatterns(
   // get remainder piece groups
   // const pieceGroupsWithRemainderGroups = getPieceGroupRemainders(pieceIdGroups);
 
-  if (!AVAILABLE_PIECES) new Error(__filename + " AVAILABLE_PIECES not defined");
+  if (!AVAILABLE_PIECES) throw Error(`${__filename} AVAILABLE_PIECES not defined`);
 
   const patterns: PatternConfigurationsArrayMap = TypeFactory.newPatternConfigurationsArrayMap();
 
