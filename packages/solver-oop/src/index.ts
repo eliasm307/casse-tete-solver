@@ -5,12 +5,20 @@ import PieceGroupFacade from "./classes/PieceGroupFacade";
 import SolverFacade from "./classes/SolverFacade";
 import { AVAILABLE_PIECES_MAP } from "./constants/production";
 
-const pieceGroupFacade = new PieceGroupFacade(AVAILABLE_PIECES_MAP);
-const solverFacade = new SolverFacade(pieceGroupFacade);
+async function main() {
+  const pieceGroupFacade = new PieceGroupFacade(AVAILABLE_PIECES_MAP);
+  const solverFacade = new SolverFacade(pieceGroupFacade);
 
-const exporter = new Exporter(AVAILABLE_PIECES_ARRAY, pieceGroupFacade, solverFacade);
+  const exporter = new Exporter(AVAILABLE_PIECES_ARRAY, pieceGroupFacade, solverFacade);
 
-exporter.exportAllSolutions();
-exporter.exportUniqueSolutions();
-exporter.exportPieces();
-exporter.exportSolutionsFromUniquePieceGroups();
+  await Promise.all([
+    exporter.exportAllSolutions(),
+    exporter.exportUniqueSolutions(),
+    exporter.exportPieces(),
+    exporter.exportSolutionsFromUniquePieceGroups(),
+  ]);
+}
+
+main()
+  .then(() => console.log("Done"))
+  .catch((error) => console.error(error));

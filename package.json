@@ -26,7 +26,6 @@
   "devDependencies": {
     "@eliasm307/config": "^0.44.4",
     "@types/combinations": "^1.0.2",
-    "@types/fs-extra": "^9.0.13",
     "@types/jest": "^26.0.24",
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@typescript-eslint/parser": "^6.19.0",
@@ -39,10 +38,9 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@types/node": "^14.18.63",
+    "@types/node": "^18.19.8",
     "array-permutation": "^0.2.0",
     "combinations": "^1.0.0",
-    "fs-extra": "^9.1.0",
     "rotate-matrix": "^0.0.3"
   },
   "jest": {
