@@ -13,6 +13,7 @@ async function main() {
   let solutions: GeneralSolution[] = [];
   [findSolutionsBfs, findSolutionsDfs].forEach((findSolutions) => {
     const timerKey = findSolutions.name;
+    console.log("Find solutions start:", timerKey);
     console.time(timerKey);
     solutions = findSolutions({ availablePieces: AVAILABLE_PIECES_ARRAY });
     console.log("solutions:", solutions.length);
