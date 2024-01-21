@@ -1,21 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/prefer-for-of */
-/*
-casse tete using backtracking
-
-start with
-
-- an empty board (representation tbc but needs to represent the current free slots)
-- list of available pieces
-
-get a piece and add it to the current board in all possible valid configurations (ie oriented vertically/horizontally, and also flipped)
-
-after adding in the piece to the board, recursively do the same to add the next available piece
-if the current piece cannot be added into the current board in a valid configuration then return failure, ie we dont need to consider more
-back track to other configurations
-
-*/
 
 import type {
   GeneralSolution,
@@ -70,27 +55,45 @@ export function findSolutions({
 }): GeneralSolution[] {
   console.log("Find solutions start");
 
+  availablePieces = availablePieces.map((p) => {
+    return {
+      id: p.id,
+      sides: p.sides.map((side) =>
+        /*
+      We will be adding pieces on top of each other and in order to determine invalid configurations each value needs to have some effect
+      e.g. if we have a nub on a flat part then thats invalid, but the default values consider a flat as 0 so this would be valid, we fix this here
+      */
+        side.map((v) => {
+          switch (v) {
+            case -1:
+              return -1;
+            case 0:
+              return 1;
+            case 1:
+              return 2;
+            default:
+              throw new Error("Invalid piece value");
+          }
+        }),
+      ) as [SidePatternTuple, SidePatternTuple],
+    };
+  });
+
   // add first piece in the available columns only (using both sides) and solve from there,
   // ie dont need to consider rows as we would get the same solutions but rotated
   // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   const pendingBoards = createInitialBoards({ availablePieces });
 
   const solutions: GeneralSolution[] = [];
-  const iteration = 0;
   const visitedBoardIds = new Set<string>();
   while (pendingBoards.length) {
-    // console.log("iteration", iteration++);
-    debugger;
-
     const { board, remainingPieces } = pendingBoards.pop()!;
 
     const [nextPiece, ...nextIterationPieces] = remainingPieces;
-
     const availableSlotPlacements = getAvailablePlacements({ board, piece: nextPiece });
     for (const placement of availableSlotPlacements) {
       const newBoard = tryCreatingBoardWithPieceAdded({ board, placement });
       if (!newBoard) {
-        // throw new Error("Expected to be able to add piece to board");
         continue; // this can fail if it doesn't fit on the board
       }
 
@@ -103,27 +106,19 @@ export function findSolutions({
         continue;
       }
 
-      if (!boardIsSolved(newBoard)) {
-        // throw new Error("Board is not complete but we have no more pieces to add");
-        continue;
-      }
-
       // no more pieces to add, we filled the board so we have a solution
       const solution = createSolutionRepresentation(newBoard);
       if (visitedBoardIds.has(solution.id)) {
         console.log("Duplicate solution found");
         continue;
       }
+
+      // register the solution
       visitedBoardIds.add(solution.id);
       visitedBoardIds.add(getMirrorSolutionId(newBoard)); // add mirror solution id also to avoid duplicates
       solutions.push(solution);
       console.log("Found a solution", solutions.length);
     }
-
-    // if (++iteration % 100 === 0) {
-    //   // console.log("pendingBoards", pendingBoards.length);
-    //   // console.log("last board layers", JSON.stringify(pendingBoards.at(-1)?.board.layers, null, 2));
-    // }
   }
 
   return solutions;
@@ -132,11 +127,14 @@ export function findSolutions({
 function createInitialBoards({ availablePieces }: { availablePieces: iPiece[] }) {
   const [firstPiece, ...initialRemainingPieces] = availablePieces;
 
+  // start with possible board configurations ie parallel or perpendicular
   return [
     createInitialBoard({ bottomLayerRotationDegrees: 0 }),
     createInitialBoard({ bottomLayerRotationDegrees: -90 }),
   ]
     .flatMap((initialBoard) => {
+      // add first piece in the available columns only (using rows would yield duplicate solutions)
+      // using both sides of the piece and solve from there,
       return initialBoard.layers[0].slots.flatMap((_, slotIndex) => [
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         tryCreatingBoardWithPieceAdded({
@@ -163,25 +161,6 @@ function createInitialBoards({ availablePieces }: { availablePieces: iPiece[] })
       ]);
     })
     .map((board) => ({ board, remainingPieces: initialRemainingPieces }));
-  // .flatMap((board) => solveRecursively({ board, remainingPieces }));
-}
-
-function boardIsSolved(board: Board): boolean {
-  const everySlotAssigned = board.layers.every((layer) => {
-    return layer.slots.every((slotValues) => {
-      return slotValues?.every((value) => typeof value === "number");
-    });
-  });
-
-  if (!everySlotAssigned) {
-    return false;
-  }
-
-  const gridIsValid = board.grid.every((row) => {
-    return row.every((value) => value < 1);
-  });
-
-  return gridIsValid;
 }
 
 function createLayerId(layer: BoardLayer): string {
@@ -253,7 +232,7 @@ function createBoardLayerRepresentation(layer: BoardLayer, index: number): Patte
 
 // NOTE: limit is 1 here as we can have a nub if no piece is added on top,
 // this just checks there are no cases of 2 nubs in the same slot which is invalid
-const GRID_MAX = 1;
+const GRID_MAX = 2;
 
 function insertPieceIntoBoardMutation({
   rotationDegrees,
