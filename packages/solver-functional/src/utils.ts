@@ -1,9 +1,11 @@
+/* eslint-disable no-console */
 import type {
   SidePatternTuple,
   GeneralSolution,
   SolutionLayer,
   Number3Tuple,
   PatternMatrixTuple,
+  iPiece,
 } from "@casse-tete-solver/common/src/types";
 import { deepClone } from "@casse-tete-solver/common/src/utils";
 import type { State, PiecePlacement, BoardLayer, Board, Context } from "./types";
@@ -243,64 +245,48 @@ export function tryCreatingBoardWithPieceAdded({
     return; // invalid placement, piece does not fit
   }
 
-  // if (isHorizontal) {
-  //   for (let i = 0; i < newBoard.grid.length; i++) {
-  //     // ie fixed row, iterate through columns
-  //     newBoard.grid[slotIndex][i] += slotValues[i];
-  //     if (newBoard.grid[i][slotIndex] > 1) {
-  //       return; // invalid placement, piece does not fit
-  //     }
-  //   }
-
-  //   // else if vertical, then add piece to column
-  // } else {
-  //   for (let i = 0; i < newBoard.grid.length; i++) {
-  //     // ie fixed column, iterate through rows
-  //     newBoard.grid[i][slotIndex] += slotValues[i];
-  //     if (newBoard.grid[i][slotIndex] > 1) {
-  //       return; // invalid placement
-  //     }
-  //   }
-  // }
-
   // mark slot as occupied
   newBoard.layers[layerIndex].slots[slotIndex] = slotValues;
 
-  // add piece to list of placements
-  // newBoard.layers[layerIndex].piecePlacements.push({
-  //   piece,
-  //   rotated,
-  //   sideIndex,
-  //   slotIndex,
-  //   layerIndex,
-  // });
+  // check if we have already considered this board configuration, if so then we can skip it
+  // because another branch would have considered the outcomes from this board already
+  const newBoardId = createBoardId(newBoard.layers.map(createLayerId));
+  if (context.seenBoardConfigurations.has(newBoardId)) {
+    context.skippedBoardConfigurationsCount++;
+    return;
+  }
+  context.seenBoardConfigurations.add(newBoardId);
 
   return newBoard;
 }
 
-// function solveRecursively({
-//   board,
-//   remainingPieces,
-// }: {
-//   board: Board;
-//   remainingPieces: iPiece[];
-// }): Solution[] {
-//   if (!remainingPieces.length) {
-//     // no more pieces to add, we filled the board so we have a solution
-//     return [[board.layers[0].piecePlacements, board.layers[1].piecePlacements]];
-//   }
+export function logResults({
+  solutions,
+  context,
+  methodName,
+}: {
+  methodName: "BFS" | "DFS";
+  solutions: GeneralSolution[];
+  context: Context;
+}) {
+  console.log(
+    methodName,
+    "considered board configurations",
+    context.consideredBoardConfigurationsCount,
+  );
+  console.log(methodName, "skipped board configurations", context.skippedBoardConfigurationsCount);
+  console.log(methodName, "solutions found", solutions.length);
+}
 
-//   const [nextPiece, ...nextIterationPieces] = remainingPieces;
-
-//   return getPossibleNextPlacementWithPiece({ board, piece: nextPiece }).flatMap((placement) => {
-//     const newBoard = addPieceToBoard({ board, placement });
-//     if (!newBoard) {
-//       return []; // invalid move
-//     }
-
-//     return solveRecursively({ board: newBoard, remainingPieces: nextIterationPieces });
-//   });
-// }
+export function createContext(availablePieces: iPiece[]): Context {
+  return {
+    knownSolutionIds: new Set(),
+    consideredBoardConfigurationsCount: 0,
+    skippedBoardConfigurationsCount: 0,
+    allPieces: Object.fromEntries(availablePieces.map((piece) => [piece.id, piece])),
+    seenBoardConfigurations: new Set(),
+  };
+}
 
 /**
  * Gets a list of all the available placement configurations for the piece on the board,

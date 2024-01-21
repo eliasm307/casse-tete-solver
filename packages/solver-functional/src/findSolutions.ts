@@ -3,9 +3,11 @@
 import type { GeneralSolution, iPiece } from "@casse-tete-solver/common/src/types";
 import type { Context, State } from "./types";
 import {
+  createContext,
   createInitialStates,
   createSolutionIfUnique,
   getAvailablePlacements,
+  logResults,
   tryCreatingBoardWithPieceAdded,
 } from "./utils";
 
@@ -16,11 +18,7 @@ export function findSolutionsBfs({
 }): GeneralSolution[] {
   console.log("Find solutions start");
 
-  const context: Context = {
-    knownSolutionIds: new Set(),
-    consideredBoardConfigurationsCount: 0,
-    allPieces: Object.fromEntries(availablePieces.map((piece) => [piece.id, piece])),
-  };
+  const context: Context = createContext(availablePieces);
 
   // add first piece in the available columns only (using both sides) and solve from there,
   // ie dont need to consider rows as we would get the same solutions but rotated
@@ -57,7 +55,7 @@ export function findSolutionsBfs({
     }
   }
 
-  console.log("BFS considered board configurations", context.consideredBoardConfigurationsCount);
+  logResults({ context, solutions, methodName: "BFS" });
   return solutions;
 }
 
@@ -66,16 +64,12 @@ export function findSolutionsDfs({
 }: {
   availablePieces: iPiece[];
 }): GeneralSolution[] {
-  const context: Context = {
-    knownSolutionIds: new Set(),
-    consideredBoardConfigurationsCount: 0,
-    allPieces: Object.fromEntries(availablePieces.map((piece) => [piece.id, piece])),
-  };
+  const context: Context = createContext(availablePieces);
   const solutions = createInitialStates({ context }).flatMap((state) =>
     findSolutionsDfsRecursive({ state, context }),
   );
 
-  console.log("DFS considered board configurations", context.consideredBoardConfigurationsCount);
+  logResults({ context, solutions, methodName: "DFS" });
   return solutions;
 }
 

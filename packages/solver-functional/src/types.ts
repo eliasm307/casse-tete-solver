@@ -48,4 +48,6 @@ export type Context = {
   knownSolutionIds: Set<string>;
   consideredBoardConfigurationsCount: number;
   allPieces: Record<PieceId, iPiece>;
+  seenBoardConfigurations: Set<string>;
+  skippedBoardConfigurationsCount: number;
 };
