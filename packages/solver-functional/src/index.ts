@@ -1,15 +1,18 @@
-/*
-casse tete using backtracking
+import { AVAILABLE_PIECES_ARRAY } from "@casse-tete-solver/common/src/constants";
+import path from "path";
+import { saveJsonToFile } from "@casse-tete-solver/common/src/utils";
+import { findSolutions } from "./findSolutions";
 
-start with
+async function main() {
+  const solutions = findSolutions({ availablePieces: AVAILABLE_PIECES_ARRAY });
 
-- an empty board (representation tbc but needs to represent the current free slots)
-- list of available pieces
+  console.log("solutions:", solutions);
 
-get a piece and add it to the current board in all possible valid configurations (ie oriented vertically/horizontally, and also flipped)
+  const outputDir = path.resolve(__dirname, "../output");
 
-after adding in the piece to the board, recursively do the same to add the next available piece
-if the current piece cannot be added into the current board in a valid configuration then return failure, ie we dont need to consider more
-back track to other configurations
+  await saveJsonToFile(solutions, path.join(outputDir, "solutions.json"));
+}
 
-*/
+main()
+  .then(() => console.log("Done"))
+  .catch((error) => console.error(error));

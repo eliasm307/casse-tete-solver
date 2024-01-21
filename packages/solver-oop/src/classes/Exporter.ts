@@ -1,6 +1,5 @@
 import type { iPiece } from "@casse-tete-solver/common/src/types";
-import type { WriteOptions } from "fs-extra";
-import fs from "fs-extra";
+import { saveJsonToFile } from "@casse-tete-solver/common/src/utils";
 import type {
   iExporter,
   iPieceGroupFacade,
@@ -28,44 +27,39 @@ export default class Exporter implements iExporter {
     this.solutionReporter = solverFacade.solutionReporter;
   }
 
-  exportAllSolutions(): void {
-    this.exportDataToFile(this.solutionReporter.solutionsAll, "src/exports/solutions-all.json");
+  async exportAllSolutions() {
+    await this.exportDataToFile(
+      this.solutionReporter.solutionsAll,
+      "src/exports/solutions-all.json",
+    );
   }
 
-  exportSolutionsByPieceGroup(): void {
-    this.exportDataToFile(
+  async exportSolutionsByPieceGroup() {
+    await this.exportDataToFile(
       this.solutionReporter.solutionsByPieceGroup,
       "src/exports/solutions-by-piece-group.json",
     );
   }
 
-  exportSolutionsFromUniquePieceGroups(): void {
-    this.exportDataToFile(
+  async exportSolutionsFromUniquePieceGroups() {
+    await this.exportDataToFile(
       this.solutionReporter.solutionsFromPieceGroups,
       "src/exports/solutions-from-piece-groups.json",
     );
   }
 
-  exportUniqueSolutions(): void {
-    this.exportDataToFile(
+  async exportUniqueSolutions() {
+    await this.exportDataToFile(
       this.solutionReporter.solutionsUnique,
       "src/exports/solutions-unique.json",
     );
   }
 
-  exportPieces(): void {
-    this.exportDataToFile(this.availablePieces, "src/exports/pieces.json");
+  async exportPieces() {
+    await this.exportDataToFile(this.availablePieces, "src/exports/pieces.json");
   }
 
-  private exportDataToFile(data: any, outputFilePath: string): void {
-    const writeOptions: WriteOptions = {
-      spaces: 2,
-    };
-    fs.ensureFile(outputFilePath) // ensure file path exists
-      .then((_) => fs.writeJSON(outputFilePath, data, writeOptions)) // write JSON to file path
-      .then((_) => console.log(__filename, `File: "${outputFilePath}" created successfully`)) // log success
-      .catch((error) =>
-        console.error(__filename, `ERROR creating File: "${outputFilePath}"`, { error }),
-      ); // log error
+  private async exportDataToFile(data: unknown, outputFilePath: string): Promise<void> {
+    await saveJsonToFile(data, outputFilePath);
   }
 }
