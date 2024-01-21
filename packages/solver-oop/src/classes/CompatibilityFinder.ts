@@ -63,7 +63,7 @@ export default class CompatibilityFinder implements iCompatibilityFinder {
     if (!this.pieceGroupUniques.has(pieceGroupOppositeId)) {
       const errorMessage = `Opposite pieceGroup id "${pieceGroupOppositeId}" for pieceGroup with id "${pieceGroupMain.id}" not found`;
       console.error(__filename, errorMessage);
-      new Error(errorMessage);
+      throw new Error(errorMessage);
     }
 
     // get opposite piece group object

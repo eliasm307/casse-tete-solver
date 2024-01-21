@@ -1,11 +1,8 @@
 /* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/prefer-for-of */
 
 import type { GeneralSolution, iPiece } from "@casse-tete-solver/common/src/types";
 import type { Context, State } from "./types";
 import {
-  formatPieces,
   createInitialStates,
   createSolution,
   getAvailablePlacements,
@@ -18,8 +15,6 @@ export function findSolutionsBfs({
   availablePieces: iPiece[];
 }): GeneralSolution[] {
   console.log("Find solutions start");
-
-  availablePieces = formatPieces(availablePieces);
 
   // add first piece in the available columns only (using both sides) and solve from there,
   // ie dont need to consider rows as we would get the same solutions but rotated
@@ -70,7 +65,7 @@ export function findSolutionsDfs({
   const context: Context = {
     knownSolutionIds: new Set(),
   };
-  return createInitialStates({ availablePieces: formatPieces(availablePieces) }).flatMap((state) =>
+  return createInitialStates({ availablePieces }).flatMap((state) =>
     findSolutionsDfsRecursive({ state, context }),
   );
 }

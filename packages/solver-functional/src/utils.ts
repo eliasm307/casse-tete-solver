@@ -9,32 +9,6 @@ import type {
 import { deepClone } from "@casse-tete-solver/common/src/utils";
 import type { State, PiecePlacement, BoardLayer, Board, Context } from "./types";
 
-/**
- * We will be adding pieces on top of each other and in order to determine invalid configurations each value needs to have some effect
- * e.g. if we have a nub on a flat part then thats invalid, but the default values consider a flat as 0 so this would be valid, we fix this here
- */
-export function formatPieces(pieces: iPiece[]): iPiece[] {
-  return pieces.map((p) => {
-    return {
-      id: p.id,
-      sides: p.sides.map((side) =>
-        side.map((v) => {
-          switch (v) {
-            case -1:
-              return -1;
-            case 0:
-              return 1;
-            case 1:
-              return 2;
-            default:
-              throw new Error("Invalid piece value");
-          }
-        }),
-      ) as [SidePatternTuple, SidePatternTuple],
-    };
-  });
-}
-
 export function createInitialStates({ availablePieces }: { availablePieces: iPiece[] }): State[] {
   const [firstPiece, ...initialRemainingPieces] = availablePieces;
 

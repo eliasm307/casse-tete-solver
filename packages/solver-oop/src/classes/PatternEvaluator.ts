@@ -68,7 +68,7 @@ export default class PatternEvaluator implements iPatternEvaluator {
   private matrixSumIsGood(matrix1: PatternMatrixTuple, matrix2: PatternMatrixTuple): boolean {
     for (let iRow = 0; iRow < matrix1.length; iRow++) {
       for (let iCol = 0; iCol < matrix1[0].length; iCol++) {
-        if (matrix1[iRow][iCol] + matrix2[iRow][iCol] > 0) {
+        if (matrix1[iRow][iCol] + matrix2[iRow][iCol] > 2) {
           return false;
         }
       }

@@ -1,3 +1,4 @@
+import { PieceValue } from "@casse-tete-solver/common/src/constants";
 import type { Number3Tuple } from "@casse-tete-solver/common/src/types";
 import styled from "@emotion/styled";
 import React from "react";
@@ -52,14 +53,14 @@ const SlotContainer = styled.div`
 
 const renderSlot: any = (slotValue: number) => {
   switch (slotValue) {
-    case -1:
+    case PieceValue.Hole:
       return <SlotHole />;
-    case 0:
+    case PieceValue.Blank:
       return <SlotBlank />;
-    case 1:
+    case PieceValue.Nub:
       return <SlotNub />;
     default:
-      return new Error(`Unknown slot value`);
+      return <div>Unknown slot value {slotValue}</div>;
   }
 };
 

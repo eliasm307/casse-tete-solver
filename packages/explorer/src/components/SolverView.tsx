@@ -42,6 +42,7 @@ type Props = {
 
 function App({ title, solutions }: Props) {
   const solutionGroups = groupSolutions(solutions);
+  console.log("solutionGroups", solutionGroups);
 
   return (
     <MainContainer>
