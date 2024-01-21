@@ -11,7 +11,8 @@
     "build": "tsc",
     "prepublish": "tsc",
     "type-check": "tsc --noEmit",
-    "lint": "eslint --report-unused-disable-directives --ignore-path .gitignore --quiet --ext .jsx,.js,.ts,.tsx --cache --fix ."
+    "lint": "eslint --report-unused-disable-directives --ignore-path .gitignore --quiet --ext .jsx,.js,.ts,.tsx --cache --fix .",
+    "format": "prettier --ignore-path .gitignore --write ."
   },
   "repository": {
     "type": "git",
